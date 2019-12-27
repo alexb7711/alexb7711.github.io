@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Alex Brown</title>
+    <description>Jekyll-Uno - a minimal, responsive theme for Jekyll</description>
+    <link>http://localhost:4000/jekyll-uno/</link>
+    <atom:link href="http://localhost:4000/jekyll-uno/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Fri, 27 Dec 2019 16:18:11 -0700</pubDate>
+    <lastBuildDate>Fri, 27 Dec 2019 16:18:11 -0700</lastBuildDate>
+    <generator>Jekyll v3.8.5</generator>
+    
+      <item>
+        <title>Flutter Vs React Native</title>
+        <description>&lt;h1 id=&quot;starting-app-development&quot;&gt;Starting App Development&lt;/h1&gt;
+&lt;p&gt;I have never developed a mobile app before, so this search is coming from fresh eyes. I tried a few years back but failed pretty miserably. Essentially, I got to the point where I installed Flutter because I read about it on a Reddit post and it sounded neat… and that was about it. I had no idea how to use it. This was back when I was starting to program and hoped that all programming would come naturally (it didn’t).&lt;/p&gt;
+
+&lt;p&gt;As expected, I gave up and moved on. Granted, I gave it minimal effort to start, but at the time it was a lot to take in to start and seemed daunting, confusing, and a lot of work that I just did not want to put.&lt;/p&gt;
+
+&lt;p&gt;With more experience under my belt, here are some thoughts (and my choice) for mobile app development.&lt;/p&gt;
+
+&lt;h2 id=&quot;background-and-development-environment&quot;&gt;Background and Development Environment&lt;/h2&gt;
+&lt;p&gt;My background stems from pretty heavy C/C++ programming, python, MatLab, and most recently C#. I’ve programmed for about five years. Over the years, I have learned to love developing under Linux for its flexibility and Unix-like environment, which is what I will use to develop. More specifically, Manjaro Linux.&lt;/p&gt;
+
+&lt;h2 id=&quot;options-as-a-linux-developer&quot;&gt;Options as a Linux Developer&lt;/h2&gt;
+&lt;p&gt;Naturally the first thought would be to develop in the native code. So, Kotlin and Swift come to mind. That introduces two new languages, and if you want to develop for both platforms and quickly (which I would like to try), those two are out the window.&lt;/p&gt;
+
+&lt;p&gt;Going full circle, we get back to Google’s Flutter, and Facebook’s React Native. They both provide a single code base for cross-platform applications. Seems pretty good to me.&lt;/p&gt;
+
+&lt;p&gt;Let’s compare the two.&lt;/p&gt;
+
+&lt;h2 id=&quot;flutter&quot;&gt;Flutter&lt;/h2&gt;
+&lt;p&gt;Flutter is Google’s cross-platform SDK that was released in May of 2017. It is free and open source, uses dart as its language of choice, and comes jam packed with utilities.&lt;/p&gt;
+
+&lt;p&gt;The big things to know about Flutter is:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;React-style framework&lt;/li&gt;
+  &lt;li&gt;Allows for hot reloading&lt;/li&gt;
+  &lt;li&gt;Everything is a widget&lt;/li&gt;
+  &lt;li&gt;All widgets are made of smaller widgets (aggressive nesting)&lt;/li&gt;
+  &lt;li&gt;Statefull and Stateless widgets (dynamic and static pages)&lt;/li&gt;
+  &lt;li&gt;Comes with Material Design (Google’s app flavor) and Cupertino (iOS app flavor).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;example-code&quot;&gt;Example Code&lt;/h3&gt;
+&lt;p&gt;The following code is pulled from &lt;a href=&quot;https://flutter.dev/docs/codelabs/layout-basics&quot;&gt;Flutter’s codelab&lt;/a&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;import 'package:flutter_web/material.dart';
+import 'package:flutter_web_test/flutter_web_test.dart';
+import 'package:flutter_web_ui/ui.dart' as ui;
+
+class MyWidget extends StatelessWidget {          // Extend Stateless/Statefull Widget
+  @override                                       // Always override
+  Widget build(BuildContext context) {            // Required to define the class
+    return Row(                                   // Widget
+      mainAxisAlignment: MainAxisAlignment.start, // Widget properties
+      children: [                                 // Children that live in side the property
+        BlueBox(),                                // Etc...
+        BlueBox(),
+        BlueBox(),
+      ],
+    );
+  }
+}
+
+class BlueBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        border: Border.all(),
+      ),
+    );
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The code above is a demonstration of how alignment works in Flutter. As you can see above, I placed some comments stating the general flow of how Flutter works.&lt;/p&gt;
+
+&lt;p&gt;Dart is a C-styled language, but Flutter changes that more to the React style. Coming from a C heavy background, the code seems somewhat messy and unorganized. However, it does seem efficient in terms of how much is types vs. how much actual work as been done toward the app. One thing to point out about Dart: because it is a relatively new programming language, it is now as widely supported like JavaScript is. For example, while writing this post the Markdown preview doesn’t recognize Dart and cannot highlight it properly.&lt;/p&gt;
+
+&lt;h2 id=&quot;react-native&quot;&gt;React Native&lt;/h2&gt;
+&lt;p&gt;React Native, on the other hand, is Facebook’s take at the cross-platform SDK. However, Facebook’s version was released March 2015. It is written in JavaScript, and seems to have tried to pick it up more on the “jam packing with utilities” front (based off some older posts I’ve read it seemed more of a skeleton framework to build off of, sort of like SFML).&lt;/p&gt;
+
+&lt;p&gt;The big things to know about React Native is:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;React-style framework&lt;/li&gt;
+  &lt;li&gt;Allows for hot reloading&lt;/li&gt;
+  &lt;li&gt;Uses JSX within the JavaScript
+    &lt;ul&gt;
+      &lt;li&gt;JSXis a syntax for embedding XML within JavaScript&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;example-code-1&quot;&gt;Example Code&lt;/h3&gt;
+&lt;p&gt;The following code is pulled from &lt;a href=&quot;https://facebook.github.io/react-native/docs/tutorial&quot;&gt;Facebook’s Github&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-JavaScript&quot;&gt;import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+const styles = StyleSheet.create({
+  bigBlue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+});
+
+export default class LotsOfStyles extends Component {                         // App Extends component
+  render() {                                                                  // All the stuff you want to draw
+    return (
+      &amp;lt;View&amp;gt;                                                                  // XML-like styling
+        &amp;lt;Text style={styles.red}&amp;gt;just red&amp;lt;/Text&amp;gt;
+        &amp;lt;Text style={styles.bigBlue}&amp;gt;just bigBlue&amp;lt;/Text&amp;gt;
+        &amp;lt;Text style={[styles.bigBlue, styles.red]}&amp;gt;bigBlue, then red&amp;lt;/Text&amp;gt;
+        &amp;lt;Text style={[styles.red, styles.bigBlue]}&amp;gt;red, then bigBlue&amp;lt;/Text&amp;gt;
+      &amp;lt;/View&amp;gt;
+    );
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The code above demonstrates how to style text in React Native. Comments were placed in this as well talking about general trends of the SDK.&lt;/p&gt;
+
+&lt;p&gt;Having developed with the ROS (Robot Operating Systems) framework (which uses some XML), this SDK does feel a little more familiar and comfortable at first glance. Albeit comfortable and somewhat more intuitive feel, it does also seem more verbose.&lt;/p&gt;
+
+&lt;h2 id=&quot;my-choice&quot;&gt;My Choice&lt;/h2&gt;
+&lt;p&gt;If you have done any previous research before reading this, you shouldn’t be too surprised to hear that I’ve decided to try Flutter. Here is quick list why:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Developed by Google, so it should be more stable for Android at least… Right?&lt;/li&gt;
+  &lt;li&gt;I’ve seen a lot less complaining about Flutter being more stable than React Native&lt;/li&gt;
+  &lt;li&gt;More full-featured&lt;/li&gt;
+  &lt;li&gt;Darts more C-styled nature (Can’t really escape the React styling though)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Something worth mentioning is that both SDK’s provide great resources on their respective websites (such as trying the live code). It is a pretty even playing field on this front. Although, I have heard/read that Flutter’s documentation is more easily read and understood.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;There are a lot routes to take for app development, and none of them are necessarily better than another. For me, I would like to develop an app for both iOS and Android and do not want to spend the time learning and porting the same app across the two languages.&lt;/p&gt;
+
+&lt;p&gt;Flutter and React Native are good candidates, however researching into the two it seems that Flutter is SDK of choice for those new to the game and React Native is good for those who are coming from React. This, plus Flutter’s more full-featured package and C-styled nature, makes it a more tempting place to start.&lt;/p&gt;
+
+&lt;p&gt;If you enjoyed this article, be sure to follow up by reading:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;How to install Flutter&lt;/li&gt;
+  &lt;li&gt;Starting with Flutter&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Fri, 27 Dec 2019 00:00:00 -0700</pubDate>
+        <link>http://localhost:4000/jekyll-uno/2019/Flutter-vs-React-Native/</link>
+        <guid isPermaLink="true">http://localhost:4000/jekyll-uno/2019/Flutter-vs-React-Native/</guid>
+        
+        
+      </item>
+    
+      <item>
+        <title>Welcome to Jekyll!</title>
+        <description>&lt;p&gt;You’ll find this post in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll serve --watch&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+
+&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+
+&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+
+&lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Check out the &lt;a href=&quot;http://jekyllrb.com&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://github.com/jekyll/jekyll-help&quot;&gt;Jekyll’s dedicated Help repository&lt;/a&gt;.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 08 Jan 2016 08:04:23 -0700</pubDate>
+        <link>http://localhost:4000/jekyll-uno/2016/welcome-to-jekyll/</link>
+        <guid isPermaLink="true">http://localhost:4000/jekyll-uno/2016/welcome-to-jekyll/</guid>
+        
+        <category>jekyll</category>
+        
+        
+        <category>jekyll</category>
+        
+      </item>
+    
+  </channel>
+</rss>

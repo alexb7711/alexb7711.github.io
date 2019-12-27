@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+
+  <title>Flutter Vs React Native</title>
+  <meta name="description" content="Starting App Development
+I have never developed a mobile app before, so this search is coming from fresh eyes. I tried a few years back but failed pretty miserably. Essentially, I got to the point where I installed Flutter because I read about it on a Reddit post and it sounded neat… and that was about it. I had no idea how to use it. This was back when I was starting to program and hoped that all programming would come naturally (it didn’t).
+
+">
+  <meta name="author" content="Alex Brown">
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Flutter Vs React Native">
+  <meta name="twitter:description" content="Starting App Development
+I have never developed a mobile app before, so this search is coming from fresh eyes. I tried a few years back but failed pretty miserably. Essentially, I got to the point where I installed Flutter because I read about it on a Reddit post and it sounded neat… and that was about it. I had no idea how to use it. This was back when I was starting to program and hoped that all programming would come naturally (it didn’t).
+
+">
+  
+  <meta name="twitter:image" content="/jekyll-uno/images/favicons/favicon-194x194.png" />
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Flutter Vs React Native">
+  <meta property="og:description" content="Starting App Development
+I have never developed a mobile app before, so this search is coming from fresh eyes. I tried a few years back but failed pretty miserably. Essentially, I got to the point where I installed Flutter because I read about it on a Reddit post and it sounded neat… and that was about it. I had no idea how to use it. This was back when I was starting to program and hoped that all programming would come naturally (it didn’t).
+
+">
+  <meta property="og:image" content="/jekyll-uno/images/favicons/favicon-194x194.png" />
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/jekyll-uno/images/favicons/apple-touch-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/jekyll-uno/images/favicons/apple-touch-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/jekyll-uno/images/favicons/apple-touch-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/jekyll-uno/images/favicons/apple-touch-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/jekyll-uno/images/favicons/apple-touch-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/jekyll-uno/images/favicons/apple-touch-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/jekyll-uno/images/favicons/apple-touch-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/jekyll-uno/images/favicons/apple-touch-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/jekyll-uno/images/favicons/apple-touch-icon-180x180.png">
+  <link rel="icon" type="image/png" href="/jekyll-uno/images/favicons/favicon-32x32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="/jekyll-uno/images/favicons/favicon-194x194.png" sizes="194x194">
+  <link rel="icon" type="image/png" href="/jekyll-uno/images/favicons/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/png" href="/jekyll-uno/images/favicons/android-chrome-192x192.png" sizes="192x192">
+  <link rel="icon" type="image/png" href="/jekyll-uno/images/favicons/favicon-16x16.png" sizes="16x16">
+  <link rel="manifest" href="/jekyll-uno/images/favicons/manifest.json">
+  <link rel="shortcut icon" href="/jekyll-uno/images/favicons/favicon.ico">
+  <meta name="msapplication-TileColor" content="#ffc40d">
+  <meta name="msapplication-TileImage" content="/jekyll-uno/images/favicons/mstile-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  
+  <link rel="stylesheet" href="/jekyll-uno/css/main.css?1577488691824348659">
+  <link rel="canonical" href="http://localhost:4000/jekyll-uno/2019/Flutter-vs-React-Native/">
+  <link rel="alternate" type="application/rss+xml" title="Alex Brown" href="/jekyll-uno/feed.xml">
+</head>
+
+
+  <body>
+    <span class="mobile btn-mobile-menu">
+  <i class="icon icon-list btn-mobile-menu__icon"></i>
+  <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+</span>
+
+<header class="panel-cover" style="background-image: url(/jekyll-uno/images/cover.jpg)">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <a href="/jekyll-uno/" title="link to home of Alex Brown">
+          <img src="/jekyll-uno/images/profile.jpg" class="user-image" alt="My Profile Photo">
+          <h1 class="panel-cover__title panel-title">Alex Brown</h1>
+        </a>
+        <hr class="panel-cover__divider">
+        <p class="panel-cover__description">Jekyll-Uno - a minimal, responsive theme for Jekyll</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+              <li class="navigation__item"><a href="/jekyll-uno/#blog" title="link to Alex Brown blog" class="blog-button">Blog</a></li>
+            </ul>
+          </nav>
+
+          <nav class="cover-navigation navigation--social">
+            <ul class="navigation">
+
+            
+
+            
+
+            
+
+            
+              <!-- GitHub -->
+              <li class="navigation__item">
+                <a href="https://www.github.com/alexb7711" title="alexb7711 on GitHub" target="_blank">
+                  <i class="icon icon-social-github"></i>
+                  <span class="label">GitHub</span>
+                </a>
+              </li>
+            
+
+            
+              <!-- Email -->
+              <li class="navigation__item">
+                <a href="mailto:alex.brown7711@gmail.com" title="Email alex.brown7711@gmail.com" target="_blank">
+                  <i class="icon icon-mail"></i>
+                  <span class="label">Email</span>
+                </a>
+              </li>
+            
+
+            <!-- RSS -->
+            <li class="navigation__item">
+              <a href="/jekyll-uno/feed.xml" title="Subscribe" target="_blank">
+                <i class="icon icon-rss"></i>
+                <span class="label">RSS</span>
+              </a>
+            </li>
+
+            </ul>
+          </nav>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+      <div class="content-wrapper__inner">
+        <article class="post-container post-container--single">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2019-12-27 00:00" class="post-meta__date date">27 Dec 2019</time>
+      
+    </div>
+    <h1 class="post-title">Flutter Vs React Native</h1>
+  </header>
+
+  <section class="post">
+    <h1 id="starting-app-development">Starting App Development</h1>
+<p>I have never developed a mobile app before, so this search is coming from fresh eyes. I tried a few years back but failed pretty miserably. Essentially, I got to the point where I installed Flutter because I read about it on a Reddit post and it sounded neat… and that was about it. I had no idea how to use it. This was back when I was starting to program and hoped that all programming would come naturally (it didn’t).</p>
+
+<p>As expected, I gave up and moved on. Granted, I gave it minimal effort to start, but at the time it was a lot to take in to start and seemed daunting, confusing, and a lot of work that I just did not want to put.</p>
+
+<p>With more experience under my belt, here are some thoughts (and my choice) for mobile app development.</p>
+
+<h2 id="background-and-development-environment">Background and Development Environment</h2>
+<p>My background stems from pretty heavy C/C++ programming, python, MatLab, and most recently C#. I’ve programmed for about five years. Over the years, I have learned to love developing under Linux for its flexibility and Unix-like environment, which is what I will use to develop. More specifically, Manjaro Linux.</p>
+
+<h2 id="options-as-a-linux-developer">Options as a Linux Developer</h2>
+<p>Naturally the first thought would be to develop in the native code. So, Kotlin and Swift come to mind. That introduces two new languages, and if you want to develop for both platforms and quickly (which I would like to try), those two are out the window.</p>
+
+<p>Going full circle, we get back to Google’s Flutter, and Facebook’s React Native. They both provide a single code base for cross-platform applications. Seems pretty good to me.</p>
+
+<p>Let’s compare the two.</p>
+
+<h2 id="flutter">Flutter</h2>
+<p>Flutter is Google’s cross-platform SDK that was released in May of 2017. It is free and open source, uses dart as its language of choice, and comes jam packed with utilities.</p>
+
+<p>The big things to know about Flutter is:</p>
+
+<ul>
+  <li>React-style framework</li>
+  <li>Allows for hot reloading</li>
+  <li>Everything is a widget</li>
+  <li>All widgets are made of smaller widgets (aggressive nesting)</li>
+  <li>Statefull and Stateless widgets (dynamic and static pages)</li>
+  <li>Comes with Material Design (Google’s app flavor) and Cupertino (iOS app flavor).</li>
+</ul>
+
+<h3 id="example-code">Example Code</h3>
+<p>The following code is pulled from <a href="https://flutter.dev/docs/codelabs/layout-basics">Flutter’s codelab</a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import 'package:flutter_web/material.dart';
+import 'package:flutter_web_test/flutter_web_test.dart';
+import 'package:flutter_web_ui/ui.dart' as ui;
+
+class MyWidget extends StatelessWidget {          // Extend Stateless/Statefull Widget
+  @override                                       // Always override
+  Widget build(BuildContext context) {            // Required to define the class
+    return Row(                                   // Widget
+      mainAxisAlignment: MainAxisAlignment.start, // Widget properties
+      children: [                                 // Children that live in side the property
+        BlueBox(),                                // Etc...
+        BlueBox(),
+        BlueBox(),
+      ],
+    );
+  }
+}
+
+class BlueBox extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 50,
+      height: 50,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        border: Border.all(),
+      ),
+    );
+  }
+}
+</code></pre></div></div>
+
+<p>The code above is a demonstration of how alignment works in Flutter. As you can see above, I placed some comments stating the general flow of how Flutter works.</p>
+
+<p>Dart is a C-styled language, but Flutter changes that more to the React style. Coming from a C heavy background, the code seems somewhat messy and unorganized. However, it does seem efficient in terms of how much is types vs. how much actual work as been done toward the app. One thing to point out about Dart: because it is a relatively new programming language, it is now as widely supported like JavaScript is. For example, while writing this post the Markdown preview doesn’t recognize Dart and cannot highlight it properly.</p>
+
+<h2 id="react-native">React Native</h2>
+<p>React Native, on the other hand, is Facebook’s take at the cross-platform SDK. However, Facebook’s version was released March 2015. It is written in JavaScript, and seems to have tried to pick it up more on the “jam packing with utilities” front (based off some older posts I’ve read it seemed more of a skeleton framework to build off of, sort of like SFML).</p>
+
+<p>The big things to know about React Native is:</p>
+
+<ul>
+  <li>React-style framework</li>
+  <li>Allows for hot reloading</li>
+  <li>Uses JSX within the JavaScript
+    <ul>
+      <li>JSXis a syntax for embedding XML within JavaScript</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="example-code-1">Example Code</h3>
+<p>The following code is pulled from <a href="https://facebook.github.io/react-native/docs/tutorial">Facebook’s Github</a>:</p>
+
+<pre><code class="language-JavaScript">import React, { Component } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+
+const styles = StyleSheet.create({
+  bigBlue: {
+    color: 'blue',
+    fontWeight: 'bold',
+    fontSize: 30,
+  },
+  red: {
+    color: 'red',
+  },
+});
+
+export default class LotsOfStyles extends Component {                         // App Extends component
+  render() {                                                                  // All the stuff you want to draw
+    return (
+      &lt;View&gt;                                                                  // XML-like styling
+        &lt;Text style={styles.red}&gt;just red&lt;/Text&gt;
+        &lt;Text style={styles.bigBlue}&gt;just bigBlue&lt;/Text&gt;
+        &lt;Text style={[styles.bigBlue, styles.red]}&gt;bigBlue, then red&lt;/Text&gt;
+        &lt;Text style={[styles.red, styles.bigBlue]}&gt;red, then bigBlue&lt;/Text&gt;
+      &lt;/View&gt;
+    );
+  }
+}
+</code></pre>
+
+<p>The code above demonstrates how to style text in React Native. Comments were placed in this as well talking about general trends of the SDK.</p>
+
+<p>Having developed with the ROS (Robot Operating Systems) framework (which uses some XML), this SDK does feel a little more familiar and comfortable at first glance. Albeit comfortable and somewhat more intuitive feel, it does also seem more verbose.</p>
+
+<h2 id="my-choice">My Choice</h2>
+<p>If you have done any previous research before reading this, you shouldn’t be too surprised to hear that I’ve decided to try Flutter. Here is quick list why:</p>
+
+<ul>
+  <li>Developed by Google, so it should be more stable for Android at least… Right?</li>
+  <li>I’ve seen a lot less complaining about Flutter being more stable than React Native</li>
+  <li>More full-featured</li>
+  <li>Darts more C-styled nature (Can’t really escape the React styling though)</li>
+</ul>
+
+<p>Something worth mentioning is that both SDK’s provide great resources on their respective websites (such as trying the live code). It is a pretty even playing field on this front. Although, I have heard/read that Flutter’s documentation is more easily read and understood.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>There are a lot routes to take for app development, and none of them are necessarily better than another. For me, I would like to develop an app for both iOS and Android and do not want to spend the time learning and porting the same app across the two languages.</p>
+
+<p>Flutter and React Native are good candidates, however researching into the two it seems that Flutter is SDK of choice for those new to the game and React Native is good for those who are coming from React. This, plus Flutter’s more full-featured package and C-styled nature, makes it a more tempting place to start.</p>
+
+<p>If you enjoyed this article, be sure to follow up by reading:</p>
+<ul>
+  <li>How to install Flutter</li>
+  <li>Starting with Flutter</li>
+</ul>
+
+  </section>
+  
+</article>
+
+
+
+      </div>
+
+      <footer class="footer">
+  <span class="footer__copyright">&copy; 2019 Alex Brown. All rights reserved.</span>
+</footer>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/jekyll-uno/js/main.js?1577488691824348659"></script>
+
+
+    </div>
+  </body>
+</html>
