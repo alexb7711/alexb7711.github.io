@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Where to start with App Development on Linux (Flutter & React-Native)
+title: Starting App Development on Linux
 categories: Flutter App-Development
 ---
 
