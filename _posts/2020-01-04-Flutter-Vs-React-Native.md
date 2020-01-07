@@ -4,7 +4,7 @@ title: Starting App Development on Linux
 categories: Flutter App-Development
 ---
 
-# Starting App Development
+## Starting App Development
 I have never developed a mobile app before, so this search is coming from fresh eyes. I tried a few years back but failed pretty miserably. Essentially, I got to the point where I installed Flutter because I read about it on a Reddit post and it sounded neat... and that was about it. I had no idea how to use it. This was back when I was starting to program and hoped that all programming would come naturally (it didn't).
 
 As expected, I gave up and moved on. Granted, I gave it minimal effort to start, but at the time it was a lot to take in to start and seemed daunting, confusing, and a lot of work that I just did not want to put.
