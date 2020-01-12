@@ -1143,6 +1143,23 @@ hr {
 	border-top: 1px solid #dddddd;
 	padding: 60px 0; }
 
+.post_comments-form {
+	padding: 1em;
+	// background: $form-background ;
+	border: 1px solid #dddddd;
+}
+
+.comment {
+  // @include clearfix();
+  display: flex;
+  margin: 1em 0;
+  flex: 4;
+  align-items: flex-start;
+
+  // &:not(:last-child) {
+    // border-bottom: 2px solid #e2e2e2;
+  }
+
 .post-meta {
 	margin: 0 0 .4em 0;
 	color: #c7c7c7; }
