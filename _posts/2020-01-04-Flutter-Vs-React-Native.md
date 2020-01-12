@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Where to start with App Development on Linux (Flutter & React-Native)
+title: Starting App Development on Linux
 categories: Flutter App-Development
 ---
 
-# Starting App Development
+## Starting App Development
 I have never developed a mobile app before, so this search is coming from fresh eyes. I tried a few years back but failed pretty miserably. Essentially, I got to the point where I installed Flutter because I read about it on a Reddit post and it sounded neat... and that was about it. I had no idea how to use it. This was back when I was starting to program and hoped that all programming would come naturally (it didn't).
 
 As expected, I gave up and moved on. Granted, I gave it minimal effort to start, but at the time it was a lot to take in to start and seemed daunting, confusing, and a lot of work that I just did not want to put.
@@ -72,7 +72,7 @@ class BlueBox extends StatelessWidget {
 
 The code above is a demonstration of how alignment works in Flutter. As you can see above, I placed some comments stating the general flow of how Flutter works. 
 
-Dart is a C-styled language, but Flutter changes that more to the React style. Coming from a C heavy background, the code seems somewhat messy and unorganized. However, it does seem efficient in terms of how much is typed versus how much actual work as been done toward the app. One thing to point out about Dart: because it is a relatively new programming language, it is not as widely supported like JavaScript is. *For example, while writing this post the Markdown preview doesn't recognize Dart and cannot highlight it properly* (This has since been fixed). However, it is starting to be more supported such as for vim which has plugins for dart syntax highlighting and flutter support. 
+Dart is a C-styled language, but Flutter changes that more to the React style. Coming from a C heavy background, the code seems somewhat messy and unorganized. However, it does seem efficient in terms of how much is typed versus how much actual work as been done toward the app. One thing to point out about Dart: because it is a relatively new programming language, it is not as widely supported like JavaScript is. ~~For example, while writing this post the Markdown preview doesn't recognize Dart and cannot highlight it properly~~ (This has since been fixed). However, it is starting to be more supported such as for vim which has plugins for dart syntax highlighting and flutter support. 
 
 ## React Native
 React Native, on the other hand, is Facebook's take at the cross-platform SDK. However, Facebook's version was released March 2015. It is written in JavaScript, and seems to have more recently tried to pick it up more on the "jam packing with utilities" front (based off some older posts I've read it seemed more of a skeleton framework to build off of, sort of like SFML - an API for C/C++ typically for game development -, correct me if I'm wrong). From comments and blog posts about React-Native, it seems like a good choice for those who are moving from traditional React.
