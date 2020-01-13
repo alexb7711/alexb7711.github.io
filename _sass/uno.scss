@@ -1140,25 +1140,41 @@ hr {
 	display: none !important; }
 
 .post-comments {
-	border-top: 1px solid #dddddd;
-	padding: 60px 0; }
+	// border-top: 1px solid #dddddd;
+	// padding: 60px 0;
+	order: 3;
+}
 
 .post_comments-form {
 	padding: 1em;
-	// background: $form-background ;
-	border: 1px solid #dddddd;
+	border-top: 1px solid #dddddd;
+	border-bottom: 1px solid #dddddd;
 }
 
 .comment {
-  // @include clearfix();
-  display: flex;
-  margin: 1em 0;
-  flex: 4;
-  align-items: flex-start;
+	padding: 1em;
+	display: flex;
+	margin: 1em 0;
+	flex: 4;
+	align-items: flex-start;
 
-  // &:not(:last-child) {
-    // border-bottom: 2px solid #e2e2e2;
+	border-bottom: 1px solid #e2e2e2;
   }
+
+.comment__avatar-wrapper {
+	margin-right: 1em;
+	flex-shrink: 0;
+}
+
+.comment__avatar {
+	width: 50px;
+	height: 50px;
+}
+
+.comment__content-wrapper {
+	float: right;
+	width: calc(100% - 60px);
+}
 
 .post-meta {
 	margin: 0 0 .4em 0;
@@ -1496,7 +1512,7 @@ input[type="email"],
 input[type="url"],
 input[type="search"],
 input[type="tel"] {
-	width: 240px;
+	width: 100%;
 	padding: 1em 1em;
 	background: #FFF;
 	border: 1px solid #dddddd;
@@ -1697,3 +1713,17 @@ input[type="tel"] {
 	.btn, .navigation__item a {
 		display: block;
 		margin-bottom: .4em; } }
+
+input,
+textarea,
+select,
+select[multiple=multiple] {
+	box-sizing: border-box;
+	margin-bottom: 2em; 
+	padding: 1em; 
+	width: 100%;
+}
+
+textarea {
+	resize: vertical;
+}
