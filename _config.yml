@@ -2,7 +2,7 @@
 title: Alex Brown 
 description: "A Mechanical Engineering post grad's thoughts on graduate school, working as a Computer Scientist, personal projects, and incorporating it into a busy life."
 url: 'https://alexb7711.github.io'
-baseurl: '/blog'
+# baseurl: '/blog'
 # google_analytics: 'UA-XXXXXX-X'
 # disqus_shortname: 'your-disqus-name'
 
