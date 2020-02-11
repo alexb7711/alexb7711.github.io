@@ -45,4 +45,4 @@ Now we want a quick and easy way to run this command and pass the file we are ed
 nnoremap <leader>c :silent execute '!~/[path]/[to]/[script]/compile %:p' <bar> :redraw! <Enter>
 ```
 
-This command remaps "\+c" to run the compile script and then pop you right back into Vim. To be able to view your pdf change as you compile it, you can open the pdf with zathura, or whatever is your favorite pdf viewer.
+This command remaps "\\+c" to run the compile script and then pop you right back into Vim. To be able to view your pdf change as you compile it, you can open the pdf with zathura, or whatever is your favorite pdf viewer.
