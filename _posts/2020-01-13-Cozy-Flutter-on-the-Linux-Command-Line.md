@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ☕Cozy Flutter on the Linux Command Line☕
-categories: Flutter App-Development
+categories: Flutter App-Development Vim
 ---
 
 ## Things to know before continuing
