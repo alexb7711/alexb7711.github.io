@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Markdown, Vim, and pandoc
-categories: Markdown Live Preview Without Vim Pluggins
+title: Markdown Live Preview Without Vim Pluggins
+categories: Markdown Linux Vim
 ---
 
 # Introduction
