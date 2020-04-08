@@ -6,7 +6,7 @@ categories: Linux dotfiles stow
 
 A few weeks ago I made a post about keeping track of your dotfiles using `rsync`. While not a horrible way to do it, there is a **way** better way of handling it using `stow`. I first heard about it here on [Wolfgang's Channel](https://www.youtube.com/watch?v=MJBVA4LeJKA). It took me a second to get a real grasp for it, but it is pretty straight forward. 
 
-This post is going to talk about what stow is and how I currently use it. s
+This post is going to talk about what stow is and how I currently use it.
 
 # What is `stow`?
 Pulling this quote directly from the [GNU page](https://www.youtube.com/watch?v=MJBVA4LeJKA):
