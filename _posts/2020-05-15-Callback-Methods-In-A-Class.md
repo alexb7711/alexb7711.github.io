@@ -22,9 +22,7 @@ Another more useful (but more complex) reason to use callbacks are in the case o
 
 ``` C
 foo(std::string message, void* data)
-{
-	...
-}
+{...}
 ```
 stored as a list. Every time you have an event occur, you can send out a message of certain type and pass the data. The callback handler will simply loop through the entire list of callback functions and attempt to pass the data to them. If the method is of the type `message`, then it will accept the data. Now because the data is passed in as a type `void*`, it can then be cast to any type.
 
