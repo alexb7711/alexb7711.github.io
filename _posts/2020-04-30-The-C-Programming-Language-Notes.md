@@ -1,7 +1,7 @@
 ---
 layout: post
 title: The C Programming Language Notes
-categories: C 
+categories: C/C++
 ---
 
 I mostly code in C++ and never __really__ spent the time to learn the nuances of C. I recently read through [The C Programming Language](https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&linkCode=osi&th=1&psc=1) and spent the time taking notes. Below is what I found useful and relevant. All diagrams and code snippets are from [The C Programming Language](https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&linkCode=osi&th=1&psc=1).
