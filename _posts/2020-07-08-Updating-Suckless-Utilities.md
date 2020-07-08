@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Updating Suckless Utilities
-categories: C/C++
+categories: Linux Suckless Git
 ---
 
 I never considered the scenario of wanting to upgrade my build of st, dwm, or any other "forked" project that I may have until I wanted to upgrade st to the latest relase in order to try the new [scrolling functionality](https://www.youtube.com/watch?v=sdeX2S2uOeA) that they have added. My brain immediataely accepted the fact that I was going to download a new copy of st and repatch everything I currently have... but that isn't very sustainable for long term use especially if you want to update every so often. I thought about it for an hour or so and was struck with the simple solution of just using git's merge feature. The thing is on how to get it configured simply. Like they always say with programming, "think lazy".
