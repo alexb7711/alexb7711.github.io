@@ -1,0 +1,2113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+<title><![CDATA[Alex Brown]]></title>
+<description><![CDATA[Alex Brown]]></description>
+<link>https://alexb7711.github.io</link>
+<lastBuildDate>Sat, 22 May 2021 11:20:49 -0600</lastBuildDate>
+<item>
+  <title><![CDATA[A Guide To Hosting An Email Server In A Residential Area (Port 25 Blocked)]]></title>
+  <description><![CDATA[
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbad52ff">Email Server Components</a>
+<ul>
+<li><a href="#orgca77c12">Postfix</a></li>
+<li><a href="#org5e31329">Dovecot</a></li>
+<li><a href="#orgbfe52c7">Spamassasin</a></li>
+<li><a href="#org8ada4e9">OpenDKIM</a></li>
+</ul>
+</li>
+<li><a href="#org92ba23c">Problem with Residential email servers</a>
+<ul>
+<li><a href="#orgd28b3dc">Borrowing SMTP server</a></li>
+<li><a href="#org803fc7a">Reroute incoming mail</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<p>
+&#x2014;
+</p>
+
+<p>
+If you are reading this, you have an extra PC, NAS, or raspberry pi that you are looking to make into a email server. Unfortunatelly, email servers are notoriously difficult to create. Fortunately enough, scripts have been created that more or less automate this process and stream lined a lot of it. Particularly, I nabbed a script off [Luke Smith](lukesmith.xyz) that installs and configures it for you. Unfortunately (again), if you are setting this server up in a residential area with residential email service you may have some difficulties outside of setting up the email server battling with your ISP (Internet Service Provider) due to blocked ports. Fortunately (again), there is a simple work around.
+</p>
+
+<p>
+Conceptually there is not that much to do, which is what this blog post is going to be about. The specifics will be left to the script, so if you are interested in learning how that works go read through that. It isn&rsquo;t earth shattering, but there are enough intricies that I am going to stick to borrowing the script when needed. What it boils down to is: install postfix, install dovecot, install spamassasin, install OpenDKIM, configure postfix to utilize SMTP, configure dovecot to connect to postfix and allow external connection for IMAP, link spamassasin, and hook up OpenDKIM. If you didn&rsquo;t get all that, don&rsquo;t worry. Each section will break down the components.
+</p>
+
+<p>
+The issue I came accross while setting up my email server is that my ISP (Internet Service Provider) was blocking port 25. Although I had a working email server, it was rendered useless because I couldn&rsquo;t send/receive email outside of my local network. This just requires some external help and minor tweaks on your end to get things moving smoothly.
+</p>
+
+<p>
+I&rsquo;ll also preface this by saying that the script README says that it is configured for VPS (Vitual Private Servers), but it worked great on my little 300$ hp pavillion makeshift server running Debian 10. Now to talk about each component.
+</p>
+
+<div id="outline-container-orgbad52ff" class="outline-2">
+<h2 id="orgbad52ff">Email Server Components</h2>
+<div class="outline-text-2" id="text-orgbad52ff">
+</div>
+<div id="outline-container-orgca77c12" class="outline-3">
+<h3 id="orgca77c12"><a href="http://www.postfix.org/">Postfix</a></h3>
+<div class="outline-text-3" id="text-orgca77c12">
+<p>
+As stated by <a href="https://en.wikipedia.org/wiki/Postfix_(software)">Wikipedia</a>:
+</p>
+
+<blockquote>
+<p>
+Postfix is a free and open-source mail transfer agent (MTA) that routes and delivers electronic mail.
+</p>
+</blockquote>
+
+<p>
+Or in other words, this is the guy that will send/receive mail to and from the outside world. It allows for <a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">SMTP</a> with <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> (which is what is enabled with this script), and allows for email to be encrypted (again if you want to know the specifics look at the script). This program is also the one who will send your mail down the chain to be saved once it has been grabbed. It has to work with Dovecot to know how to format it so you can access it with your email client and Spamassasin to know what sort of mail to keep and reject.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5e31329" class="outline-3">
+<h3 id="org5e31329"><a href="https://www.dovecot.org/">Dovecot</a></h3>
+<div class="outline-text-3" id="text-org5e31329">
+<blockquote>
+<p>
+Dovecot is an open source IMAP and POP3 email server for Linux/UNIX-like systems
+</p>
+</blockquote>
+
+<p>
+Basically, this is what you interface with to access your email through your email client. Again, it allows for encrypted connection and what not. It is also responsible for the structure of you mail folders. Say you have an Inbox, Junk, Sent, and Drafts folder. That is laid out with Dovecot. It also needs to know about Postfix in order to know where to grab it&rsquo;s mail from.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbfe52c7" class="outline-3">
+<h3 id="orgbfe52c7"><a href="https://spamassassin.apache.org/">Spamassasin</a></h3>
+<div class="outline-text-3" id="text-orgbfe52c7">
+<p>
+What it does is pretty self evident by the name. To be safe though here is a description via <a href="https://en.wikipedia.org/wiki/SpamAssassin">Wikipedia.</a>
+</p>
+
+<blockquote>
+<p>
+It uses a variety of spam-detection techniques, including DNS and fuzzy checksum techniques, Bayesian filtering, external programs, blacklists and online databases.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org8ada4e9" class="outline-3">
+<h3 id="org8ada4e9"><a href="http://opendkim.org/">OpenDKIM</a></h3>
+<div class="outline-text-3" id="text-org8ada4e9">
+<blockquote>
+<p>
+OpenDKIM is an open source implementation of the DKIM (Domain Keys Identified Mail) sender authentication system proposed by the E-mail Signing Technology Group (ESTG), now standardized by the IETF.
+</p>
+</blockquote>
+
+<p>
+In other words, it just signs your email in a way to show that is valid in such a way that big email servers (Like Gmail, Outlook, etc.) will accept your mail instead of tossing it to the side as spam.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org92ba23c" class="outline-2">
+<h2 id="org92ba23c">Problem with Residential email servers</h2>
+<div class="outline-text-2" id="text-org92ba23c">
+<p>
+Port 25 is blocked by a <b><b>lot</b></b> of ISPs. Why does that matter? Well, port 25 is what mail servers use to transfer email. That means that your email server is only good locally. There are two things you need to do in order to fix this problem:
+</p>
+
+<ol class="org-ol">
+<li>You need to borrow an SMTP server</li>
+<li>You need an external service to re-route your email to another port</li>
+</ol>
+
+<p>
+Maybe it isn&rsquo;t the best answer since you are probably trying to gain more independence and privacy on the internet, but it works amazingly.
+</p>
+</div>
+
+<div id="outline-container-orgd28b3dc" class="outline-3">
+<h3 id="orgd28b3dc">Borrowing SMTP server</h3>
+<div class="outline-text-3" id="text-orgd28b3dc">
+<p>
+The quick and easy way to get it up and running is to borrow Google&rsquo;s STMP servers. If you have an account, then you are all set to get this done. This also should work if your ISP supplies an SMTP server. You will just need the credentials for your ISP email account.
+</p>
+
+<p>
+First, create a file such as <code>/etc/postfix/sasl_passwd</code>. In that file you are going to type out:
+</p>
+
+<pre class="example">
+[mail.example.com]:587 user@example.com:passwd
+</pre>
+
+<p>
+where <code>mail.example.com</code> will be <code>smtp.gmail.com</code> if you are using gmail. Then supply your email address and password as shown. For the sake of security, and how almost all examples include, is to make this file only accessible to read or write via root. To do so type:
+</p>
+
+<pre class="example">
+chmod 0600 /etc/postfix/sasl_passwd
+</pre>
+
+<p>
+Then create a database for postfix to access by typing:
+</p>
+
+<pre class="example">
+postmap /etc/postfix/sasl_passwd
+</pre>
+
+<p>
+Now to configure postfix to read that map. Open <code>/etc/postfix/main.cf</code> and find/create the lines as follows:
+</p>
+
+<pre class="example">
+relayhost                  = [mail.example.com]:587
+smtp_sasl_auth_enable      = yes
+smtp_sasl_password_maps    = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_CApath            = /etc/ssl/certs
+smtp_use_tls               = yes
+</pre>
+
+<p>
+Restart postfix via <code>systemctl restart postfix</code> and try sending an email to yourself.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org803fc7a" class="outline-3">
+<h3 id="org803fc7a">Reroute incoming mail</h3>
+<div class="outline-text-3" id="text-org803fc7a">
+<p>
+If you are in a residential area, you most likely need a DDNS (Dynamic Domain Name System), personally I use [Dynu](dynu.com). It is free, and easy to set up. The only thing you need to do here is create an account, go to Dynamic DNS Service, click the add button, use one of the given DNS names or type in your own. If you opted to use your own domain name on the website you got your domain name from in your &ldquo;External Hosts&rdquo; record type in the ip address given to you by Dynu.
+</p>
+
+<p>
+First thing you need to do is to create a [rollernet.us](rollernet.us) account. Go to mail derives, select SMTP Redirection (Direct Connection) (I believe that is the one that I am using. At any rate, for free accounts, only one of the SMTP redirections work). Type in your domain, and under your destination server, type your domain name again. Under port, type something like 2525 (this is the port we are going to be redirecting mail to). Now you need to set permissions for what is allowed through. In the &ldquo;Mail Services&rdquo; base page there is a hyper link labeled &ldquo;valid user table&rdquo;, click that. For all domain names given, ensure that the &ldquo;Default Action&rdquo; is &ldquo;Allow&rdquo;. This will allow all data incoming on port 25 be moved to port 2525.
+</p>
+
+<p>
+Going back to the website you got your Domain name from. Under &ldquo;Email Services&rdquo; create two new entries with the &ldquo;Points to&rdquo; options filled out as <code>mail.rollernet.us</code> and <code>mail2.rollernet.us</code>.
+</p>
+
+<p>
+There are two ways you can make sure that you receive mail from this untraditional port in postfix. You can either redirect port 2525 back to port 25 on your router, or you can add the line
+</p>
+
+<pre class="example">
+2525 inet n - y - - smtpd
+	-o content_filter=spamassassin
+</pre>
+
+<p>
+After you complete all these configurations, give everything some time for all settings to take effect (those set for the DDNS and your domain name mostly). You should now be able to send and receive email from you home server! If you have any questions about the specific setup process, I&rsquo;d recommend watching <a href="https://videos.lukesmith.xyz/videos/watch/9eac5348-7cc0-491e-ac9d-8f2ba1e3e69f">Luke Smith&rsquo;s Video about setting up an email server with his script</a>. Again, all these changes are built off of the changes made by that script.
+</p>
+
+<p>
+Thank you for reading, and happy emailing!
+</p>
+</div>
+</div>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://alexb7711.github.io/2020-08-15-Guide-To-Creating-An-Email-Server-In-A-Residential-Area.html</link>
+  <pubDate>Mon, 17 May 2021 13:43:00 -0600</pubDate>
+</item>
+<item>
+  <title><![CDATA[Updating Suckless Utilities]]></title>
+  <description><![CDATA[
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0767e44">Creating Another Remote Repository</a></li>
+<li><a href="#org9c17eea">Merging Your Source with Suckless&rsquo;s</a></li>
+</ul>
+</div>
+</nav>
+<p>
+&#x2014;
+</p>
+
+<p>
+I never considered the scenario of wanting to upgrade my build of st, dwm, or any other &ldquo;forked&rdquo; project that I may have until I wanted to upgrade st to the latest release in order to try the new <a href="https://www.youtube.com/watch?v=sdeX2S2uOeA">scrolling functionality</a> that they have added. My brain immediately accepted the fact that I was going to download a new copy of st and repatch everything I currently have&#x2026; but that isn&rsquo;t very sustainable for long term use especially if you want to update every so often. I thought about it for an hour or so and was struck with the simple solution of just using git&rsquo;s merge feature. The thing is on how to get it configured simply. Like they always say with programming, &ldquo;think lazy&rdquo;.
+</p>
+
+<div id="outline-container-org0767e44" class="outline-2">
+<h2 id="org0767e44">Creating Another Remote Repository</h2>
+<div class="outline-text-2" id="text-org0767e44">
+<p>
+Much like how some people use this to keep multiple repositories up to date, multiple remote repositories are also very handy for updating (basically the same thing stated in different words). To take advantage of this feature, you can run:
+</p>
+
+<pre class="example">
+git remote add -m suckless https://git.suckless.org/st
+</pre>
+
+<p>
+to create another remote repository called suckless. The `-m` flag is set up to point at remote’s &lt;master&gt; branch.
+</p>
+
+<p>
+Now if you run
+</p>
+
+<pre class="example">
+git remote update
+</pre>
+
+<p>
+You can make sure you are up to date on HEAD of suckless&rsquo;s master.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org9c17eea" class="outline-2">
+<h2 id="org9c17eea">Merging Your Source with Suckless&rsquo;s</h2>
+<div class="outline-text-2" id="text-org9c17eea">
+<p>
+To do this, I like to create a branch to make sure I don&rsquo;t destroy my master branch:
+</p>
+
+<pre class="example">
+git checkout -b suckless
+</pre>
+
+<p>
+Then you simply have to run:
+</p>
+
+<pre class="example">
+git merge suckless/master
+</pre>
+
+<p>
+and git will attempt to merge your code with that of suckless/master. You will most likely get conflicts, so be sure to checkout my post on how to set up neovim as a merge tool.
+</p>
+</div>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://alexb7711.github.io/2020-07-08-Updating-Suckless-Utilities.html</link>
+  <pubDate>Mon, 17 May 2021 13:43:00 -0600</pubDate>
+</item>
+<item>
+  <title><![CDATA[Simple Callback Methods In C++]]></title>
+  <description><![CDATA[
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org52aa8a9">Callbacks</a></li>
+<li><a href="#org6593c28">Why Would You Want To Use A Callback?&rsquo;&rsquo;</a></li>
+<li><a href="#org12a7466">A Simple Example</a></li>
+<li><a href="#org5f37203">Shortcomings</a></li>
+<li><a href="#orga4e85c0">My Problem That Was Fixed With Callbacks</a></li>
+<li><a href="#orge83e4a9">References</a></li>
+</ul>
+</div>
+</nav>
+<p>
+I have been spending a lot of time as of late creating a small framework for developing games. It is in an extreme infancy still, but it has given me a lot of chances to practice and learn a lot of new techniques. One of the things I&rsquo;ve always known about that would be useful are callback methods, but I never really had the time to implement it up until today. The concept is not to difficult to understand (we will go into how it works later), but the actual application is a little more complicated. Not by much, but enough to give me a hard time for a few hours.
+</p>
+
+<p>
+To start, lets cover what a callback method is and how it can be used to your advantage.
+</p>
+
+<div id="outline-container-org52aa8a9" class="outline-2">
+<h2 id="org52aa8a9">Callbacks</h2>
+<div class="outline-text-2" id="text-org52aa8a9">
+<p>
+A callback is a piece of code that is used to execute (call back) a specified argument. In other words, if you pass a pointer of a function (foo) to another function (bar) as an argument and execute it, then the function pointer (foo) is a callback. As stated on [GeeksForGeeks](<a href="https://www.geeksforgeeks.org/">https://www.geeksforgeeks.org/</a>).
+</p>
+
+<p>
+&gt; In C, a callback function is a function that is called through a function pointer.
+</p>
+
+<p>
+That is specific enough for our purpose right now. If you would like read more about Callbacks, here is a link to [Wikipedia](<a href="https://en.wikipedia.org/wiki/Callback_(computer_programming)">https://en.wikipedia.org/wiki/Callback_(computer_programming)</a>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6593c28" class="outline-2">
+<h2 id="org6593c28">Why Would You Want To Use A Callback?&rsquo;&rsquo;</h2>
+<div class="outline-text-2" id="text-org6593c28">
+<p>
+As will all things, it is situational as to why you would like to use it. It doesn&rsquo;t solve all your problems, but it does make a lot of tasks quite easy. It is useful when you can make generic code that can apply different logic. Now what do I mean by that? For example in &ldquo;[The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>)&rdquo; the example they give is a single method that can be used to call different types of sorting methods. They use the same call to sort, but apply different sorting methods on the same bit of data.
+</p>
+
+<p>
+Another more useful (but more complex) reason to use callbacks are in the case of message driven applications. In this case, you have a bunch of methods that have the parameters of the form:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #b8bb26;">foo</span><span style="color: #fe8019;">(</span>std::string message, <span style="color: #fabd2f;">void</span>* <span style="color: #83a598;">data</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+stored as a list. Every time you have an event occur, you can send out a message of certain type and pass the data. The callback handler will simply loop through the entire list of callback functions and attempt to pass the data to them. If the method is of the type <code>message</code>, then it will accept the data. Now because the data is passed in as a type <code>void*</code>, it can then be cast to any type.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org12a7466" class="outline-2">
+<h2 id="org12a7466">A Simple Example</h2>
+<div class="outline-text-2" id="text-org12a7466">
+<p>
+Below is a simple class that uses a callback to count to 10. To start, you can see that we have a method called <code>callback(int count)</code> that all that it knows is to print the integer that it gets if it is smaller than 10. <code>caller(void (Foo::*fnc)(int))</code> is the function that is going to be providing the values to <code>callback</code>, and <code>run()</code> is just the driving code that will be called from <code>main()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">cstdio</span><span style="color: #fe8019;">&gt;</span>
+
+<span style="color: #fb4934;">class</span> <span style="color: #fabd2f;">Foo</span>
+<span style="color: #fe8019;">{</span>
+    <span style="color: #fb4934;">public</span>:
+    <span style="color: #b8bb26;">Foo</span><span style="color: #fb4934;">()</span>
+    <span style="color: #fb4934;">{}</span>
+
+    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">callback</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">count</span><span style="color: #fb4934;">)</span>
+    <span style="color: #fb4934;">{</span>
+        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>count &gt; <span style="color: #d3869b; font-weight: bold;">10</span><span style="color: #cc241d;">)</span> <span style="color: #fb4934;">return</span>;
+        printf<span style="color: #cc241d;">(</span><span style="color: #b8bb26;">"%d\n"</span>, count++<span style="color: #cc241d;">)</span>;
+    <span style="color: #fb4934;">}</span>
+
+    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #cc241d;">(</span><span style="color: #d3869b;">Foo</span>::*<span style="color: #fabd2f;">fnc</span><span style="color: #cc241d;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>
+    <span style="color: #fb4934;">{</span>
+        <span style="color: #fb4934;">for</span> <span style="color: #cc241d;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span> = <span style="color: #d3869b; font-weight: bold;">1</span>; i &lt; <span style="color: #d3869b; font-weight: bold;">12</span>; ++i<span style="color: #cc241d;">)</span>
+            <span style="color: #cc241d;">(</span><span style="color: #fb4934;">this</span>-&gt;*fnc<span style="color: #cc241d;">)(</span>i<span style="color: #cc241d;">)</span>;
+    <span style="color: #fb4934;">}</span>
+
+    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">run</span><span style="color: #fb4934;">()</span>
+    <span style="color: #fb4934;">{</span>
+        caller<span style="color: #cc241d;">(</span>&amp;<span style="color: #d3869b;">Foo</span>::callback<span style="color: #cc241d;">)</span>;
+    <span style="color: #fb4934;">}</span>
+<span style="color: #fe8019;">}</span>;
+
+<span style="color: #fabd2f;">int</span> <span style="color: #b8bb26;">main</span><span style="color: #fe8019;">()</span>
+<span style="color: #fe8019;">{</span>
+    <span style="color: #fabd2f;">Foo</span> <span style="color: #83a598;">foo</span>;
+    foo.run<span style="color: #fb4934;">()</span>;
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+Looking specifically at the parameter list of <code>caller(void (Foo::*fnc)(int))</code>, <code>void (Foo::*fnc)(int)</code> is used to specify that we are going to be passing a function that has a <code>void</code> return type, it is a part of the <code>Foo</code> class, <code>*fnc</code> is just the pointer to the method that is being passed (we don&rsquo;t know what it is yet), and <code>(int)</code> which is the argument that <code>*fnc</code> can take. It is important to take not of the parenthesis. They <b>must</b> look like this in order specify that we are passing a function pointer rather than a <code>void*</code>.
+</p>
+
+<p>
+At this point, we don&rsquo;t know what method is coming in, but we know what the method is going to look like and from what object that method is a part of. Now lets look at the implementation of <code>callback</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>Foo::*fnc<span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>
+    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span> = <span style="color: #d3869b; font-weight: bold;">1</span>; i &lt; <span style="color: #d3869b; font-weight: bold;">12</span>; ++i<span style="color: #fb4934;">)</span>
+        <span style="color: #fb4934;">(</span>this-&gt;*fnc<span style="color: #fb4934;">)(</span>i<span style="color: #fb4934;">)</span>;
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+The tricky part here is how we dereference the function. Like how the parenthesis were important in the argument list, the parenthesis are important in how we dereference the function pointer. You must also specify <code>this-&gt;</code> for the compiler to understand that the function call is from the class type <code>Foo</code>.
+</p>
+
+<p>
+As for <code>run</code>, that is simple. We just need to pass the pointer to the function which is straightforward. Again, we have to specify the owner of the method by placing <code>Foo::</code> in front of the function name.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">run</span><span style="color: #fe8019;">()</span>
+<span style="color: #fe8019;">{</span>
+    caller<span style="color: #fb4934;">(</span>&amp;Foo::callback<span style="color: #fb4934;">)</span>
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f37203" class="outline-2">
+<h2 id="org5f37203">Shortcomings</h2>
+<div class="outline-text-2" id="text-org5f37203">
+<p>
+Pretty simple once you have done it once, right? It can&rsquo;t be all good though as you probably guessed from the heading. The drawback of this type of declaration is that the method calls must be from inside the same class. Why is that the case though? Couldn&rsquo;t you just do something like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>Bar::*fnc<span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+and call a method from <code>Bar</code>? The problem with this is that you can know the class definition, but you can&rsquo;t know which instance you are referring to. In the way outlined above, the <code>this-&gt;</code> pointer indicates which instance you are talking about, so it all works out. But if you have 3 instances of <code>Bar</code>, using this method you can&rsquo;t possibly know which instance you are referring to.
+</p>
+
+<p>
+The good news though is that with minor adjustments you can know!
+</p>
+
+<p>
+Rather than doing it the way we stated above, try:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span> <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>*<span style="color: #b8bb26;">fnc</span><span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span>, <span style="color: #fabd2f;">void</span>* <span style="color: #83a598;">instance</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+Everything will be more or less the same. The only difference is now that you have the instance of the object, you can static cast it to the correct type and then dereference the method. Pretty slick, right? It requires a little more work, but using this method you can potentially create a message handler class!
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga4e85c0" class="outline-2">
+<h2 id="orga4e85c0">My Problem That Was Fixed With Callbacks</h2>
+<div class="outline-text-2" id="text-orga4e85c0">
+<p>
+As for my case, it is a lot simpler than some of the examples I gave above. My problem is that I wanted to open and parse two different files that will similar formatting but contain two different types of data. More specifically, for my game framework I want to be able to load/save files from a text file. To do this I am currently employing two files: <code>Maps.txt</code> and <code>Dictionary.txt</code>. <code>Maps.txt</code> looks like:
+</p>
+
+<pre class="example" id="org3d053fe">
+[Default]
+0 0 1
+1 1 0
+1 0 0
+</pre>
+
+<p>
+Where <code>[Default]</code> is the name of the map, and the matrix underneath specified the type of tiles that will be placed in that specific area. But what do those tiles mean? Thats what <code>Dictionary.txt</code> is for. That file looks like this:
+</p>
+
+<pre class="example" id="org9124777">
+[Default]
+0 0 256 64
+1 0 128 64
+</pre>
+
+<p>
+Where the first character is the identifier that will be used in <code>Map.txt</code>, the second is the <code>x</code> location on the asset sheet, then the <code>y</code> position on the asset sheet, and the width/height of the texture (I&rsquo;m assuming squares). Because they both have similar ways of being parsed, the only part that is going to change is how the data will be stores. Rather than writing two separate methods that will open the file and loop through it the same way, why not create one method that does that, but implements different ways of storing the data.
+</p>
+
+<p>
+Similarly to the examples given above I wrote a generic method that will execute a callback:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #928374;">/*</span>
+<span style="color: #928374;"> *--------------------------------------------------------------------------------------</span>
+<span style="color: #928374;"> *       Class:  TileMap</span>
+<span style="color: #928374;"> *      Method:  TileMap :: readFromFileCallback</span>
+<span style="color: #928374;"> * Description:  Callback method used to read from config files.</span>
+<span style="color: #928374;"> *--------------------------------------------------------------------------------------</span>
+<span style="color: #928374;"> */</span>
+<span style="color: #fabd2f;">void</span> <span style="color: #d3869b;">TileMap</span>::<span style="color: #b8bb26;">readFromFileCallback</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span><span style="color: #d3869b;">TileMap</span>::*<span style="color: #b8bb26;">method</span><span style="color: #fb4934;">)(</span><span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">ifstream</span>&amp;, <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span>&amp;<span style="color: #fb4934;">)</span>,
+                                   <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span>&amp; <span style="color: #83a598;">map_name</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>
+  <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">ifstream</span> <span style="color: #83a598;">file_in</span><span style="color: #fb4934;">(</span>m_map_text_file<span style="color: #fb4934;">)</span>;
+  <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span> <span style="color: #83a598;">line</span>;
+
+  <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>file_in.is_open<span style="color: #cc241d;">()</span><span style="color: #fb4934;">)</span>
+  <span style="color: #fb4934;">{</span>
+    <span style="color: #fb4934;">while</span> <span style="color: #cc241d;">(</span><span style="color: #d3869b;">std</span>::getline<span style="color: #fe8019;">(</span>file_in, line<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span>
+    <span style="color: #cc241d;">{</span>
+      <span style="color: #fe8019;">(</span><span style="color: #fb4934;">this</span>-&gt;*method<span style="color: #fe8019;">)(</span>file_in, map_name<span style="color: #fe8019;">)</span>;
+    <span style="color: #cc241d;">}</span>
+
+    file_in.close<span style="color: #cc241d;">()</span>;
+  <span style="color: #fb4934;">}</span>
+   <span style="color: #fb4934;">else</span>
+     printf<span style="color: #fb4934;">(</span><span style="color: #b8bb26;">"ERROR: COULD NOT LOAD FILE!\n"</span><span style="color: #fb4934;">)</span>;
+
+  <span style="color: #fb4934;">return</span>;
+<span style="color: #fe8019;">}</span>
+
+</pre>
+</div>
+
+<p>
+The method that is accepted is a <code>void</code> method that has a <code>ifstream</code> reference and a <code>string</code>. I&rsquo;m also passing a separate string <code>map_name</code> that is used in <code>method</code> to figure out which file is being parsed!
+</p>
+
+<p>
+Super simple, and now I can use this one method to parse different files of the same formatting style!
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge83e4a9" class="outline-2">
+<h2 id="orge83e4a9">References</h2>
+<div class="outline-text-2" id="text-orge83e4a9">
+<ul class="org-ul">
+<li><a href="https://www.geeksforgeeks.org/callbacks-in-c/">GeeksForGeeks</a></li>
+<li><a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">The C Programming Language</a></li>
+</ul>
+</div>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://alexb7711.github.io/2020-05-15-Callback-Methods-In-A-Class.html</link>
+  <pubDate>Mon, 17 May 2021 13:43:00 -0600</pubDate>
+</item>
+<item>
+  <title><![CDATA[The C Programming Language Notes]]></title>
+  <description><![CDATA[
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org940022e">Types, Operators, and Expressions</a>
+<ul>
+<li><a href="#org6cc3116">Constants</a></li>
+<li><a href="#orgf06638a">Increment and Decrement Operators</a></li>
+<li><a href="#orgea9fb11">Bitwise Operators</a></li>
+</ul>
+</li>
+<li><a href="#orge62f1d5">Control Flow</a>
+<ul>
+<li><a href="#org6383b8b">Break and Continue</a></li>
+<li><a href="#orga6c92fa">GoTo and Labels</a></li>
+</ul>
+</li>
+<li><a href="#orgc4bc6a0">Functions and Program Structure</a>
+<ul>
+<li><a href="#org62d4df2">Static Variables</a></li>
+</ul>
+</li>
+<li><a href="#org817fce4">Types, Operators, and Expressions</a>
+<ul>
+<li><a href="#orgb9d671c">Constants</a></li>
+<li><a href="#orgb1c4ceb">Increment and Decrement Operators</a></li>
+<li><a href="#org78549e1">Bitwise Operators</a></li>
+</ul>
+</li>
+<li><a href="#orgc9e5ed8">Control Flow</a>
+<ul>
+<li><a href="#org595c373">Break and Continue</a></li>
+<li><a href="#orga871031">GoTo and Labels</a></li>
+</ul>
+</li>
+<li><a href="#org00eb4a7">Functions and Program Structure</a>
+<ul>
+<li><a href="#orgb8a1dea">Static Variables</a></li>
+</ul>
+</li>
+<li><a href="#org0586cef">Pointers and Arrays</a>
+<ul>
+<li><a href="#org136273e">Address Arithmetic</a></li>
+<li><a href="#org41aa07f">Character Pointers and Functions</a></li>
+<li><a href="#orgf0c42ea">Pointer Arrays; Pointers to Pointers</a></li>
+<li><a href="#org63a00a0">Multi-Dimensional Arrays</a></li>
+<li><a href="#orge4f2e7b">Initialization of Pointer Arrays</a></li>
+<li><a href="#org5aee65c">Pointers vs. Multi-Dimensional Array</a></li>
+<li><a href="#org016d092">Command Line Arguments</a></li>
+<li><a href="#org860221e">Pointers To Functions</a></li>
+<li><a href="#orgb71bdb4">Complicated Declarations</a></li>
+</ul>
+</li>
+<li><a href="#orgffd896d">Structures</a>
+<ul>
+<li><a href="#org996e959">Arrays of Structures</a></li>
+<li><a href="#orgbcb0228">Table Lookup</a></li>
+</ul>
+</li>
+<li><a href="#orga1a9698">Input and Output</a>
+<ul>
+<li><a href="#orgce0a91a">Command Execution</a></li>
+<li><a href="#org2d512ec">Storage Management</a></li>
+</ul>
+</li>
+<li><a href="#org0844fac">The UNIX System Interface</a>
+<ul>
+<li><a href="#org879ad15">Open, Creat, Close, Unlink</a></li>
+<li><a href="#orgeaa7b49">Random Access - Lseek</a></li>
+<li><a href="#orgfcb21b9">Example - A Storage Allocator</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<p>
+&#x2014;
+</p>
+
+<p>
+I mostly code in C++ and never <i>really</i> spent the time to learn the nuances of C. I recently read through [The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>) and spent the time taking notes. Below is what I found useful and relevant. All diagrams and code snippets are from [The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>).
+</p>
+
+<div id="outline-container-org940022e" class="outline-2">
+<h2 id="org940022e">Types, Operators, and Expressions</h2>
+<div class="outline-text-2" id="text-org940022e">
+</div>
+<div id="outline-container-org6cc3116" class="outline-3">
+<h3 id="org6cc3116">Constants</h3>
+<div class="outline-text-3" id="text-org6cc3116">
+<p>
+A character constant is an integer, written as one character within single quotes such as &rsquo;x&rsquo;. The value of a character constant is the numeric value of the character in the machine&rsquo;s character set. For example, &rsquo;0&rsquo; has the value 48 in ASCII.
+</p>
+
+<p>
+Certain characters can be expressed in character and string constants by escape sequences like `\n`. In addition, an arbitrary byte-sized bit pattern can be specified by `\ooo`, where `ooo` is one to three octal digits (0&#x2026;7) or by `\xhh` where `hh` is one or more hexadecimal digits (0..9, a&#x2026;f, A&#x2026;F). So as an example, you can write:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">VTAB</span> <span style="color: #b8bb26;">'\013'</span> <span style="color: #928374;">// </span><span style="color: #928374;">ASCII vertical tab</span>
+<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">BELL</span> <span style="color: #b8bb26;">'\007'</span> <span style="color: #928374;">// </span><span style="color: #928374;">ASCII bell character</span>
+</pre>
+</div>
+
+<p>
+or in hexadecimal,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">VTAB</span> <span style="color: #b8bb26;">'\xb'</span>  <span style="color: #928374;">// </span><span style="color: #928374;">ASCII vertical tab</span>
+<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">BELL</span> <span style="color: #b8bb26;">'\x7'</span>  <span style="color: #928374;">// </span><span style="color: #928374;">ASCII bell character</span>
+</pre>
+</div>
+
+<p>
+The complete set of escape sequences is:
+</p>
+
+<p>
+#+begin<sub>example</sub>
+\a       alert (bell) character
+\b       backspace
+\f       formfeed
+\n       newline
+\r       carriage return
+\t       horizontal tab
+\v       vertical tab
+\\       backslash
+\?       question mark
+\′       single quote
+\&ldquo;       double quote
+\0	 null character
+\ooo  octal number
+\xhh  hexadecimal number
+#+end<sub>src</sub>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf06638a" class="outline-3">
+<h3 id="orgf06638a">Increment and Decrement Operators</h3>
+<div class="outline-text-3" id="text-orgf06638a">
+<p>
+An example of when to use `++i` rather than `i++`:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">squeeze:  delete all c from s</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">squeeze</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> <span style="color: #83a598;">s</span><span style="color: #fb4934;">[]</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">c</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span>, <span style="color: #83a598;">j</span>;
+
+
+
+    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>i = j = <span style="color: #d3869b; font-weight: bold;">0</span>; s<span style="color: #cc241d;">[</span>i<span style="color: #cc241d;">]</span> != &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;; i++<span style="color: #fb4934;">)</span>
+
+        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>s<span style="color: #cc241d;">[</span>i<span style="color: #cc241d;">]</span> != c<span style="color: #fb4934;">)</span>
+
+            s<span style="color: #fb4934;">[</span>j++<span style="color: #fb4934;">]</span> = s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span>;
+
+    s<span style="color: #fb4934;">[</span>j<span style="color: #fb4934;">]</span> = &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+This is the same code as:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span> != c<span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>
+
+    s<span style="color: #fb4934;">[</span>j<span style="color: #fb4934;">]</span> = s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span>;
+
+    j++;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgea9fb11" class="outline-3">
+<h3 id="orgea9fb11">Bitwise Operators</h3>
+<div class="outline-text-3" id="text-orgea9fb11">
+<p>
+C provides six operators for bit manipulation; these may only be applied to integral operands, that is, `char`, `short`, `int`, and `long`, whether signed or unsigned.
+</p>
+
+<pre class="example" id="org80ef437">
+&amp;    bitwise AND
+|    bitwise inclusive OR
+^    bitwise exclusive OR
+&lt;&lt;   left shift
+&gt;&gt;   right shift
+~    one’s complement (unary)
+</pre>
+
+<p>
+`~` yield&rsquo;s one&rsquo;s compliment of an integer; that is, it converts each 1-bit into a 0-bit and vice versa.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge62f1d5" class="outline-2">
+<h2 id="orge62f1d5">Control Flow</h2>
+<div class="outline-text-2" id="text-orge62f1d5">
+</div>
+<div id="outline-container-org6383b8b" class="outline-3">
+<h3 id="org6383b8b">Break and Continue</h3>
+<div class="outline-text-3" id="text-org6383b8b">
+<p>
+The `break` statement provides an early exit from `for`, `while`, and `do`, just as it does from `switch`. <b><b>A `break` causes the innermost enclosing loop or switch to be exited immediately.</b></b>
+</p>
+
+<p>
+The `continue` statement is related to `break`, but less often used; <b><b>it causes the next iteration of the enclosing `for`, `while`, or `do` loop to begin.</b></b> In the `while` and `do`, this means that the test part is executed immediately; in the `for`, control passes to the increment step. This statement only applies to loops, not to a `switch`.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga6c92fa" class="outline-3">
+<h3 id="orga6c92fa">GoTo and Labels</h3>
+<div class="outline-text-3" id="text-orga6c92fa">
+<p>
+`goto` is almost never needed, but it can be useful in situations such as abandoning a process in some deeply nested structure, such as breaking out of two or more loops at once as shown below:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">for</span> <span style="color: #fe8019;">(</span> ... <span style="color: #fe8019;">)</span>
+
+    <span style="color: #fb4934;">for</span> <span style="color: #fe8019;">(</span> ... <span style="color: #fe8019;">)</span> <span style="color: #fe8019;">{</span>
+
+        ...
+
+        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>disaster<span style="color: #fb4934;">)</span>
+
+            <span style="color: #fb4934;">goto</span> <span style="color: #d3869b;">error</span>;
+
+    <span style="color: #fe8019;">}</span>
+
+...
+
+error:
+    <span style="color: #928374;">// </span><span style="color: #928374;">Clean up the mess</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc4bc6a0" class="outline-2">
+<h2 id="orgc4bc6a0">Functions and Program Structure</h2>
+<div class="outline-text-2" id="text-orgc4bc6a0">
+</div>
+<div id="outline-container-org62d4df2" class="outline-3">
+<h3 id="org62d4df2">Static Variables</h3>
+<div class="outline-text-3" id="text-org62d4df2">
+<p>
+The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org817fce4" class="outline-2">
+<h2 id="org817fce4">Types, Operators, and Expressions</h2>
+<div class="outline-text-2" id="text-org817fce4">
+</div>
+<div id="outline-container-orgb9d671c" class="outline-3">
+<h3 id="orgb9d671c">Constants</h3>
+<div class="outline-text-3" id="text-orgb9d671c">
+<p>
+A character constant is an integer, written as one character within single quotes such as &rsquo;x&rsquo;. The value of a character constant is the numeric value of the character in the machine&rsquo;s character set. For example, &rsquo;0&rsquo; has the value 48 in ASCII.
+</p>
+
+<p>
+Certain characters can be expressed in character and string constants by escape sequences like `\n`. In addition, an arbitrary byte-sized bit pattern can be specified by `\ooo`, where `ooo` is one to three octal digits (0&#x2026;7) or by `\xhh` where `hh` is one or more hexadecimal digits (0..9, a&#x2026;f, A&#x2026;F). So as an example, you can write:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">VTAB</span> <span style="color: #b8bb26;">'\013'</span> <span style="color: #928374;">// </span><span style="color: #928374;">ASCII vertical tab</span>
+<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">BELL</span> <span style="color: #b8bb26;">'\007'</span> <span style="color: #928374;">// </span><span style="color: #928374;">ASCII bell character</span>
+</pre>
+</div>
+
+<p>
+or in hexadecimal,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">VTAB</span> <span style="color: #b8bb26;">'\xb'</span>  <span style="color: #928374;">// </span><span style="color: #928374;">ASCII vertical tab</span>
+<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">BELL</span> <span style="color: #b8bb26;">'\x7'</span>  <span style="color: #928374;">// </span><span style="color: #928374;">ASCII bell character</span>
+</pre>
+</div>
+
+<p>
+The complete set of escape sequences is:
+</p>
+
+<pre class="example" id="org463d352">
+\a       alert (bell) character
+\b       backspace
+\f       formfeed
+\n       newline
+\r       carriage return
+\t       horizontal tab
+\v       vertical tab
+\\       backslash
+\?       question mark
+\′       single quote
+\"       double quote
+\0	 null character
+\ooo	 octal number
+\xhh	 hexadecimal number
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgb1c4ceb" class="outline-3">
+<h3 id="orgb1c4ceb">Increment and Decrement Operators</h3>
+<div class="outline-text-3" id="text-orgb1c4ceb">
+<p>
+An example of when to use `++i` rather than `i++`:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">squeeze:  delete all c from s</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">squeeze</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> <span style="color: #83a598;">s</span><span style="color: #fb4934;">[]</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">c</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span>, <span style="color: #83a598;">j</span>;
+
+
+
+    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>i = j = <span style="color: #d3869b; font-weight: bold;">0</span>; s<span style="color: #cc241d;">[</span>i<span style="color: #cc241d;">]</span> != &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;; i++<span style="color: #fb4934;">)</span>
+
+        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>s<span style="color: #cc241d;">[</span>i<span style="color: #cc241d;">]</span> != c<span style="color: #fb4934;">)</span>
+
+            s<span style="color: #fb4934;">[</span>j++<span style="color: #fb4934;">]</span> = s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span>;
+
+    s<span style="color: #fb4934;">[</span>j<span style="color: #fb4934;">]</span> = &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+This is the same code as:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span> != c<span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>
+
+    s<span style="color: #fb4934;">[</span>j<span style="color: #fb4934;">]</span> = s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span>;
+
+    j++;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org78549e1" class="outline-3">
+<h3 id="org78549e1">Bitwise Operators</h3>
+<div class="outline-text-3" id="text-org78549e1">
+<p>
+C provides six operators for bit manipulation; these may only be applied to integral operands, that is, `char`, `short`, `int`, and `long`, whether signed or unsigned.
+</p>
+
+<pre class="example" id="orgf0dadbf">
+&amp;    bitwise AND
+|    bitwise inclusive OR
+^    bitwise exclusive OR
+&lt;&lt;   left shift
+&gt;&gt;   right shift
+~    one’s complement (unary)
+</pre>
+
+<p>
+`~` yield&rsquo;s one&rsquo;s compliment of an integer; that is, it converts each 1-bit into a 0-bit and vice versa.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc9e5ed8" class="outline-2">
+<h2 id="orgc9e5ed8">Control Flow</h2>
+<div class="outline-text-2" id="text-orgc9e5ed8">
+</div>
+<div id="outline-container-org595c373" class="outline-3">
+<h3 id="org595c373">Break and Continue</h3>
+<div class="outline-text-3" id="text-org595c373">
+<p>
+The `break` statement provides an early exit from `for`, `while`, and `do`, just as it does from `switch`. <b><b>A `break` causes the innermost enclosing loop or switch to be exited immediately.</b></b>
+</p>
+
+<p>
+The `continue` statement is related to `break`, but less often used; <b><b>it causes the next iteration of the enclosing `for`, `while`, or `do` loop to begin.</b></b> In the `while` and `do`, this means that the test part is executed immediately; in the `for`, control passes to the increment step. This statement only applies to loops, not to a `switch`.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga871031" class="outline-3">
+<h3 id="orga871031">GoTo and Labels</h3>
+<div class="outline-text-3" id="text-orga871031">
+<p>
+`goto` is almost never needed, but it can be useful in situations such as abandoning a process in some deeply nested structure, such as breaking out of two or more loops at once as shown below:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">for</span> <span style="color: #fe8019;">(</span> ... <span style="color: #fe8019;">)</span>
+
+    <span style="color: #fb4934;">for</span> <span style="color: #fe8019;">(</span> ... <span style="color: #fe8019;">)</span> <span style="color: #fe8019;">{</span>
+
+        ...
+
+        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>disaster<span style="color: #fb4934;">)</span>
+
+            <span style="color: #fb4934;">goto</span> <span style="color: #d3869b;">error</span>;
+
+    <span style="color: #fe8019;">}</span>
+
+...
+
+error:
+    <span style="color: #928374;">// </span><span style="color: #928374;">Clean up the mess</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org00eb4a7" class="outline-2">
+<h2 id="org00eb4a7">Functions and Program Structure</h2>
+<div class="outline-text-2" id="text-org00eb4a7">
+</div>
+<div id="outline-container-orgb8a1dea" class="outline-3">
+<h3 id="orgb8a1dea">Static Variables</h3>
+<div class="outline-text-3" id="text-orgb8a1dea">
+<p>
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream
+The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled.
+<code>=====</code>
+The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0586cef" class="outline-2">
+<h2 id="org0586cef">Pointers and Arrays</h2>
+<div class="outline-text-2" id="text-org0586cef">
+<p>
+In C, there is a strong relationship between pointers and arrays. Any operation that can be achieved by array subscripting can also be done with pointers. The pointer version will generally be faster, but at least to the uninitiated, somewhat harder to understand.
+</p>
+
+<p>
+If you look at an array, indexing it via `array[i]`, is the same way as indexing it via `&amp;array[0] + i`. `&amp;array[0]`, is the pointer to the first item in the array, if we have a value I added on to it, that will move down the array as shown in Figure \ref{fig:arraypointerexample}
+</p>
+
+<p>
+![Using pointers to index an array \label{fig:arraypointerexample}](<img src="https://learning.oreilly.com/library/view/the-c-programming/9780133086249/graphics/98med03.jpg" alt="98med03.jpg">)
+</p>
+
+<p>
+Using this line of thinking, it is possible to then pass part of an array to a function:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">foo<span style="color: #fe8019;">(</span>&amp;a<span style="color: #fb4934;">[</span><span style="color: #d3869b; font-weight: bold;">2</span><span style="color: #fb4934;">]</span><span style="color: #fe8019;">)</span>;
+<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
+<span style="color: #b8bb26;">foo</span><span style="color: #fe8019;">(</span>a+<span style="color: #d3869b; font-weight: bold;">2</span><span style="color: #fe8019;">)</span>;
+</pre>
+</div>
+
+<p>
+Where the function `foo`&rsquo;s arguments have the form of:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #b8bb26;">foo</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">arr</span><span style="color: #fb4934;">[]</span><span style="color: #fe8019;">)</span> <span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
+<span style="color: #b8bb26;">fo</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span>* <span style="color: #83a598;">arr</span><span style="color: #fe8019;">)</span> <span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+As far as `foo` is concerned, the fact that the parameter refers to part of a larger array is of no consequence.
+</p>
+</div>
+
+<div id="outline-container-org136273e" class="outline-3">
+<h3 id="org136273e">Address Arithmetic</h3>
+<div class="outline-text-3" id="text-org136273e">
+<p>
+Because memory is allocated sequentially, we can use mathematical comparisons to see if we have enough memory allocated in a buffer, to see a position of a value in an array, etc. For example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>allocbuf + <span style="color: #d3869b;">ALLOCSIZE</span> - allocp &gt;= n<span style="color: #fe8019;">)</span>     <span style="color: #928374;">// </span><span style="color: #928374;">Checks if the buffer is large enough</span>
+<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
+<span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>p &gt;= allocbuf &amp;&amp; p &lt; allocbuf + <span style="color: #d3869b;">ALLOCSIZE</span><span style="color: #fe8019;">)</span>  <span style="color: #928374;">// </span><span style="color: #928374;">Checks if the pointer is within the buffer range</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org41aa07f" class="outline-3">
+<h3 id="org41aa07f">Character Pointers and Functions</h3>
+<div class="outline-text-3" id="text-org41aa07f">
+<p>
+A string constant is written as `&ldquo;I am a string&rdquo;`. It is represented as an array of characters and is terminated with a `\0`.
+</p>
+
+<p>
+When a character string appears, it is accessed through a character pointer. For example
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">printf<span style="color: #fe8019;">(</span><span style="color: #b8bb26;">"Hello, World!\n"</span><span style="color: #fe8019;">)</span>;
+</pre>
+</div>
+
+<p>
+takes the pointer of the start of the character string.
+</p>
+
+<p>
+If you declare a character pointer as follows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">char</span>* <span style="color: #83a598;">pmessage</span>;
+</pre>
+</div>
+
+<p>
+then the statement
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">pmessage = <span style="color: #b8bb26;">"Hello, World!"</span>;
+</pre>
+</div>
+
+<p>
+Assigns `pmessage` to the &ldquo;Hello, World!&rdquo;. This is <b>not</b> a copy; only pointers are involved. C does not provide any operators for processing an entire string of characters as a unit.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf0c42ea" class="outline-3">
+<h3 id="orgf0c42ea">Pointer Arrays; Pointers to Pointers</h3>
+<div class="outline-text-3" id="text-orgf0c42ea">
+<p>
+To create an array of pointers, we can say:
+</p>
+
+<pre class="example" id="org0100f53">
+char* lineptr[10];	// Array of character pointers
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org63a00a0" class="outline-3">
+<h3 id="org63a00a0">Multi-Dimensional Arrays</h3>
+<div class="outline-text-3" id="text-org63a00a0">
+<p>
+C provides rectangular multi-dimensional arrays, although in practice they are much less used than arrays of pointers.
+</p>
+
+<p>
+**If a two-dimensional array is to be passed to a function, the parameter declaration in the function must include the number of columns; the number of rows is irrelevant, since what is passed is, as before, a pointer to an array of rows.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">foo <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">daytab</span><span style="color: #fb4934;">[</span><span style="color: #d3869b; font-weight: bold;">2</span><span style="color: #fb4934;">][</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fb4934;">]</span> <span style="color: #fb4934;">{</span>...<span style="color: #fb4934;">}</span>
+<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
+foo <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">daytab</span><span style="color: #cc241d;">[][</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #cc241d;">]</span> <span style="color: #cc241d;">{</span>...<span style="color: #cc241d;">}</span>
+<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
+foo <span style="color: #cc241d;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #fe8019;">(</span>*<span style="color: #83a598;">daytab</span><span style="color: #fe8019;">)[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span> <span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+<p>
+It is necessary to have the parenthesis in the last version since brackets `[]` have higher precedence than *. Without the parenthesis
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">int</span>* <span style="color: #83a598;">daytab</span><span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span>
+</pre>
+</div>
+
+<p>
+is an array of 13 pointers to integers. More generally, only the first dimension of an array is free; all others have to be specified.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge4f2e7b" class="outline-3">
+<h3 id="orge4f2e7b">Initialization of Pointer Arrays</h3>
+<div class="outline-text-3" id="text-orge4f2e7b">
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">char</span>* <span style="color: #83a598;">array_of_pointers</span><span style="color: #fe8019;">[]</span> =
+<span style="color: #fe8019;">{</span>
+    <span style="color: #b8bb26;">"Item 1"</span>,
+    <span style="color: #b8bb26;">"Item 2"</span>,
+    ...
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5aee65c" class="outline-3">
+<h3 id="org5aee65c">Pointers vs. Multi-Dimensional Array</h3>
+<div class="outline-text-3" id="text-org5aee65c">
+<p>
+The big difference between
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">a</span><span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">10</span><span style="color: #fe8019;">][</span><span style="color: #d3869b; font-weight: bold;">20</span><span style="color: #fe8019;">]</span>;
+<span style="color: #928374;">// </span><span style="color: #928374;">and</span>
+<span style="color: #fabd2f;">int</span>* <span style="color: #83a598;">b</span><span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">10</span><span style="color: #fe8019;">]</span>;
+</pre>
+</div>
+
+<p>
+Is that the first one allocates all 10x20 array, the second only allocates 10 integer pointers. Initialization must be done explicitly either statically or with code. The important advantage of the pointer array is that the rows of the array may be of different lengths.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org016d092" class="outline-3">
+<h3 id="org016d092">Command Line Arguments</h3>
+<div class="outline-text-3" id="text-org016d092">
+<p>
+When `main` is called, it is called with two arguments. The first (conventionally called `argc` for argument count) is the number of command-line arguments. The second (`argv`, for argument vector), is a pointer to an array of character strings that contain the arguments, one per string. We customarily use multiple levels of pointers to manipulate these character strings.
+</p>
+</div>
+
+<div id="outline-container-orga18974a" class="outline-4">
+<h4 id="orga18974a">Accepting Command Line Flags</h4>
+<div class="outline-text-4" id="text-orga18974a">
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">stdio.h</span><span style="color: #fe8019;">&gt;</span>
+
+<span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">string.h</span><span style="color: #fe8019;">&gt;</span>
+
+<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">MAXLINE</span> <span style="color: #d3869b; font-weight: bold;">1000</span>
+
+
+
+<span style="color: #fabd2f;">int</span> <span style="color: #b8bb26;">getline</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">line</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">max</span><span style="color: #fe8019;">)</span>;
+
+
+
+<span style="color: #928374;">/* </span><span style="color: #928374;">find:  print lines that match pattern from 1st arg</span><span style="color: #928374;"> */</span>
+
+<span style="color: #b8bb26;">main</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">argc</span>, <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">argv</span><span style="color: #fb4934;">[]</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fabd2f;">char</span> <span style="color: #83a598;">line</span><span style="color: #fb4934;">[</span><span style="color: #d3869b;">MAXLINE</span><span style="color: #fb4934;">]</span>;
+
+    <span style="color: #fabd2f;">long</span> <span style="color: #83a598;">lineno</span> = <span style="color: #d3869b; font-weight: bold;">0</span>;
+
+    <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">c</span>, <span style="color: #83a598;">except</span> = <span style="color: #d3869b; font-weight: bold;">0</span>, <span style="color: #83a598;">number</span> = <span style="color: #d3869b; font-weight: bold;">0</span>, <span style="color: #83a598;">found</span> = <span style="color: #d3869b; font-weight: bold;">0</span>;
+
+
+
+    <span style="color: #fb4934;">while</span> <span style="color: #fb4934;">(</span>--argc &gt; <span style="color: #d3869b; font-weight: bold;">0</span> &amp;&amp; <span style="color: #cc241d;">(</span>*++argv<span style="color: #cc241d;">)[</span><span style="color: #d3869b; font-weight: bold;">0</span><span style="color: #cc241d;">]</span> == &#8242;-&#8242;<span style="color: #fb4934;">)</span>
+
+        <span style="color: #fb4934;">while</span> <span style="color: #fb4934;">(</span>c = *++argv<span style="color: #cc241d;">[</span><span style="color: #d3869b; font-weight: bold;">0</span><span style="color: #cc241d;">]</span><span style="color: #fb4934;">)</span>
+
+            <span style="color: #fb4934;">switch</span> <span style="color: #fb4934;">(</span>c<span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>
+
+            <span style="color: #fb4934;">case</span> &#8242;x&#8242;:
+
+                except = <span style="color: #d3869b; font-weight: bold;">1</span>;
+
+                <span style="color: #fb4934;">break</span>;
+
+            <span style="color: #fb4934;">case</span> &#8242;n&#8242;:
+
+                number = <span style="color: #d3869b; font-weight: bold;">1</span>;
+
+                <span style="color: #fb4934;">break</span>;
+
+            <span style="color: #fb4934;">default</span>:
+
+                printf<span style="color: #cc241d;">(</span><span style="color: #b8bb26;">"find: illegal option %c\n"</span>, c<span style="color: #cc241d;">)</span>;
+
+                argc = <span style="color: #d3869b; font-weight: bold;">0</span>;
+
+                found = &#8722;<span style="color: #d3869b; font-weight: bold;">1</span>;
+
+                <span style="color: #fb4934;">break</span>;
+
+            <span style="color: #fb4934;">}</span>
+
+    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>argc != <span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #fb4934;">)</span>
+
+        printf<span style="color: #fb4934;">(</span><span style="color: #b8bb26;">"Usage: find -x -n pattern\n"</span><span style="color: #fb4934;">)</span>;
+
+    <span style="color: #fb4934;">else</span>
+
+        <span style="color: #fb4934;">while</span> <span style="color: #fb4934;">(</span>getline<span style="color: #cc241d;">(</span>line, <span style="color: #d3869b;">MAXLINE</span><span style="color: #cc241d;">)</span> &gt; <span style="color: #d3869b; font-weight: bold;">0</span><span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>
+
+            lineno++;
+
+            <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span><span style="color: #fe8019;">(</span>strstr<span style="color: #fb4934;">(</span>line, *argv<span style="color: #fb4934;">)</span> != <span style="color: #d3869b;">NULL</span><span style="color: #fe8019;">)</span> != except<span style="color: #cc241d;">)</span> <span style="color: #cc241d;">{</span>
+
+                <span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>number<span style="color: #fe8019;">)</span>
+
+                    printf<span style="color: #fe8019;">(</span><span style="color: #b8bb26;">"%ld:"</span>, lineno<span style="color: #fe8019;">)</span>;
+
+                printf<span style="color: #fe8019;">(</span><span style="color: #b8bb26;">"%s"</span>, line<span style="color: #fe8019;">)</span>;
+
+                found++;
+
+            <span style="color: #cc241d;">}</span>
+
+        <span style="color: #fb4934;">}</span>
+
+    <span style="color: #fb4934;">return</span> found;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org860221e" class="outline-3">
+<h3 id="org860221e">Pointers To Functions</h3>
+<div class="outline-text-3" id="text-org860221e">
+<p>
+In C, it is possible to define pointers to functions which can be assigned, placed in arrays, passed to functions, returned by functions, and so on.
+</p>
+
+<p>
+The generic `void*` is used for pointer arguments. Any pointer can be cast to `void*` and back again without loss of information.
+</p>
+
+<p>
+When creating a function that accepts function pointers:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">qsort</span> <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span>* <span style="color: #83a598;">v</span><span style="color: #fb4934;">[]</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">left</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">right</span>, <span style="color: #fabd2f;">int</span> <span style="color: #fb4934;">(</span>*<span style="color: #b8bb26;">comp</span><span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">void</span>*, <span style="color: #fabd2f;">void</span>*<span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span>
+</pre>
+</div>
+
+<p>
+Says that `comp` is a pointer to a function that has two `void*` as arguments.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb71bdb4" class="outline-3">
+<h3 id="orgb71bdb4">Complicated Declarations</h3>
+<div class="outline-text-3" id="text-orgb71bdb4">
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">char</span> **<span style="color: #b8bb26;">argv</span>
+
+    argv:  pointer to pointer to <span style="color: #fabd2f;">char</span>
+
+<span style="color: #fabd2f;">int</span> <span style="color: #fe8019;">(</span>*daytab<span style="color: #fe8019;">)[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span>
+
+    daytab:  pointer to array<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span> of <span style="color: #fabd2f;">int</span>
+
+<span style="color: #fabd2f;">int</span> *daytab<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span>
+
+    daytab:  array<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span> of pointer to <span style="color: #fabd2f;">int</span>
+
+<span style="color: #fabd2f;">void</span> *comp<span style="color: #fe8019;">()</span>
+
+    comp:  function returning pointer to <span style="color: #fabd2f;">void</span>
+
+<span style="color: #fabd2f;">void</span> <span style="color: #fe8019;">(</span>*comp<span style="color: #fe8019;">)()</span>
+
+    comp:  pointer to function returning <span style="color: #fabd2f;">void</span>
+
+<span style="color: #fabd2f;">char</span> <span style="color: #fe8019;">(</span>*<span style="color: #fb4934;">(</span>*x<span style="color: #cc241d;">()</span><span style="color: #fb4934;">)[]</span><span style="color: #fe8019;">)()</span>
+
+    x: function returning pointer to array<span style="color: #fe8019;">[]</span> of
+
+    pointer to function returning <span style="color: #fabd2f;">char</span>
+
+<span style="color: #fabd2f;">char</span> <span style="color: #fe8019;">(</span>*<span style="color: #fb4934;">(</span>*x<span style="color: #cc241d;">[</span><span style="color: #d3869b; font-weight: bold;">3</span><span style="color: #cc241d;">]</span><span style="color: #fb4934;">)()</span><span style="color: #fe8019;">)[</span><span style="color: #d3869b; font-weight: bold;">5</span><span style="color: #fe8019;">]</span>
+
+    x: array<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">3</span><span style="color: #fe8019;">]</span> of pointer to function returning
+
+    pointer to array<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">5</span><span style="color: #fe8019;">]</span> of <span style="color: #fabd2f;">char</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgffd896d" class="outline-2">
+<h2 id="orgffd896d">Structures</h2>
+<div class="outline-text-2" id="text-orgffd896d">
+<p>
+A `struct` declaration defines a type. The right brace that terminates the list of members may be followed by a list of variables, just as for any basic type. That is,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span> <span style="color: #83a598;">x</span>, <span style="color: #83a598;">y</span>, <span style="color: #83a598;">z</span>;
+</pre>
+</div>
+
+<p>
+A structure declaration that is not followed by  a list of variables reserves no storage; it merely describes a template or the shape of a structure. If the declaration is tagged, however; the tag can be used later in definitions of instances of the structure. For example:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">point</span> <span style="color: #83a598;">pt</span>;
+</pre>
+</div>
+
+<p>
+Is analogous to `int c`.
+</p>
+</div>
+
+<div id="outline-container-org996e959" class="outline-3">
+<h3 id="org996e959">Arrays of Structures</h3>
+<div class="outline-text-3" id="text-org996e959">
+<p>
+When defining an array of structures, it is acceptable to define it in the following manner:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">key</span> <span style="color: #fe8019;">{</span>
+
+    <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">word</span>;
+
+    <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">count</span>;
+
+<span style="color: #fe8019;">}</span> <span style="color: #83a598;">keytab</span><span style="color: #fe8019;">[]</span> = <span style="color: #fe8019;">{</span>
+
+    <span style="color: #b8bb26;">"auto"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"break"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"case"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"char"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"const"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"continue"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"default"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #928374;">/* </span><span style="color: #928374;">...</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #b8bb26;">"unsigned"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"void"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"volatile"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+
+    <span style="color: #b8bb26;">"while"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>
+
+<span style="color: #fe8019;">}</span>;
+</pre>
+</div>
+
+<p>
+However, it is more precise to enclose the initializers for each &ldquo;row&rdquo; or structure in braces:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"> <span style="color: #fe8019;">{</span> <span style="color: #b8bb26;">"auto"</span>, <span style="color: #d3869b; font-weight: bold;">0</span> <span style="color: #fe8019;">}</span>,
+
+ <span style="color: #fe8019;">{</span> <span style="color: #b8bb26;">"break"</span>, <span style="color: #d3869b; font-weight: bold;">0</span> <span style="color: #fe8019;">}</span>,
+
+ <span style="color: #fe8019;">{</span> <span style="color: #b8bb26;">"case"</span>, <span style="color: #d3869b; font-weight: bold;">0</span> <span style="color: #fe8019;">}</span>,
+
+...
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbcb0228" class="outline-3">
+<h3 id="orgbcb0228">Table Lookup</h3>
+<div class="outline-text-3" id="text-orgbcb0228">
+<p>
+This section will be about writing the innards of a table-lookup package.
+</p>
+
+<p>
+There are two routines that manipulate the names and replace texts. `install(s,t)` records the name s and the replacement text `t` in a table; `s` and `t` are just character strings. `lookup(s)` searches for `s` in the table, and returns a pointer to the place where it was found, or `NULL` if it wasn&rsquo;t there.
+</p>
+
+<p>
+The algorithm is a hash search—the incoming name is converted into a small non-negative integer, which is then used to index into an array of pointers. An array element points to the beginning of a linked list of blocks describing names that have that hash value. It is NULL if no names have hashed to that value.
+</p>
+
+<p>
+This is shown in Figure \ref{fig:hashtable}.
+</p>
+
+<p>
+![Diagram of table lookup \label{fig:hashtable}](<img src="https://learning.oreilly.com/library/view/the-c-programming/9780133086249/graphics/f0144_01.jpg" alt="f0144_01.jpg">)
+</p>
+
+<p>
+A block in the list is a structure containing pointers to the name, the replacement text, and the next blocks in the list. A `NULL` next-pointer marks the end of the list.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> <span style="color: #fe8019;">{</span>       <span style="color: #928374;">/* </span><span style="color: #928374;">table entry:</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #83a598;">next</span>;   <span style="color: #928374;">/* </span><span style="color: #928374;">next entry in chain</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">name</span>;           <span style="color: #928374;">/* </span><span style="color: #928374;">defined name</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">defn</span>;           <span style="color: #928374;">/* </span><span style="color: #928374;">replacement text</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fe8019;">}</span>;
+</pre>
+</div>
+
+<p>
+The pointer array is just
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">HASHSIZE</span> <span style="color: #d3869b; font-weight: bold;">101</span>
+
+<span style="color: #fb4934;">static</span> <span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #83a598;">hashtab</span><span style="color: #fe8019;">[</span><span style="color: #d3869b;">HASHSIZE</span><span style="color: #fe8019;">]</span>;    <span style="color: #928374;">/* </span><span style="color: #928374;">pointer table</span><span style="color: #928374;"> */</span>
+</pre>
+</div>
+
+<p>
+The hashing function, which is used by both `lookup` and `install`, adds each character value in the string to a scrambled combination of the previous ones and returns the remainder modulo the array size.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">hash:  form hash value for string s</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fabd2f;">unsigned</span> <span style="color: #b8bb26;">hash</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">s</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">hashval</span>;
+
+
+
+    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>hashval = <span style="color: #d3869b; font-weight: bold;">0</span>; *s != &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;; s++<span style="color: #fb4934;">)</span>
+
+        hashval = *s + <span style="color: #d3869b; font-weight: bold;">31</span> * hashval;
+
+    <span style="color: #fb4934;">return</span> hashval % <span style="color: #d3869b;">HASHSIZE</span>;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+The reason we return `hashval % HASHSIZE` is because `hastab` only has a size of `HASHSIZE`. In this particular instance, the hash is placing the item in a arbitrary position from 0 to `HASHSIZE` - 1.
+</p>
+
+<p>
+The hashing process produces a staring index in the array `hashtab`; if the string is to be found anywhere, it will be int he list of blocks beginning there. By this, it is meant that if there is a collision in the hashing, a list will be produced at that hash from which the for loop will search for the string name.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">lookup:  look for s in hashtab</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #b8bb26;">lookup</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">s</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #83a598;">np</span>;
+
+
+
+    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>np = hashtab<span style="color: #cc241d;">[</span>hash<span style="color: #fe8019;">(</span>s<span style="color: #fe8019;">)</span><span style="color: #cc241d;">]</span>; np != <span style="color: #d3869b;">NULL</span>; np = np-&gt;next<span style="color: #fb4934;">)</span>
+
+        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>strcmp<span style="color: #cc241d;">(</span>s, np-&gt;name<span style="color: #cc241d;">)</span> == <span style="color: #d3869b; font-weight: bold;">0</span><span style="color: #fb4934;">)</span>
+
+            <span style="color: #fb4934;">return</span> np;  <span style="color: #928374;">/* </span><span style="color: #928374;">found</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;        <span style="color: #928374;">/* </span><span style="color: #928374;">not found</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+`install` returns a `NULL` if for any reason there is no room for a new entry.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #b8bb26;">lookup</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #fe8019;">)</span>;
+
+<span style="color: #fabd2f;">char</span> *<span style="color: #b8bb26;">strdup</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #fe8019;">)</span>;
+
+
+
+<span style="color: #928374;">/* </span><span style="color: #928374;">install:  put (name, defn) in hashtab</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #b8bb26;">install</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">name</span>, <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">defn</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #83a598;">np</span>;
+
+    <span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">hashval</span>;
+
+
+
+    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span>np = lookup<span style="color: #fe8019;">(</span>name<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>  <span style="color: #928374;">/* </span><span style="color: #928374;">not found</span><span style="color: #928374;"> */</span>
+
+        np = <span style="color: #cc241d;">(</span><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #cc241d;">)</span> malloc<span style="color: #cc241d;">(</span><span style="color: #fb4934;">sizeof</span><span style="color: #fe8019;">(</span>*np<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span>;
+
+        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>np == <span style="color: #d3869b;">NULL</span> &#166;&#166; <span style="color: #fe8019;">(</span>np-&gt;name = strdup<span style="color: #fb4934;">(</span>name<span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #cc241d;">)</span>
+
+            <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;
+
+        hashval = hash<span style="color: #cc241d;">(</span>name<span style="color: #cc241d;">)</span>;
+
+        np-&gt;next = hashtab<span style="color: #cc241d;">[</span>hashval<span style="color: #cc241d;">]</span>;
+
+        hashtab<span style="color: #cc241d;">[</span>hashval<span style="color: #cc241d;">]</span> = np;
+
+    <span style="color: #fb4934;">}</span> <span style="color: #fb4934;">else</span>      <span style="color: #928374;">/* </span><span style="color: #928374;">already there</span><span style="color: #928374;"> */</span>
+
+        free<span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span><span style="color: #fabd2f;">void</span> *<span style="color: #cc241d;">)</span> np-&gt;defn<span style="color: #fb4934;">)</span>;  <span style="color: #928374;">/* </span><span style="color: #928374;">free previous defn</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span>np-&gt;defn = strdup<span style="color: #fe8019;">(</span>defn<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #fb4934;">)</span>
+
+        <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;
+
+    <span style="color: #fb4934;">return</span> np;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga1a9698" class="outline-2">
+<h2 id="orga1a9698">Input and Output</h2>
+<div class="outline-text-2" id="text-orga1a9698">
+</div>
+<div id="outline-container-orgce0a91a" class="outline-3">
+<h3 id="orgce0a91a">Command Execution</h3>
+<div class="outline-text-3" id="text-orgce0a91a">
+<p>
+The function `system(char* s)` executes the commands contained in the character string `s`, then resumes execution of the current program.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C">system<span style="color: #fe8019;">(</span><span style="color: #b8bb26;">"date"</span><span style="color: #fe8019;">)</span>;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2d512ec" class="outline-3">
+<h3 id="org2d512ec">Storage Management</h3>
+<div class="outline-text-3" id="text-org2d512ec">
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span>* <span style="color: #b8bb26;">malloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">n</span><span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">returns a pointer to n bytes of uninitialized storage</span>
+<span style="color: #fabd2f;">void</span>* <span style="color: #b8bb26;">calloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">n</span>, <span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">size</span><span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">returns a pointer to enough space for an array of n objects of the specified size. </span>
+<span style="color: #b8bb26;">free</span><span style="color: #fe8019;">(</span>p<span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">frees the space appointed to p where p was originally obtained by calling malloc or calloc.</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0844fac" class="outline-2">
+<h2 id="org0844fac">The UNIX System Interface</h2>
+<div class="outline-text-2" id="text-org0844fac">
+</div>
+<div id="outline-container-org879ad15" class="outline-3">
+<h3 id="org879ad15">Open, Creat, Close, Unlink</h3>
+<div class="outline-text-3" id="text-org879ad15">
+<p>
+Other than the default standard input, output and error, you must explicitly open files in order to read or write them (such as with I/O manipulation with external hardware).
+</p>
+
+<p>
+There is a limit (often about 20) on the number of files that a program may have open simultaneously.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgeaa7b49" class="outline-3">
+<h3 id="orgeaa7b49">Random Access - Lseek</h3>
+<div class="outline-text-3" id="text-orgeaa7b49">
+<p>
+When necessary, a file can be read or written in any arbitrary order. The system call `lseek` provides a way to move around in a file without reading or writing any data:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">long</span> <span style="color: #b8bb26;">lseek</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">fd</span>, <span style="color: #fabd2f;">long</span> <span style="color: #83a598;">offset</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">origin</span><span style="color: #fe8019;">)</span>;
+</pre>
+</div>
+
+<p>
+`lseek` sets the position in the file whose descriptor is given. Subsequent reads and write will start at this point.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfcb21b9" class="outline-3">
+<h3 id="orgfcb21b9">Example - A Storage Allocator</h3>
+<div class="outline-text-3" id="text-orgfcb21b9">
+<p>
+This example creates a memory allocator that allows for non-continuous and/or segmented memory allocation as shown in Figure \ref{fig:storageexample}.
+</p>
+
+<p>
+![An example of how the storage allocator will work \label{fig:storageexample}](<img src="https://learning.oreilly.com/library/view/the-c-programming/9780133086249/graphics/f0185_01.jpg" alt="f0185_01.jpg">).
+</p>
+
+<p>
+`freep` is a list of pointers to the start of free areas of memory. The list contains structures of the form:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">typedef</span> <span style="color: #fabd2f;">long</span> <span style="color: #fabd2f;">Align</span>;  <span style="color: #928374;">/* </span><span style="color: #928374;">for alignment to long boundary</span><span style="color: #928374;"> */</span>
+
+
+
+<span style="color: #fb4934;">union</span> <span style="color: #fabd2f;">header</span> <span style="color: #fe8019;">{</span>       <span style="color: #928374;">/* </span><span style="color: #928374;">block header:</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fb4934;">struct</span> <span style="color: #fb4934;">{</span>
+
+        <span style="color: #fb4934;">union</span> <span style="color: #fabd2f;">header</span> *<span style="color: #83a598;">ptr</span>; <span style="color: #928374;">/* </span><span style="color: #928374;">next block if on free list</span><span style="color: #928374;"> */</span>
+
+        <span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">size</span>;     <span style="color: #928374;">/* </span><span style="color: #928374;">size of this block</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fb4934;">}</span> <span style="color: #83a598;">s</span>;
+
+    <span style="color: #fabd2f;">Align</span> <span style="color: #83a598;">x</span>;         <span style="color: #928374;">/* </span><span style="color: #928374;">force alignment of blocks</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fe8019;">}</span>;
+
+
+
+<span style="color: #fb4934;">typedef</span> <span style="color: #fb4934;">union</span> <span style="color: #fabd2f;">header</span> <span style="color: #fabd2f;">Header</span>;
+</pre>
+</div>
+
+<p>
+The overridden `malloc` method has the form of:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fb4934;">static</span> <span style="color: #fabd2f;">Header</span> <span style="color: #83a598;">base</span>;       <span style="color: #928374;">/* </span><span style="color: #928374;">empty list to get started</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fb4934;">static</span> <span style="color: #fabd2f;">Header</span> *<span style="color: #83a598;">freep</span> = <span style="color: #d3869b;">NULL</span>;     <span style="color: #928374;">/* </span><span style="color: #928374;">start of free list</span><span style="color: #928374;"> */</span>
+
+
+
+<span style="color: #928374;">/* </span><span style="color: #928374;">malloc:  general-purpose storage allocator</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fabd2f;">void</span> *<span style="color: #b8bb26;">malloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">nbytes</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fabd2f;">Header</span> *<span style="color: #83a598;">p</span>, *<span style="color: #83a598;">prevp</span>;
+
+    <span style="color: #fabd2f;">Header</span> *<span style="color: #b8bb26;">morecore</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">unsigned</span><span style="color: #fb4934;">)</span>;
+
+    <span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">nunits</span>;
+
+
+
+    nunits = <span style="color: #fb4934;">(</span>nbytes+<span style="color: #fb4934;">sizeof</span><span style="color: #cc241d;">(</span>Header<span style="color: #cc241d;">)</span>&#8722;<span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #fb4934;">)</span>/<span style="color: #fb4934;">sizeof</span><span style="color: #fb4934;">(</span>Header<span style="color: #fb4934;">)</span> + <span style="color: #d3869b; font-weight: bold;">1</span>;
+
+    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span>prevp = freep<span style="color: #cc241d;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>  <span style="color: #928374;">/* </span><span style="color: #928374;">no free list yet</span><span style="color: #928374;"> */</span>
+
+        base.s.ptr = freep = prevp = &amp;base;
+
+        base.s.size = <span style="color: #d3869b; font-weight: bold;">0</span>;
+
+    <span style="color: #fb4934;">}</span>
+
+    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>p = prevp-&gt;s.ptr; ; prevp = p, p = p-&gt;s.ptr<span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>
+
+        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>p-&gt;s.size &gt;= nunits<span style="color: #cc241d;">)</span> <span style="color: #cc241d;">{</span>    <span style="color: #928374;">/* </span><span style="color: #928374;">big enough</span><span style="color: #928374;"> */</span>
+
+            <span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>p-&gt;s.size == nunits<span style="color: #fe8019;">)</span>     <span style="color: #928374;">/* </span><span style="color: #928374;">exactly</span><span style="color: #928374;"> */</span>
+
+                prevp-&gt;s.ptr = p-&gt;s.ptr;
+
+            <span style="color: #fb4934;">else</span> <span style="color: #fe8019;">{</span>             <span style="color: #928374;">/* </span><span style="color: #928374;">allocate tail end</span><span style="color: #928374;"> */</span>
+
+                p-&gt;s.size -= nunits;
+
+                p += p-&gt;s.size;
+
+                p-&gt;s.size = nunits;
+
+            <span style="color: #fe8019;">}</span>
+
+            freep = prevp;
+
+            <span style="color: #fb4934;">return</span> <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> *<span style="color: #fe8019;">)(</span>p+<span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #fe8019;">)</span>;
+
+        <span style="color: #cc241d;">}</span>
+
+        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>p == freep<span style="color: #cc241d;">)</span>  <span style="color: #928374;">/* </span><span style="color: #928374;">wrapped around free list</span><span style="color: #928374;"> */</span>
+
+            <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span><span style="color: #fe8019;">(</span>p = morecore<span style="color: #fb4934;">(</span>nunits<span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #cc241d;">)</span>
+
+                <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;   <span style="color: #928374;">/* </span><span style="color: #928374;">none left</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fb4934;">}</span>
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+Where `morecore` is used to obtain more storage from the operating system.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span>    <span style="color: #83a598;">NALLOC</span>    <span style="color: #d3869b; font-weight: bold;">1024</span>    <span style="color: #928374;">/* </span><span style="color: #928374;">minimum #units to request</span><span style="color: #928374;"> */</span>
+
+
+
+<span style="color: #928374;">/* </span><span style="color: #928374;">morecore:  ask system for more memory</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fb4934;">static</span> <span style="color: #fabd2f;">Header</span> *<span style="color: #b8bb26;">morecore</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">nu</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">cp</span>, *<span style="color: #b8bb26;">sbrk</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span>;
+
+    <span style="color: #fabd2f;">Header</span> *<span style="color: #83a598;">up</span>;
+
+
+
+    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>nu &lt; <span style="color: #d3869b;">NALLOC</span><span style="color: #fb4934;">)</span>
+
+        nu = <span style="color: #d3869b;">NALLOC</span>;
+
+    cp = sbrk<span style="color: #fb4934;">(</span>nu * <span style="color: #fb4934;">sizeof</span><span style="color: #cc241d;">(</span>Header<span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>;
+
+    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>cp == <span style="color: #cc241d;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #cc241d;">)</span> &#8722;<span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #fb4934;">)</span>    <span style="color: #928374;">/* </span><span style="color: #928374;">no space at all</span><span style="color: #928374;"> */</span>
+
+        <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;
+
+    up = <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">Header</span> *<span style="color: #fb4934;">)</span> cp;
+
+    up-&gt;s.size = nu;
+
+    free<span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span><span style="color: #fabd2f;">void</span> *<span style="color: #cc241d;">)(</span>up+<span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>;
+
+    <span style="color: #fb4934;">return</span> freep;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+`free` is the last thing. It scans the free list looking for the place to insert the free block. This is either between two existing blocks or at one end of the list. In any case, if th block being freed is adjacent to either neighbor, the adjacent blocks are combined.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">free:  put block ap in free list</span><span style="color: #928374;"> */</span>
+
+<span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">free</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> *<span style="color: #83a598;">ap</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fe8019;">{</span>
+
+    <span style="color: #fabd2f;">Header</span> *<span style="color: #83a598;">bp</span>, *<span style="color: #83a598;">p</span>;
+
+
+
+    bp = <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">Header</span> *<span style="color: #fb4934;">)</span>ap - <span style="color: #d3869b; font-weight: bold;">1</span>;    <span style="color: #928374;">/* </span><span style="color: #928374;">point to block header</span><span style="color: #928374;"> */</span>
+
+    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>p = freep; <span style="color: #ebdbb2; font-weight: bold;">!</span><span style="color: #cc241d;">(</span>bp &gt; p &amp;&amp; bp &lt; p-&gt;s.ptr<span style="color: #cc241d;">)</span>; p = p-&gt;s.ptr<span style="color: #fb4934;">)</span>
+
+        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>p &gt;= p-&gt;s.ptr &amp;&amp; <span style="color: #cc241d;">(</span>bp &gt; p &#166;&#166; bp &lt; p-&gt;s.ptr<span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>
+
+            <span style="color: #fb4934;">break</span>;  <span style="color: #928374;">/* </span><span style="color: #928374;">freed block at start or end of arena</span><span style="color: #928374;"> */</span>
+
+
+
+    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>bp + bp-&gt;s.size == p-&gt;s.ptr<span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span> <span style="color: #928374;">/* </span><span style="color: #928374;">join to upper nbr</span><span style="color: #928374;"> */</span>
+
+        bp-&gt;s.size += p-&gt;s.ptr-&gt;s.size;
+
+        bp-&gt;s.ptr = p-&gt;s.ptr-&gt;s.ptr;
+
+    <span style="color: #fb4934;">}</span> <span style="color: #fb4934;">else</span>
+
+        bp-&gt;s.ptr = p-&gt;s.ptr;
+
+    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>p + p-&gt;s.size == bp<span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>         <span style="color: #928374;">/* </span><span style="color: #928374;">join to lower nbr</span><span style="color: #928374;"> */</span>
+
+        p-&gt;s.size += bp-&gt;s.size;
+
+        p-&gt;s.ptr = bp-&gt;s.ptr;
+
+    <span style="color: #fb4934;">}</span> <span style="color: #fb4934;">else</span>
+
+        p-&gt;s.ptr = bp;
+
+    freep = p;
+
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://alexb7711.github.io/2020-04-30-The-C-Programming-Language-Notes.html</link>
+  <pubDate>Mon, 17 May 2021 13:43:00 -0600</pubDate>
+</item>
+<item>
+  <title><![CDATA[Using =stow= To Manage Your Dotfiles]]></title>
+  <description><![CDATA[
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0160cd2">What is <code>stow</code>?</a>
+<ul>
+<li><a href="#org5b94fbf">Example 1</a></li>
+<li><a href="#orgdcbfc23">Example 2</a></li>
+</ul>
+</li>
+<li><a href="#orgb590034">My <code>stow</code> Workflow</a></li>
+</ul>
+</div>
+</nav>
+<p>
+A few weeks ago I made a post about keeping track of your dotfiles using <code>rsync</code>. While not a horrible way to do it, there is a <b><b>way</b></b> better way of handling it using <code>stow</code>. I first heard about it here on [Wolfgang&rsquo;s Channel](<a href="https://www.youtube.com/watch?v=MJBVA4LeJKA">https://www.youtube.com/watch?v=MJBVA4LeJKA</a>). It took me a second to get a real grasp for it, but it is pretty straight forward.
+</p>
+
+<p>
+This post is going to talk about what stow is and how I currently use it.
+</p>
+
+<div id="outline-container-org0160cd2" class="outline-2">
+<h2 id="org0160cd2">What is <code>stow</code>?</h2>
+<div class="outline-text-2" id="text-org0160cd2">
+<p>
+Pulling this quote directly from the <a href="https://www.youtube.com/watch?v=MJBVA4LeJKA">GNU page</a>:
+</p>
+
+<blockquote>
+<p>
+GNU Stow is a symlink farm manager which takes distinct packages of software and/or data located in separate directories on the filesystem, and makes them appear to be installed in the same place. For example, /usr/local/bin could contain symlinks to files within /usr/local/stow/emacs/bin, /usr/local/stow/perl/bin etc., and likewise recursively for any other subdirectories such as &#x2026;/share, &#x2026;/man, and so on.
+</p>
+
+<p>
+This is particularly useful for keeping track of system-wide and per-user installations of software built from source, but can also facilitate a more controlled approach to management of configuration files in the user&rsquo;s home directory, especially when coupled with version control systems.
+</p>
+
+<p>
+Stow is implemented as a combination of a Perl script providing a CLI interface, and a backend Perl module which does most of the work. Stow is Free Software, licensed under the GNU General Public License.
+</p>
+
+<p>
+In other words, it symlinks the desired file based of a starting directory and the path dictated by the file tree created for the file. If that doesn&rsquo;t make sense, don&rsquo;t worry. Take a look at the following examples and it will make more sense.
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-org5b94fbf" class="outline-3">
+<h3 id="org5b94fbf">Example 1</h3>
+<div class="outline-text-3" id="text-org5b94fbf">
+<p>
+You have a vimrc file in <code>~/.vimrc</code>. You want to symlink that. So you have a git repository that you cloned in <code>~/Code/dotfiles</code>. If you want to keep track of your vimrc file, what you do is first do is create a directory called vim (or whatever else you want to call it) in your dotfiles directory. After doing so, move your vimrc into the vim directory you just created. Now, if you type <code>stow ~/ vim</code> while you are in the dotfiles directory you will symlink you vimrc to <code>~/.vimrc</code>.
+</p>
+
+<p>
+The <code>-t</code> flag sets that starting location for where you want the symlink to propagate from. So from the point of view from <code>stow</code> you are looking in the directory <code>vim</code> that has the path <code>.vimrc</code>. Since you are starting from <code>~/</code> you will symlink the <code>.vimrc</code> file to <code>~/.vimrc</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdcbfc23" class="outline-3">
+<h3 id="orgdcbfc23">Example 2</h3>
+<div class="outline-text-3" id="text-orgdcbfc23">
+<p>
+You have a config file <code>~/.config/nvim/init.vim</code> that you want to keep track of. Following the steps from the previous example, you create a directory called <code>nvim</code> in your dotfiles and create a file structure <code>nvim/.config/nvim/</code>. Copy the init.vim file so you have the structure <code>nvim/.config/nvim/init.vim'. To symlink this file you type =stow -t ~/ nvim</code>.
+</p>
+
+<p>
+Again, from the point of view of <code>stow</code>, you are linking the path <code>.config/nvim/init.vim</code> starting at <code>~/</code> creating the link <code>~/.config/nvim/init.vim</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb590034" class="outline-2">
+<h2 id="orgb590034">My <code>stow</code> Workflow</h2>
+<div class="outline-text-2" id="text-orgb590034">
+<p>
+As a TL;DR, my workflow is essentially what I described above. The only difference is that I have a script that has all the name of the directories appended to the stow command. The only difference is that I also keep track of my packages in a different script by running <code>pacman -Qqe &gt; PackageList.txt</code> which creates a list of all the packages you installed in such a way that you can use it as an input to pacman later on. So at the end of the day, you have a little scrip that looks like the following:
+</p>
+
+<p>
+<code>setConfig.sh</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #928374;">#</span><span style="color: #928374;">!/bin/</span><span style="color: #fb4934;">sh</span>
+
+stow -t ~/ aliasrc dunst <span style="color: #fabd2f;">git</span> Xmodmap zshenv compton env nvim shortcutrc zsh xinitrc rofi mbsync notmuch mutt password-store gnupg ncspot vifm
+</pre>
+</div>
+
+<p>
+<code>updatePackages.sh</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">pacman -Qqe &gt; PackageList.txt
+</pre>
+</div>
+</div>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://alexb7711.github.io/2020-04-08-Using-stow-To-Manage-Your-Dotfiles.html</link>
+  <pubDate>Mon, 17 May 2021 13:43:00 -0600</pubDate>
+</item>
+<item>
+  <title><![CDATA[Markdown Live Preview Without Vim Pluggins]]></title>
+  <description><![CDATA[
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orga3fd747">Introduction</a></li>
+<li><a href="#org188864b">pandoc</a></li>
+<li><a href="#orgc2bc311">Compile Script</a></li>
+<li><a href="#org8e4cbcb">Tying this all together with Vim</a></li>
+</ul>
+</div>
+</nav>
+
+<div id="outline-container-orga3fd747" class="outline-2">
+<h2 id="orga3fd747">Introduction</h2>
+<div class="outline-text-2" id="text-orga3fd747">
+<p>
+Markdown is an extremely quick and convenient way to jot down notes, draft up a quick styled paper, or even with the yaml metada block for pandoc markdown write a full paper. During college I went through a few markdown applications that auto-generated the markdown on the fly, managed your notes into a tree structure for you, or had auto complete commands. I even tried using Vim for a while, but gave up on it for a while. Recently I have rekindled my affinity for Vim because of work and decided to give note taking through Vim another shot. Needless to say that it went well because this post exists.
+</p>
+
+<p>
+If you don&rsquo;t know the basics of Markdown, you can refer to <a href="https://www.markdownguide.org/getting-started">this link</a>. Other than that, the configuration I will show you in this post utilizes: Linux, pandoc, Vim, and Zathura (or whatever other pdf tool you would like to use). Using these tools we will create a quick and easy way to compile your markdown files (which can also be extended to any file type), and view our formatted pdf document generated by our markdown file on the fly!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org188864b" class="outline-2">
+<h2 id="org188864b">pandoc</h2>
+<div class="outline-text-2" id="text-org188864b">
+<p>
+Very simply pandoc is a file converter. You can convert LaTeX files into html files, pdf files, or whatever other file type pandoc supports. This is a similar case to markdown. A typical conversion from markdown to pdf using pandoc would be:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">pandoc markdown.md -o pdf.pdf
+</pre>
+</div>
+
+<p>
+Which takes a markdown file called &ldquo;markdown&rdquo; and creates a pdf file called &ldquo;pdf&rdquo;.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc2bc311" class="outline-2">
+<h2 id="orgc2bc311">Compile Script</h2>
+<div class="outline-text-2" id="text-orgc2bc311">
+<p>
+This is the glue that will make the compiling a breeze. Create a document called &ldquo;compile&rdquo; and insert the following code:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #928374;">#</span><span style="color: #928374;">!/bin/</span><span style="color: #fb4934;">sh</span>
+
+<span style="color: #83a598;">file</span>=$<span style="color: #fe8019;">(</span>readlink -f <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">1</span><span style="color: #b8bb26;">"</span><span style="color: #fe8019;">)</span>
+<span style="color: #83a598;">dir</span>=$<span style="color: #fe8019;">(</span>dirname <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">file</span><span style="color: #b8bb26;">"</span><span style="color: #fe8019;">)</span>
+<span style="color: #83a598;">base</span>=<span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">{file%.*}</span><span style="color: #b8bb26;">"</span>
+<span style="color: #83a598;">shebang</span>=$<span style="color: #fe8019;">(</span>sed -n 1p <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">file</span><span style="color: #b8bb26;">"</span><span style="color: #fe8019;">)</span>
+
+<span style="color: #fabd2f;">cd</span> <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">dir</span><span style="color: #b8bb26;">"</span> || <span style="color: #fb4934;">exit</span>
+
+<span style="color: #fb4934;">case</span> <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">file</span><span style="color: #b8bb26;">"</span><span style="color: #fb4934;"> in</span>
+    *.md) pandoc <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">file</span><span style="color: #b8bb26;">"</span> -o <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">base</span><span style="color: #b8bb26;">"</span>.pdf;;
+<span style="color: #fb4934;">esac</span>
+</pre>
+</div>
+
+<p>
+All this script does is when it is passed a file it will run a certain command based on the file extension. In this case it runs a pandoc command similar to the one shown above.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8e4cbcb" class="outline-2">
+<h2 id="org8e4cbcb">Tying this all together with Vim</h2>
+<div class="outline-text-2" id="text-org8e4cbcb">
+<p>
+Now we want a quick and easy way to run this command and pass the file we are editing from Vim. Fortunately, this is easy enough! Copy the following command into your .vimrc:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-vim">nnoremap &lt;leader&gt;c :silent execute '!~/[path]/[to]/[script]/compile %:p' &lt;bar&gt; :redraw! &lt;Enter&gt;
+</pre>
+</div>
+
+<p>
+This command remaps &ldquo;\\+c&rdquo; to run the compile script and then pop you right back into Vim. To be able to view your pdf change as you compile it, you can open the pdf with zathura, or whatever is your favorite pdf viewer.
+</p>
+</div>
+</div>
+<div class="taglist"></div>]]></description>
+  <link>https://alexb7711.github.io/2020-02-10-Markdown-Live-Preview-Without-Vim-Pluggins.html</link>
+  <pubDate>Mon, 17 May 2021 13:43:00 -0600</pubDate>
+</item>
+</channel>
+</rss>

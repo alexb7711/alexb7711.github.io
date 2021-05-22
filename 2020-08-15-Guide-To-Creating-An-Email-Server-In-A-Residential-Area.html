@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Preview markdown without pluggins in vim">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://alexb7711.github.io/rss.xml"
+      title="RSS feed for https://alexb7711.github.io">
+<title>A Guide To Hosting An Email Server In A Residential Area (Port 25 Blocked)</title>
+<meta name="author" content="Alex Brown">
+<meta name="referrer" content="no-referrer">
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
+<body>
+<div id="preamble" class="status"><div class="header">
+  <a href="https://alexb7711.github.io">Created with Emacs</a>
+</div></div>
+<div id="content">
+<div class="post-date">17 May 2021</div><h1 class="post-title"><a href="https://alexb7711.github.io/2020-08-15-Guide-To-Creating-An-Email-Server-In-A-Residential-Area.html">A Guide To Hosting An Email Server In A Residential Area (Port 25 Blocked)</a></h1>
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgbad52ff">Email Server Components</a>
+<ul>
+<li><a href="#orgca77c12">Postfix</a></li>
+<li><a href="#org5e31329">Dovecot</a></li>
+<li><a href="#orgbfe52c7">Spamassasin</a></li>
+<li><a href="#org8ada4e9">OpenDKIM</a></li>
+</ul>
+</li>
+<li><a href="#org92ba23c">Problem with Residential email servers</a>
+<ul>
+<li><a href="#orgd28b3dc">Borrowing SMTP server</a></li>
+<li><a href="#org803fc7a">Reroute incoming mail</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</nav>
+<p>
+&#x2014;
+</p>
+
+<p>
+If you are reading this, you have an extra PC, NAS, or raspberry pi that you are looking to make into a email server. Unfortunatelly, email servers are notoriously difficult to create. Fortunately enough, scripts have been created that more or less automate this process and stream lined a lot of it. Particularly, I nabbed a script off [Luke Smith](lukesmith.xyz) that installs and configures it for you. Unfortunately (again), if you are setting this server up in a residential area with residential email service you may have some difficulties outside of setting up the email server battling with your ISP (Internet Service Provider) due to blocked ports. Fortunately (again), there is a simple work around.
+</p>
+
+<p>
+Conceptually there is not that much to do, which is what this blog post is going to be about. The specifics will be left to the script, so if you are interested in learning how that works go read through that. It isn&rsquo;t earth shattering, but there are enough intricies that I am going to stick to borrowing the script when needed. What it boils down to is: install postfix, install dovecot, install spamassasin, install OpenDKIM, configure postfix to utilize SMTP, configure dovecot to connect to postfix and allow external connection for IMAP, link spamassasin, and hook up OpenDKIM. If you didn&rsquo;t get all that, don&rsquo;t worry. Each section will break down the components.
+</p>
+
+<p>
+The issue I came accross while setting up my email server is that my ISP (Internet Service Provider) was blocking port 25. Although I had a working email server, it was rendered useless because I couldn&rsquo;t send/receive email outside of my local network. This just requires some external help and minor tweaks on your end to get things moving smoothly.
+</p>
+
+<p>
+I&rsquo;ll also preface this by saying that the script README says that it is configured for VPS (Vitual Private Servers), but it worked great on my little 300$ hp pavillion makeshift server running Debian 10. Now to talk about each component.
+</p>
+
+<div id="outline-container-orgbad52ff" class="outline-2">
+<h2 id="orgbad52ff">Email Server Components</h2>
+<div class="outline-text-2" id="text-orgbad52ff">
+</div>
+<div id="outline-container-orgca77c12" class="outline-3">
+<h3 id="orgca77c12"><a href="http://www.postfix.org/">Postfix</a></h3>
+<div class="outline-text-3" id="text-orgca77c12">
+<p>
+As stated by <a href="https://en.wikipedia.org/wiki/Postfix_(software)">Wikipedia</a>:
+</p>
+
+<blockquote>
+<p>
+Postfix is a free and open-source mail transfer agent (MTA) that routes and delivers electronic mail.
+</p>
+</blockquote>
+
+<p>
+Or in other words, this is the guy that will send/receive mail to and from the outside world. It allows for <a href="https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol">SMTP</a> with <a href="https://en.wikipedia.org/wiki/Transport_Layer_Security">TLS</a> (which is what is enabled with this script), and allows for email to be encrypted (again if you want to know the specifics look at the script). This program is also the one who will send your mail down the chain to be saved once it has been grabbed. It has to work with Dovecot to know how to format it so you can access it with your email client and Spamassasin to know what sort of mail to keep and reject.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5e31329" class="outline-3">
+<h3 id="org5e31329"><a href="https://www.dovecot.org/">Dovecot</a></h3>
+<div class="outline-text-3" id="text-org5e31329">
+<blockquote>
+<p>
+Dovecot is an open source IMAP and POP3 email server for Linux/UNIX-like systems
+</p>
+</blockquote>
+
+<p>
+Basically, this is what you interface with to access your email through your email client. Again, it allows for encrypted connection and what not. It is also responsible for the structure of you mail folders. Say you have an Inbox, Junk, Sent, and Drafts folder. That is laid out with Dovecot. It also needs to know about Postfix in order to know where to grab it&rsquo;s mail from.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbfe52c7" class="outline-3">
+<h3 id="orgbfe52c7"><a href="https://spamassassin.apache.org/">Spamassasin</a></h3>
+<div class="outline-text-3" id="text-orgbfe52c7">
+<p>
+What it does is pretty self evident by the name. To be safe though here is a description via <a href="https://en.wikipedia.org/wiki/SpamAssassin">Wikipedia.</a>
+</p>
+
+<blockquote>
+<p>
+It uses a variety of spam-detection techniques, including DNS and fuzzy checksum techniques, Bayesian filtering, external programs, blacklists and online databases.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org8ada4e9" class="outline-3">
+<h3 id="org8ada4e9"><a href="http://opendkim.org/">OpenDKIM</a></h3>
+<div class="outline-text-3" id="text-org8ada4e9">
+<blockquote>
+<p>
+OpenDKIM is an open source implementation of the DKIM (Domain Keys Identified Mail) sender authentication system proposed by the E-mail Signing Technology Group (ESTG), now standardized by the IETF.
+</p>
+</blockquote>
+
+<p>
+In other words, it just signs your email in a way to show that is valid in such a way that big email servers (Like Gmail, Outlook, etc.) will accept your mail instead of tossing it to the side as spam.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org92ba23c" class="outline-2">
+<h2 id="org92ba23c">Problem with Residential email servers</h2>
+<div class="outline-text-2" id="text-org92ba23c">
+<p>
+Port 25 is blocked by a <b><b>lot</b></b> of ISPs. Why does that matter? Well, port 25 is what mail servers use to transfer email. That means that your email server is only good locally. There are two things you need to do in order to fix this problem:
+</p>
+
+<ol class="org-ol">
+<li>You need to borrow an SMTP server</li>
+<li>You need an external service to re-route your email to another port</li>
+</ol>
+
+<p>
+Maybe it isn&rsquo;t the best answer since you are probably trying to gain more independence and privacy on the internet, but it works amazingly.
+</p>
+</div>
+
+<div id="outline-container-orgd28b3dc" class="outline-3">
+<h3 id="orgd28b3dc">Borrowing SMTP server</h3>
+<div class="outline-text-3" id="text-orgd28b3dc">
+<p>
+The quick and easy way to get it up and running is to borrow Google&rsquo;s STMP servers. If you have an account, then you are all set to get this done. This also should work if your ISP supplies an SMTP server. You will just need the credentials for your ISP email account.
+</p>
+
+<p>
+First, create a file such as <code>/etc/postfix/sasl_passwd</code>. In that file you are going to type out:
+</p>
+
+<pre class="example">
+[mail.example.com]:587 user@example.com:passwd
+</pre>
+
+<p>
+where <code>mail.example.com</code> will be <code>smtp.gmail.com</code> if you are using gmail. Then supply your email address and password as shown. For the sake of security, and how almost all examples include, is to make this file only accessible to read or write via root. To do so type:
+</p>
+
+<pre class="example">
+chmod 0600 /etc/postfix/sasl_passwd
+</pre>
+
+<p>
+Then create a database for postfix to access by typing:
+</p>
+
+<pre class="example">
+postmap /etc/postfix/sasl_passwd
+</pre>
+
+<p>
+Now to configure postfix to read that map. Open <code>/etc/postfix/main.cf</code> and find/create the lines as follows:
+</p>
+
+<pre class="example">
+relayhost                  = [mail.example.com]:587
+smtp_sasl_auth_enable      = yes
+smtp_sasl_password_maps    = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = noanonymous
+smtp_tls_CApath            = /etc/ssl/certs
+smtp_use_tls               = yes
+</pre>
+
+<p>
+Restart postfix via <code>systemctl restart postfix</code> and try sending an email to yourself.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org803fc7a" class="outline-3">
+<h3 id="org803fc7a">Reroute incoming mail</h3>
+<div class="outline-text-3" id="text-org803fc7a">
+<p>
+If you are in a residential area, you most likely need a DDNS (Dynamic Domain Name System), personally I use [Dynu](dynu.com). It is free, and easy to set up. The only thing you need to do here is create an account, go to Dynamic DNS Service, click the add button, use one of the given DNS names or type in your own. If you opted to use your own domain name on the website you got your domain name from in your &ldquo;External Hosts&rdquo; record type in the ip address given to you by Dynu.
+</p>
+
+<p>
+First thing you need to do is to create a [rollernet.us](rollernet.us) account. Go to mail derives, select SMTP Redirection (Direct Connection) (I believe that is the one that I am using. At any rate, for free accounts, only one of the SMTP redirections work). Type in your domain, and under your destination server, type your domain name again. Under port, type something like 2525 (this is the port we are going to be redirecting mail to). Now you need to set permissions for what is allowed through. In the &ldquo;Mail Services&rdquo; base page there is a hyper link labeled &ldquo;valid user table&rdquo;, click that. For all domain names given, ensure that the &ldquo;Default Action&rdquo; is &ldquo;Allow&rdquo;. This will allow all data incoming on port 25 be moved to port 2525.
+</p>
+
+<p>
+Going back to the website you got your Domain name from. Under &ldquo;Email Services&rdquo; create two new entries with the &ldquo;Points to&rdquo; options filled out as <code>mail.rollernet.us</code> and <code>mail2.rollernet.us</code>.
+</p>
+
+<p>
+There are two ways you can make sure that you receive mail from this untraditional port in postfix. You can either redirect port 2525 back to port 25 on your router, or you can add the line
+</p>
+
+<pre class="example">
+2525 inet n - y - - smtpd
+	-o content_filter=spamassassin
+</pre>
+
+<p>
+After you complete all these configurations, give everything some time for all settings to take effect (those set for the DDNS and your domain name mostly). You should now be able to send and receive email from you home server! If you have any questions about the specific setup process, I&rsquo;d recommend watching <a href="https://videos.lukesmith.xyz/videos/watch/9eac5348-7cc0-491e-ac9d-8f2ba1e3e69f">Luke Smith&rsquo;s Video about setting up an email server with his script</a>. Again, all these changes are built off of the changes made by that script.
+</p>
+
+<p>
+Thank you for reading, and happy emailing!
+</p>
+</div>
+</div>
+</div>
+<div class="taglist"></div></div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="https://alexb7711.github.io/archive.html">Other posts</a>
+</div></div>
+</body>
+</html>

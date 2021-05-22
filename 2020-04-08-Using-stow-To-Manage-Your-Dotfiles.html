@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="An easy way to keep deploy your dotfiles">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://alexb7711.github.io/rss.xml"
+      title="RSS feed for https://alexb7711.github.io">
+<title>Using =stow= To Manage Your Dotfiles</title>
+<meta name="author" content="Alex Brown">
+<meta name="referrer" content="no-referrer">
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
+<body>
+<div id="preamble" class="status"><div class="header">
+  <a href="https://alexb7711.github.io">Created with Emacs</a>
+</div></div>
+<div id="content">
+<div class="post-date">17 May 2021</div><h1 class="post-title"><a href="https://alexb7711.github.io/2020-04-08-Using-stow-To-Manage-Your-Dotfiles.html">Using =stow= To Manage Your Dotfiles</a></h1>
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org0160cd2">What is <code>stow</code>?</a>
+<ul>
+<li><a href="#org5b94fbf">Example 1</a></li>
+<li><a href="#orgdcbfc23">Example 2</a></li>
+</ul>
+</li>
+<li><a href="#orgb590034">My <code>stow</code> Workflow</a></li>
+</ul>
+</div>
+</nav>
+<p>
+A few weeks ago I made a post about keeping track of your dotfiles using <code>rsync</code>. While not a horrible way to do it, there is a <b><b>way</b></b> better way of handling it using <code>stow</code>. I first heard about it here on [Wolfgang&rsquo;s Channel](<a href="https://www.youtube.com/watch?v=MJBVA4LeJKA">https://www.youtube.com/watch?v=MJBVA4LeJKA</a>). It took me a second to get a real grasp for it, but it is pretty straight forward.
+</p>
+
+<p>
+This post is going to talk about what stow is and how I currently use it.
+</p>
+
+<div id="outline-container-org0160cd2" class="outline-2">
+<h2 id="org0160cd2">What is <code>stow</code>?</h2>
+<div class="outline-text-2" id="text-org0160cd2">
+<p>
+Pulling this quote directly from the <a href="https://www.youtube.com/watch?v=MJBVA4LeJKA">GNU page</a>:
+</p>
+
+<blockquote>
+<p>
+GNU Stow is a symlink farm manager which takes distinct packages of software and/or data located in separate directories on the filesystem, and makes them appear to be installed in the same place. For example, /usr/local/bin could contain symlinks to files within /usr/local/stow/emacs/bin, /usr/local/stow/perl/bin etc., and likewise recursively for any other subdirectories such as &#x2026;/share, &#x2026;/man, and so on.
+</p>
+
+<p>
+This is particularly useful for keeping track of system-wide and per-user installations of software built from source, but can also facilitate a more controlled approach to management of configuration files in the user&rsquo;s home directory, especially when coupled with version control systems.
+</p>
+
+<p>
+Stow is implemented as a combination of a Perl script providing a CLI interface, and a backend Perl module which does most of the work. Stow is Free Software, licensed under the GNU General Public License.
+</p>
+
+<p>
+In other words, it symlinks the desired file based of a starting directory and the path dictated by the file tree created for the file. If that doesn&rsquo;t make sense, don&rsquo;t worry. Take a look at the following examples and it will make more sense.
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-org5b94fbf" class="outline-3">
+<h3 id="org5b94fbf">Example 1</h3>
+<div class="outline-text-3" id="text-org5b94fbf">
+<p>
+You have a vimrc file in <code>~/.vimrc</code>. You want to symlink that. So you have a git repository that you cloned in <code>~/Code/dotfiles</code>. If you want to keep track of your vimrc file, what you do is first do is create a directory called vim (or whatever else you want to call it) in your dotfiles directory. After doing so, move your vimrc into the vim directory you just created. Now, if you type <code>stow ~/ vim</code> while you are in the dotfiles directory you will symlink you vimrc to <code>~/.vimrc</code>.
+</p>
+
+<p>
+The <code>-t</code> flag sets that starting location for where you want the symlink to propagate from. So from the point of view from <code>stow</code> you are looking in the directory <code>vim</code> that has the path <code>.vimrc</code>. Since you are starting from <code>~/</code> you will symlink the <code>.vimrc</code> file to <code>~/.vimrc</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdcbfc23" class="outline-3">
+<h3 id="orgdcbfc23">Example 2</h3>
+<div class="outline-text-3" id="text-orgdcbfc23">
+<p>
+You have a config file <code>~/.config/nvim/init.vim</code> that you want to keep track of. Following the steps from the previous example, you create a directory called <code>nvim</code> in your dotfiles and create a file structure <code>nvim/.config/nvim/</code>. Copy the init.vim file so you have the structure <code>nvim/.config/nvim/init.vim'. To symlink this file you type =stow -t ~/ nvim</code>.
+</p>
+
+<p>
+Again, from the point of view of <code>stow</code>, you are linking the path <code>.config/nvim/init.vim</code> starting at <code>~/</code> creating the link <code>~/.config/nvim/init.vim</code>.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb590034" class="outline-2">
+<h2 id="orgb590034">My <code>stow</code> Workflow</h2>
+<div class="outline-text-2" id="text-orgb590034">
+<p>
+As a TL;DR, my workflow is essentially what I described above. The only difference is that I have a script that has all the name of the directories appended to the stow command. The only difference is that I also keep track of my packages in a different script by running <code>pacman -Qqe &gt; PackageList.txt</code> which creates a list of all the packages you installed in such a way that you can use it as an input to pacman later on. So at the end of the day, you have a little scrip that looks like the following:
+</p>
+
+<p>
+<code>setConfig.sh</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-shell"><span style="color: #928374;">#</span><span style="color: #928374;">!/bin/</span><span style="color: #fb4934;">sh</span>
+
+stow -t ~/ aliasrc dunst <span style="color: #fabd2f;">git</span> Xmodmap zshenv compton env nvim shortcutrc zsh xinitrc rofi mbsync notmuch mutt password-store gnupg ncspot vifm
+</pre>
+</div>
+
+<p>
+<code>updatePackages.sh</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-shell">pacman -Qqe &gt; PackageList.txt
+</pre>
+</div>
+</div>
+</div>
+<div class="taglist"></div></div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="https://alexb7711.github.io/archive.html">Other posts</a>
+</div></div>
+</body>
+</html>

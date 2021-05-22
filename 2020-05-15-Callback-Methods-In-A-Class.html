@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="simple way to make callbacks in c++">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://alexb7711.github.io/rss.xml"
+      title="RSS feed for https://alexb7711.github.io">
+<title>Simple Callback Methods In C++</title>
+<meta name="author" content="Alex Brown">
+<meta name="referrer" content="no-referrer">
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
+<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
+<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
+<body>
+<div id="preamble" class="status"><div class="header">
+  <a href="https://alexb7711.github.io">Created with Emacs</a>
+</div></div>
+<div id="content">
+<div class="post-date">17 May 2021</div><h1 class="post-title"><a href="https://alexb7711.github.io/2020-05-15-Callback-Methods-In-A-Class.html">Simple Callback Methods In C++</a></h1>
+<nav id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org52aa8a9">Callbacks</a></li>
+<li><a href="#org6593c28">Why Would You Want To Use A Callback?&rsquo;&rsquo;</a></li>
+<li><a href="#org12a7466">A Simple Example</a></li>
+<li><a href="#org5f37203">Shortcomings</a></li>
+<li><a href="#orga4e85c0">My Problem That Was Fixed With Callbacks</a></li>
+<li><a href="#orge83e4a9">References</a></li>
+</ul>
+</div>
+</nav>
+<p>
+I have been spending a lot of time as of late creating a small framework for developing games. It is in an extreme infancy still, but it has given me a lot of chances to practice and learn a lot of new techniques. One of the things I&rsquo;ve always known about that would be useful are callback methods, but I never really had the time to implement it up until today. The concept is not to difficult to understand (we will go into how it works later), but the actual application is a little more complicated. Not by much, but enough to give me a hard time for a few hours.
+</p>
+
+<p>
+To start, lets cover what a callback method is and how it can be used to your advantage.
+</p>
+
+<div id="outline-container-org52aa8a9" class="outline-2">
+<h2 id="org52aa8a9">Callbacks</h2>
+<div class="outline-text-2" id="text-org52aa8a9">
+<p>
+A callback is a piece of code that is used to execute (call back) a specified argument. In other words, if you pass a pointer of a function (foo) to another function (bar) as an argument and execute it, then the function pointer (foo) is a callback. As stated on [GeeksForGeeks](<a href="https://www.geeksforgeeks.org/">https://www.geeksforgeeks.org/</a>).
+</p>
+
+<p>
+&gt; In C, a callback function is a function that is called through a function pointer.
+</p>
+
+<p>
+That is specific enough for our purpose right now. If you would like read more about Callbacks, here is a link to [Wikipedia](<a href="https://en.wikipedia.org/wiki/Callback_(computer_programming)">https://en.wikipedia.org/wiki/Callback_(computer_programming)</a>).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6593c28" class="outline-2">
+<h2 id="org6593c28">Why Would You Want To Use A Callback?&rsquo;&rsquo;</h2>
+<div class="outline-text-2" id="text-org6593c28">
+<p>
+As will all things, it is situational as to why you would like to use it. It doesn&rsquo;t solve all your problems, but it does make a lot of tasks quite easy. It is useful when you can make generic code that can apply different logic. Now what do I mean by that? For example in &ldquo;[The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>)&rdquo; the example they give is a single method that can be used to call different types of sorting methods. They use the same call to sort, but apply different sorting methods on the same bit of data.
+</p>
+
+<p>
+Another more useful (but more complex) reason to use callbacks are in the case of message driven applications. In this case, you have a bunch of methods that have the parameters of the form:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #b8bb26;">foo</span><span style="color: #fe8019;">(</span>std::string message, <span style="color: #fabd2f;">void</span>* <span style="color: #83a598;">data</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+stored as a list. Every time you have an event occur, you can send out a message of certain type and pass the data. The callback handler will simply loop through the entire list of callback functions and attempt to pass the data to them. If the method is of the type <code>message</code>, then it will accept the data. Now because the data is passed in as a type <code>void*</code>, it can then be cast to any type.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org12a7466" class="outline-2">
+<h2 id="org12a7466">A Simple Example</h2>
+<div class="outline-text-2" id="text-org12a7466">
+<p>
+Below is a simple class that uses a callback to count to 10. To start, you can see that we have a method called <code>callback(int count)</code> that all that it knows is to print the integer that it gets if it is smaller than 10. <code>caller(void (Foo::*fnc)(int))</code> is the function that is going to be providing the values to <code>callback</code>, and <code>run()</code> is just the driving code that will be called from <code>main()</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">cstdio</span><span style="color: #fe8019;">&gt;</span>
+
+<span style="color: #fb4934;">class</span> <span style="color: #fabd2f;">Foo</span>
+<span style="color: #fe8019;">{</span>
+    <span style="color: #fb4934;">public</span>:
+    <span style="color: #b8bb26;">Foo</span><span style="color: #fb4934;">()</span>
+    <span style="color: #fb4934;">{}</span>
+
+    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">callback</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">count</span><span style="color: #fb4934;">)</span>
+    <span style="color: #fb4934;">{</span>
+        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>count &gt; <span style="color: #d3869b; font-weight: bold;">10</span><span style="color: #cc241d;">)</span> <span style="color: #fb4934;">return</span>;
+        printf<span style="color: #cc241d;">(</span><span style="color: #b8bb26;">"%d\n"</span>, count++<span style="color: #cc241d;">)</span>;
+    <span style="color: #fb4934;">}</span>
+
+    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #cc241d;">(</span><span style="color: #d3869b;">Foo</span>::*<span style="color: #fabd2f;">fnc</span><span style="color: #cc241d;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>
+    <span style="color: #fb4934;">{</span>
+        <span style="color: #fb4934;">for</span> <span style="color: #cc241d;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span> = <span style="color: #d3869b; font-weight: bold;">1</span>; i &lt; <span style="color: #d3869b; font-weight: bold;">12</span>; ++i<span style="color: #cc241d;">)</span>
+            <span style="color: #cc241d;">(</span><span style="color: #fb4934;">this</span>-&gt;*fnc<span style="color: #cc241d;">)(</span>i<span style="color: #cc241d;">)</span>;
+    <span style="color: #fb4934;">}</span>
+
+    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">run</span><span style="color: #fb4934;">()</span>
+    <span style="color: #fb4934;">{</span>
+        caller<span style="color: #cc241d;">(</span>&amp;<span style="color: #d3869b;">Foo</span>::callback<span style="color: #cc241d;">)</span>;
+    <span style="color: #fb4934;">}</span>
+<span style="color: #fe8019;">}</span>;
+
+<span style="color: #fabd2f;">int</span> <span style="color: #b8bb26;">main</span><span style="color: #fe8019;">()</span>
+<span style="color: #fe8019;">{</span>
+    <span style="color: #fabd2f;">Foo</span> <span style="color: #83a598;">foo</span>;
+    foo.run<span style="color: #fb4934;">()</span>;
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+Looking specifically at the parameter list of <code>caller(void (Foo::*fnc)(int))</code>, <code>void (Foo::*fnc)(int)</code> is used to specify that we are going to be passing a function that has a <code>void</code> return type, it is a part of the <code>Foo</code> class, <code>*fnc</code> is just the pointer to the method that is being passed (we don&rsquo;t know what it is yet), and <code>(int)</code> which is the argument that <code>*fnc</code> can take. It is important to take not of the parenthesis. They <b>must</b> look like this in order specify that we are passing a function pointer rather than a <code>void*</code>.
+</p>
+
+<p>
+At this point, we don&rsquo;t know what method is coming in, but we know what the method is going to look like and from what object that method is a part of. Now lets look at the implementation of <code>callback</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>Foo::*fnc<span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>
+    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span> = <span style="color: #d3869b; font-weight: bold;">1</span>; i &lt; <span style="color: #d3869b; font-weight: bold;">12</span>; ++i<span style="color: #fb4934;">)</span>
+        <span style="color: #fb4934;">(</span>this-&gt;*fnc<span style="color: #fb4934;">)(</span>i<span style="color: #fb4934;">)</span>;
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+The tricky part here is how we dereference the function. Like how the parenthesis were important in the argument list, the parenthesis are important in how we dereference the function pointer. You must also specify <code>this-&gt;</code> for the compiler to understand that the function call is from the class type <code>Foo</code>.
+</p>
+
+<p>
+As for <code>run</code>, that is simple. We just need to pass the pointer to the function which is straightforward. Again, we have to specify the owner of the method by placing <code>Foo::</code> in front of the function name.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">run</span><span style="color: #fe8019;">()</span>
+<span style="color: #fe8019;">{</span>
+    caller<span style="color: #fb4934;">(</span>&amp;Foo::callback<span style="color: #fb4934;">)</span>
+<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5f37203" class="outline-2">
+<h2 id="org5f37203">Shortcomings</h2>
+<div class="outline-text-2" id="text-org5f37203">
+<p>
+Pretty simple once you have done it once, right? It can&rsquo;t be all good though as you probably guessed from the heading. The drawback of this type of declaration is that the method calls must be from inside the same class. Why is that the case though? Couldn&rsquo;t you just do something like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>Bar::*fnc<span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+and call a method from <code>Bar</code>? The problem with this is that you can know the class definition, but you can&rsquo;t know which instance you are referring to. In the way outlined above, the <code>this-&gt;</code> pointer indicates which instance you are talking about, so it all works out. But if you have 3 instances of <code>Bar</code>, using this method you can&rsquo;t possibly know which instance you are referring to.
+</p>
+
+<p>
+The good news though is that with minor adjustments you can know!
+</p>
+
+<p>
+Rather than doing it the way we stated above, try:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span> <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>*<span style="color: #b8bb26;">fnc</span><span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span>, <span style="color: #fabd2f;">void</span>* <span style="color: #83a598;">instance</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+</pre>
+</div>
+
+<p>
+Everything will be more or less the same. The only difference is now that you have the instance of the object, you can static cast it to the correct type and then dereference the method. Pretty slick, right? It requires a little more work, but using this method you can potentially create a message handler class!
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga4e85c0" class="outline-2">
+<h2 id="orga4e85c0">My Problem That Was Fixed With Callbacks</h2>
+<div class="outline-text-2" id="text-orga4e85c0">
+<p>
+As for my case, it is a lot simpler than some of the examples I gave above. My problem is that I wanted to open and parse two different files that will similar formatting but contain two different types of data. More specifically, for my game framework I want to be able to load/save files from a text file. To do this I am currently employing two files: <code>Maps.txt</code> and <code>Dictionary.txt</code>. <code>Maps.txt</code> looks like:
+</p>
+
+<pre class="example" id="org3d053fe">
+[Default]
+0 0 1
+1 1 0
+1 0 0
+</pre>
+
+<p>
+Where <code>[Default]</code> is the name of the map, and the matrix underneath specified the type of tiles that will be placed in that specific area. But what do those tiles mean? Thats what <code>Dictionary.txt</code> is for. That file looks like this:
+</p>
+
+<pre class="example" id="org9124777">
+[Default]
+0 0 256 64
+1 0 128 64
+</pre>
+
+<p>
+Where the first character is the identifier that will be used in <code>Map.txt</code>, the second is the <code>x</code> location on the asset sheet, then the <code>y</code> position on the asset sheet, and the width/height of the texture (I&rsquo;m assuming squares). Because they both have similar ways of being parsed, the only part that is going to change is how the data will be stores. Rather than writing two separate methods that will open the file and loop through it the same way, why not create one method that does that, but implements different ways of storing the data.
+</p>
+
+<p>
+Similarly to the examples given above I wrote a generic method that will execute a callback:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-C++"><span style="color: #928374;">/*</span>
+<span style="color: #928374;"> *--------------------------------------------------------------------------------------</span>
+<span style="color: #928374;"> *       Class:  TileMap</span>
+<span style="color: #928374;"> *      Method:  TileMap :: readFromFileCallback</span>
+<span style="color: #928374;"> * Description:  Callback method used to read from config files.</span>
+<span style="color: #928374;"> *--------------------------------------------------------------------------------------</span>
+<span style="color: #928374;"> */</span>
+<span style="color: #fabd2f;">void</span> <span style="color: #d3869b;">TileMap</span>::<span style="color: #b8bb26;">readFromFileCallback</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span><span style="color: #d3869b;">TileMap</span>::*<span style="color: #b8bb26;">method</span><span style="color: #fb4934;">)(</span><span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">ifstream</span>&amp;, <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span>&amp;<span style="color: #fb4934;">)</span>,
+                                   <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span>&amp; <span style="color: #83a598;">map_name</span><span style="color: #fe8019;">)</span>
+<span style="color: #fe8019;">{</span>
+  <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">ifstream</span> <span style="color: #83a598;">file_in</span><span style="color: #fb4934;">(</span>m_map_text_file<span style="color: #fb4934;">)</span>;
+  <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span> <span style="color: #83a598;">line</span>;
+
+  <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>file_in.is_open<span style="color: #cc241d;">()</span><span style="color: #fb4934;">)</span>
+  <span style="color: #fb4934;">{</span>
+    <span style="color: #fb4934;">while</span> <span style="color: #cc241d;">(</span><span style="color: #d3869b;">std</span>::getline<span style="color: #fe8019;">(</span>file_in, line<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span>
+    <span style="color: #cc241d;">{</span>
+      <span style="color: #fe8019;">(</span><span style="color: #fb4934;">this</span>-&gt;*method<span style="color: #fe8019;">)(</span>file_in, map_name<span style="color: #fe8019;">)</span>;
+    <span style="color: #cc241d;">}</span>
+
+    file_in.close<span style="color: #cc241d;">()</span>;
+  <span style="color: #fb4934;">}</span>
+   <span style="color: #fb4934;">else</span>
+     printf<span style="color: #fb4934;">(</span><span style="color: #b8bb26;">"ERROR: COULD NOT LOAD FILE!\n"</span><span style="color: #fb4934;">)</span>;
+
+  <span style="color: #fb4934;">return</span>;
+<span style="color: #fe8019;">}</span>
+
+</pre>
+</div>
+
+<p>
+The method that is accepted is a <code>void</code> method that has a <code>ifstream</code> reference and a <code>string</code>. I&rsquo;m also passing a separate string <code>map_name</code> that is used in <code>method</code> to figure out which file is being parsed!
+</p>
+
+<p>
+Super simple, and now I can use this one method to parse different files of the same formatting style!
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge83e4a9" class="outline-2">
+<h2 id="orge83e4a9">References</h2>
+<div class="outline-text-2" id="text-orge83e4a9">
+<ul class="org-ul">
+<li><a href="https://www.geeksforgeeks.org/callbacks-in-c/">GeeksForGeeks</a></li>
+<li><a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">The C Programming Language</a></li>
+</ul>
+</div>
+</div>
+<div class="taglist"></div></div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="https://alexb7711.github.io/archive.html">Other posts</a>
+</div></div>
+</body>
+</html>
