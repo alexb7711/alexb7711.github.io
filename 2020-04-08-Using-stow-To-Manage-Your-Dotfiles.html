@@ -10,12 +10,7 @@
 <title>Using =stow= To Manage Your Dotfiles</title>
 <meta name="author" content="Alex Brown">
 <meta name="referrer" content="no-referrer">
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<link href= "readtheorg/readtheorg.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
 <body>
 <div id="preamble" class="status"><div class="header">
@@ -27,13 +22,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0160cd2">What is <code>stow</code>?</a>
+<li><a href="#orgf23a078">What is <code>stow</code>?</a>
 <ul>
-<li><a href="#org5b94fbf">Example 1</a></li>
-<li><a href="#orgdcbfc23">Example 2</a></li>
+<li><a href="#org1c113ba">Example 1</a></li>
+<li><a href="#org1689294">Example 2</a></li>
 </ul>
 </li>
-<li><a href="#orgb590034">My <code>stow</code> Workflow</a></li>
+<li><a href="#org7830696">My <code>stow</code> Workflow</a></li>
 </ul>
 </div>
 </nav>
@@ -45,9 +40,9 @@ A few weeks ago I made a post about keeping track of your dotfiles using <code>r
 This post is going to talk about what stow is and how I currently use it.
 </p>
 
-<div id="outline-container-org0160cd2" class="outline-2">
-<h2 id="org0160cd2">What is <code>stow</code>?</h2>
-<div class="outline-text-2" id="text-org0160cd2">
+<div id="outline-container-orgf23a078" class="outline-2">
+<h2 id="orgf23a078">What is <code>stow</code>?</h2>
+<div class="outline-text-2" id="text-orgf23a078">
 <p>
 Pulling this quote directly from the <a href="https://www.youtube.com/watch?v=MJBVA4LeJKA">GNU page</a>:
 </p>
@@ -71,9 +66,9 @@ In other words, it symlinks the desired file based of a starting directory and t
 </blockquote>
 </div>
 
-<div id="outline-container-org5b94fbf" class="outline-3">
-<h3 id="org5b94fbf">Example 1</h3>
-<div class="outline-text-3" id="text-org5b94fbf">
+<div id="outline-container-org1c113ba" class="outline-3">
+<h3 id="org1c113ba">Example 1</h3>
+<div class="outline-text-3" id="text-org1c113ba">
 <p>
 You have a vimrc file in <code>~/.vimrc</code>. You want to symlink that. So you have a git repository that you cloned in <code>~/Code/dotfiles</code>. If you want to keep track of your vimrc file, what you do is first do is create a directory called vim (or whatever else you want to call it) in your dotfiles directory. After doing so, move your vimrc into the vim directory you just created. Now, if you type <code>stow ~/ vim</code> while you are in the dotfiles directory you will symlink you vimrc to <code>~/.vimrc</code>.
 </p>
@@ -84,9 +79,9 @@ The <code>-t</code> flag sets that starting location for where you want the syml
 </div>
 </div>
 
-<div id="outline-container-orgdcbfc23" class="outline-3">
-<h3 id="orgdcbfc23">Example 2</h3>
-<div class="outline-text-3" id="text-orgdcbfc23">
+<div id="outline-container-org1689294" class="outline-3">
+<h3 id="org1689294">Example 2</h3>
+<div class="outline-text-3" id="text-org1689294">
 <p>
 You have a config file <code>~/.config/nvim/init.vim</code> that you want to keep track of. Following the steps from the previous example, you create a directory called <code>nvim</code> in your dotfiles and create a file structure <code>nvim/.config/nvim/</code>. Copy the init.vim file so you have the structure <code>nvim/.config/nvim/init.vim'. To symlink this file you type =stow -t ~/ nvim</code>.
 </p>
@@ -98,9 +93,9 @@ Again, from the point of view of <code>stow</code>, you are linking the path <co
 </div>
 </div>
 
-<div id="outline-container-orgb590034" class="outline-2">
-<h2 id="orgb590034">My <code>stow</code> Workflow</h2>
-<div class="outline-text-2" id="text-orgb590034">
+<div id="outline-container-org7830696" class="outline-2">
+<h2 id="org7830696">My <code>stow</code> Workflow</h2>
+<div class="outline-text-2" id="text-org7830696">
 <p>
 As a TL;DR, my workflow is essentially what I described above. The only difference is that I have a script that has all the name of the directories appended to the stow command. The only difference is that I also keep track of my packages in a different script by running <code>pacman -Qqe &gt; PackageList.txt</code> which creates a list of all the packages you installed in such a way that you can use it as an input to pacman later on. So at the end of the day, you have a little scrip that looks like the following:
 </p>

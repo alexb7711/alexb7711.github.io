@@ -4,7 +4,7 @@
 <title><![CDATA[Alex Brown]]></title>
 <description><![CDATA[Alex Brown]]></description>
 <link>https://alexb7711.github.io</link>
-<lastBuildDate>Sat, 22 May 2021 11:20:49 -0600</lastBuildDate>
+<lastBuildDate>Mon, 24 May 2021 07:42:02 -0600</lastBuildDate>
 <item>
   <title><![CDATA[A Guide To Hosting An Email Server In A Residential Area (Port 25 Blocked)]]></title>
   <description><![CDATA[
@@ -12,18 +12,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgbad52ff">Email Server Components</a>
+<li><a href="#org8b4b761">Email Server Components</a>
 <ul>
-<li><a href="#orgca77c12">Postfix</a></li>
-<li><a href="#org5e31329">Dovecot</a></li>
-<li><a href="#orgbfe52c7">Spamassasin</a></li>
-<li><a href="#org8ada4e9">OpenDKIM</a></li>
+<li><a href="#org0750038">Postfix</a></li>
+<li><a href="#org80da91d">Dovecot</a></li>
+<li><a href="#org04ca169">Spamassasin</a></li>
+<li><a href="#org25dc2c1">OpenDKIM</a></li>
 </ul>
 </li>
-<li><a href="#org92ba23c">Problem with Residential email servers</a>
+<li><a href="#orgd4842db">Problem with Residential email servers</a>
 <ul>
-<li><a href="#orgd28b3dc">Borrowing SMTP server</a></li>
-<li><a href="#org803fc7a">Reroute incoming mail</a></li>
+<li><a href="#org2d0d654">Borrowing SMTP server</a></li>
+<li><a href="#orge55a425">Reroute incoming mail</a></li>
 </ul>
 </li>
 </ul>
@@ -49,13 +49,13 @@ The issue I came accross while setting up my email server is that my ISP (Intern
 I&rsquo;ll also preface this by saying that the script README says that it is configured for VPS (Vitual Private Servers), but it worked great on my little 300$ hp pavillion makeshift server running Debian 10. Now to talk about each component.
 </p>
 
-<div id="outline-container-orgbad52ff" class="outline-2">
-<h2 id="orgbad52ff">Email Server Components</h2>
-<div class="outline-text-2" id="text-orgbad52ff">
+<div id="outline-container-org8b4b761" class="outline-2">
+<h2 id="org8b4b761">Email Server Components</h2>
+<div class="outline-text-2" id="text-org8b4b761">
 </div>
-<div id="outline-container-orgca77c12" class="outline-3">
-<h3 id="orgca77c12"><a href="http://www.postfix.org/">Postfix</a></h3>
-<div class="outline-text-3" id="text-orgca77c12">
+<div id="outline-container-org0750038" class="outline-3">
+<h3 id="org0750038"><a href="http://www.postfix.org/">Postfix</a></h3>
+<div class="outline-text-3" id="text-org0750038">
 <p>
 As stated by <a href="https://en.wikipedia.org/wiki/Postfix_(software)">Wikipedia</a>:
 </p>
@@ -72,9 +72,9 @@ Or in other words, this is the guy that will send/receive mail to and from the o
 </div>
 </div>
 
-<div id="outline-container-org5e31329" class="outline-3">
-<h3 id="org5e31329"><a href="https://www.dovecot.org/">Dovecot</a></h3>
-<div class="outline-text-3" id="text-org5e31329">
+<div id="outline-container-org80da91d" class="outline-3">
+<h3 id="org80da91d"><a href="https://www.dovecot.org/">Dovecot</a></h3>
+<div class="outline-text-3" id="text-org80da91d">
 <blockquote>
 <p>
 Dovecot is an open source IMAP and POP3 email server for Linux/UNIX-like systems
@@ -87,9 +87,9 @@ Basically, this is what you interface with to access your email through your ema
 </div>
 </div>
 
-<div id="outline-container-orgbfe52c7" class="outline-3">
-<h3 id="orgbfe52c7"><a href="https://spamassassin.apache.org/">Spamassasin</a></h3>
-<div class="outline-text-3" id="text-orgbfe52c7">
+<div id="outline-container-org04ca169" class="outline-3">
+<h3 id="org04ca169"><a href="https://spamassassin.apache.org/">Spamassasin</a></h3>
+<div class="outline-text-3" id="text-org04ca169">
 <p>
 What it does is pretty self evident by the name. To be safe though here is a description via <a href="https://en.wikipedia.org/wiki/SpamAssassin">Wikipedia.</a>
 </p>
@@ -102,9 +102,9 @@ It uses a variety of spam-detection techniques, including DNS and fuzzy checksum
 </div>
 </div>
 
-<div id="outline-container-org8ada4e9" class="outline-3">
-<h3 id="org8ada4e9"><a href="http://opendkim.org/">OpenDKIM</a></h3>
-<div class="outline-text-3" id="text-org8ada4e9">
+<div id="outline-container-org25dc2c1" class="outline-3">
+<h3 id="org25dc2c1"><a href="http://opendkim.org/">OpenDKIM</a></h3>
+<div class="outline-text-3" id="text-org25dc2c1">
 <blockquote>
 <p>
 OpenDKIM is an open source implementation of the DKIM (Domain Keys Identified Mail) sender authentication system proposed by the E-mail Signing Technology Group (ESTG), now standardized by the IETF.
@@ -118,9 +118,9 @@ In other words, it just signs your email in a way to show that is valid in such 
 </div>
 </div>
 
-<div id="outline-container-org92ba23c" class="outline-2">
-<h2 id="org92ba23c">Problem with Residential email servers</h2>
-<div class="outline-text-2" id="text-org92ba23c">
+<div id="outline-container-orgd4842db" class="outline-2">
+<h2 id="orgd4842db">Problem with Residential email servers</h2>
+<div class="outline-text-2" id="text-orgd4842db">
 <p>
 Port 25 is blocked by a <b><b>lot</b></b> of ISPs. Why does that matter? Well, port 25 is what mail servers use to transfer email. That means that your email server is only good locally. There are two things you need to do in order to fix this problem:
 </p>
@@ -135,9 +135,9 @@ Maybe it isn&rsquo;t the best answer since you are probably trying to gain more 
 </p>
 </div>
 
-<div id="outline-container-orgd28b3dc" class="outline-3">
-<h3 id="orgd28b3dc">Borrowing SMTP server</h3>
-<div class="outline-text-3" id="text-orgd28b3dc">
+<div id="outline-container-org2d0d654" class="outline-3">
+<h3 id="org2d0d654">Borrowing SMTP server</h3>
+<div class="outline-text-3" id="text-org2d0d654">
 <p>
 The quick and easy way to get it up and running is to borrow Google&rsquo;s STMP servers. If you have an account, then you are all set to get this done. This also should work if your ISP supplies an SMTP server. You will just need the credentials for your ISP email account.
 </p>
@@ -185,9 +185,9 @@ Restart postfix via <code>systemctl restart postfix</code> and try sending an em
 </div>
 </div>
 
-<div id="outline-container-org803fc7a" class="outline-3">
-<h3 id="org803fc7a">Reroute incoming mail</h3>
-<div class="outline-text-3" id="text-org803fc7a">
+<div id="outline-container-orge55a425" class="outline-3">
+<h3 id="orge55a425">Reroute incoming mail</h3>
+<div class="outline-text-3" id="text-orge55a425">
 <p>
 If you are in a residential area, you most likely need a DDNS (Dynamic Domain Name System), personally I use [Dynu](dynu.com). It is free, and easy to set up. The only thing you need to do here is create an account, go to Dynamic DNS Service, click the add button, use one of the given DNS names or type in your own. If you opted to use your own domain name on the website you got your domain name from in your &ldquo;External Hosts&rdquo; record type in the ip address given to you by Dynu.
 </p>
@@ -230,8 +230,8 @@ Thank you for reading, and happy emailing!
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0767e44">Creating Another Remote Repository</a></li>
-<li><a href="#org9c17eea">Merging Your Source with Suckless&rsquo;s</a></li>
+<li><a href="#org8836853">Creating Another Remote Repository</a></li>
+<li><a href="#org1692f07">Merging Your Source with Suckless&rsquo;s</a></li>
 </ul>
 </div>
 </nav>
@@ -243,9 +243,9 @@ Thank you for reading, and happy emailing!
 I never considered the scenario of wanting to upgrade my build of st, dwm, or any other &ldquo;forked&rdquo; project that I may have until I wanted to upgrade st to the latest release in order to try the new <a href="https://www.youtube.com/watch?v=sdeX2S2uOeA">scrolling functionality</a> that they have added. My brain immediately accepted the fact that I was going to download a new copy of st and repatch everything I currently have&#x2026; but that isn&rsquo;t very sustainable for long term use especially if you want to update every so often. I thought about it for an hour or so and was struck with the simple solution of just using git&rsquo;s merge feature. The thing is on how to get it configured simply. Like they always say with programming, &ldquo;think lazy&rdquo;.
 </p>
 
-<div id="outline-container-org0767e44" class="outline-2">
-<h2 id="org0767e44">Creating Another Remote Repository</h2>
-<div class="outline-text-2" id="text-org0767e44">
+<div id="outline-container-org8836853" class="outline-2">
+<h2 id="org8836853">Creating Another Remote Repository</h2>
+<div class="outline-text-2" id="text-org8836853">
 <p>
 Much like how some people use this to keep multiple repositories up to date, multiple remote repositories are also very handy for updating (basically the same thing stated in different words). To take advantage of this feature, you can run:
 </p>
@@ -272,9 +272,9 @@ You can make sure you are up to date on HEAD of suckless&rsquo;s master.
 </div>
 </div>
 
-<div id="outline-container-org9c17eea" class="outline-2">
-<h2 id="org9c17eea">Merging Your Source with Suckless&rsquo;s</h2>
-<div class="outline-text-2" id="text-org9c17eea">
+<div id="outline-container-org1692f07" class="outline-2">
+<h2 id="org1692f07">Merging Your Source with Suckless&rsquo;s</h2>
+<div class="outline-text-2" id="text-org1692f07">
 <p>
 To do this, I like to create a branch to make sure I don&rsquo;t destroy my master branch:
 </p>
@@ -307,12 +307,12 @@ and git will attempt to merge your code with that of suckless/master. You will m
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org52aa8a9">Callbacks</a></li>
-<li><a href="#org6593c28">Why Would You Want To Use A Callback?&rsquo;&rsquo;</a></li>
-<li><a href="#org12a7466">A Simple Example</a></li>
-<li><a href="#org5f37203">Shortcomings</a></li>
-<li><a href="#orga4e85c0">My Problem That Was Fixed With Callbacks</a></li>
-<li><a href="#orge83e4a9">References</a></li>
+<li><a href="#org9708ed9">Callbacks</a></li>
+<li><a href="#org77fdda9">Why Would You Want To Use A Callback?&rsquo;&rsquo;</a></li>
+<li><a href="#org0039a36">A Simple Example</a></li>
+<li><a href="#org36d425d">Shortcomings</a></li>
+<li><a href="#org01769cc">My Problem That Was Fixed With Callbacks</a></li>
+<li><a href="#orgb8f2045">References</a></li>
 </ul>
 </div>
 </nav>
@@ -324,9 +324,9 @@ I have been spending a lot of time as of late creating a small framework for dev
 To start, lets cover what a callback method is and how it can be used to your advantage.
 </p>
 
-<div id="outline-container-org52aa8a9" class="outline-2">
-<h2 id="org52aa8a9">Callbacks</h2>
-<div class="outline-text-2" id="text-org52aa8a9">
+<div id="outline-container-org9708ed9" class="outline-2">
+<h2 id="org9708ed9">Callbacks</h2>
+<div class="outline-text-2" id="text-org9708ed9">
 <p>
 A callback is a piece of code that is used to execute (call back) a specified argument. In other words, if you pass a pointer of a function (foo) to another function (bar) as an argument and execute it, then the function pointer (foo) is a callback. As stated on [GeeksForGeeks](<a href="https://www.geeksforgeeks.org/">https://www.geeksforgeeks.org/</a>).
 </p>
@@ -341,9 +341,9 @@ That is specific enough for our purpose right now. If you would like read more a
 </div>
 </div>
 
-<div id="outline-container-org6593c28" class="outline-2">
-<h2 id="org6593c28">Why Would You Want To Use A Callback?&rsquo;&rsquo;</h2>
-<div class="outline-text-2" id="text-org6593c28">
+<div id="outline-container-org77fdda9" class="outline-2">
+<h2 id="org77fdda9">Why Would You Want To Use A Callback?&rsquo;&rsquo;</h2>
+<div class="outline-text-2" id="text-org77fdda9">
 <p>
 As will all things, it is situational as to why you would like to use it. It doesn&rsquo;t solve all your problems, but it does make a lot of tasks quite easy. It is useful when you can make generic code that can apply different logic. Now what do I mean by that? For example in &ldquo;[The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>)&rdquo; the example they give is a single method that can be used to call different types of sorting methods. They use the same call to sort, but apply different sorting methods on the same bit of data.
 </p>
@@ -364,9 +364,9 @@ stored as a list. Every time you have an event occur, you can send out a message
 </div>
 </div>
 
-<div id="outline-container-org12a7466" class="outline-2">
-<h2 id="org12a7466">A Simple Example</h2>
-<div class="outline-text-2" id="text-org12a7466">
+<div id="outline-container-org0039a36" class="outline-2">
+<h2 id="org0039a36">A Simple Example</h2>
+<div class="outline-text-2" id="text-org0039a36">
 <p>
 Below is a simple class that uses a callback to count to 10. To start, you can see that we have a method called <code>callback(int count)</code> that all that it knows is to print the integer that it gets if it is smaller than 10. <code>caller(void (Foo::*fnc)(int))</code> is the function that is going to be providing the values to <code>callback</code>, and <code>run()</code> is just the driving code that will be called from <code>main()</code>.
 </p>
@@ -441,9 +441,9 @@ As for <code>run</code>, that is simple. We just need to pass the pointer to the
 </div>
 </div>
 
-<div id="outline-container-org5f37203" class="outline-2">
-<h2 id="org5f37203">Shortcomings</h2>
-<div class="outline-text-2" id="text-org5f37203">
+<div id="outline-container-org36d425d" class="outline-2">
+<h2 id="org36d425d">Shortcomings</h2>
+<div class="outline-text-2" id="text-org36d425d">
 <p>
 Pretty simple once you have done it once, right? It can&rsquo;t be all good though as you probably guessed from the heading. The drawback of this type of declaration is that the method calls must be from inside the same class. Why is that the case though? Couldn&rsquo;t you just do something like:
 </p>
@@ -478,14 +478,14 @@ Everything will be more or less the same. The only difference is now that you ha
 </div>
 </div>
 
-<div id="outline-container-orga4e85c0" class="outline-2">
-<h2 id="orga4e85c0">My Problem That Was Fixed With Callbacks</h2>
-<div class="outline-text-2" id="text-orga4e85c0">
+<div id="outline-container-org01769cc" class="outline-2">
+<h2 id="org01769cc">My Problem That Was Fixed With Callbacks</h2>
+<div class="outline-text-2" id="text-org01769cc">
 <p>
 As for my case, it is a lot simpler than some of the examples I gave above. My problem is that I wanted to open and parse two different files that will similar formatting but contain two different types of data. More specifically, for my game framework I want to be able to load/save files from a text file. To do this I am currently employing two files: <code>Maps.txt</code> and <code>Dictionary.txt</code>. <code>Maps.txt</code> looks like:
 </p>
 
-<pre class="example" id="org3d053fe">
+<pre class="example" id="orgeb289c6">
 [Default]
 0 0 1
 1 1 0
@@ -496,7 +496,7 @@ As for my case, it is a lot simpler than some of the examples I gave above. My p
 Where <code>[Default]</code> is the name of the map, and the matrix underneath specified the type of tiles that will be placed in that specific area. But what do those tiles mean? Thats what <code>Dictionary.txt</code> is for. That file looks like this:
 </p>
 
-<pre class="example" id="org9124777">
+<pre class="example" id="orgcdbc73f">
 [Default]
 0 0 256 64
 1 0 128 64
@@ -552,9 +552,9 @@ Super simple, and now I can use this one method to parse different files of the 
 </div>
 </div>
 
-<div id="outline-container-orge83e4a9" class="outline-2">
-<h2 id="orge83e4a9">References</h2>
-<div class="outline-text-2" id="text-orge83e4a9">
+<div id="outline-container-orgb8f2045" class="outline-2">
+<h2 id="orgb8f2045">References</h2>
+<div class="outline-text-2" id="text-orgb8f2045">
 <ul class="org-ul">
 <li><a href="https://www.geeksforgeeks.org/callbacks-in-c/">GeeksForGeeks</a></li>
 <li><a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">The C Programming Language</a></li>
@@ -572,72 +572,72 @@ Super simple, and now I can use this one method to parse different files of the 
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org940022e">Types, Operators, and Expressions</a>
+<li><a href="#orgd73432e">Types, Operators, and Expressions</a>
 <ul>
-<li><a href="#org6cc3116">Constants</a></li>
-<li><a href="#orgf06638a">Increment and Decrement Operators</a></li>
-<li><a href="#orgea9fb11">Bitwise Operators</a></li>
+<li><a href="#org9e7929d">Constants</a></li>
+<li><a href="#orgaaedb87">Increment and Decrement Operators</a></li>
+<li><a href="#org73938b4">Bitwise Operators</a></li>
 </ul>
 </li>
-<li><a href="#orge62f1d5">Control Flow</a>
+<li><a href="#orgce00bff">Control Flow</a>
 <ul>
-<li><a href="#org6383b8b">Break and Continue</a></li>
-<li><a href="#orga6c92fa">GoTo and Labels</a></li>
+<li><a href="#org9e9854d">Break and Continue</a></li>
+<li><a href="#org88c23ab">GoTo and Labels</a></li>
 </ul>
 </li>
-<li><a href="#orgc4bc6a0">Functions and Program Structure</a>
+<li><a href="#org492854c">Functions and Program Structure</a>
 <ul>
-<li><a href="#org62d4df2">Static Variables</a></li>
+<li><a href="#org72c5139">Static Variables</a></li>
 </ul>
 </li>
-<li><a href="#org817fce4">Types, Operators, and Expressions</a>
+<li><a href="#org9f2f7ff">Types, Operators, and Expressions</a>
 <ul>
-<li><a href="#orgb9d671c">Constants</a></li>
-<li><a href="#orgb1c4ceb">Increment and Decrement Operators</a></li>
-<li><a href="#org78549e1">Bitwise Operators</a></li>
+<li><a href="#org7ffbe00">Constants</a></li>
+<li><a href="#org1cd9762">Increment and Decrement Operators</a></li>
+<li><a href="#orgd0b6539">Bitwise Operators</a></li>
 </ul>
 </li>
-<li><a href="#orgc9e5ed8">Control Flow</a>
+<li><a href="#org2781555">Control Flow</a>
 <ul>
-<li><a href="#org595c373">Break and Continue</a></li>
-<li><a href="#orga871031">GoTo and Labels</a></li>
+<li><a href="#orgf9ce5eb">Break and Continue</a></li>
+<li><a href="#org206b967">GoTo and Labels</a></li>
 </ul>
 </li>
-<li><a href="#org00eb4a7">Functions and Program Structure</a>
+<li><a href="#org5d5cdf5">Functions and Program Structure</a>
 <ul>
-<li><a href="#orgb8a1dea">Static Variables</a></li>
+<li><a href="#orgae42c7b">Static Variables</a></li>
 </ul>
 </li>
-<li><a href="#org0586cef">Pointers and Arrays</a>
+<li><a href="#org38ed660">Pointers and Arrays</a>
 <ul>
-<li><a href="#org136273e">Address Arithmetic</a></li>
-<li><a href="#org41aa07f">Character Pointers and Functions</a></li>
-<li><a href="#orgf0c42ea">Pointer Arrays; Pointers to Pointers</a></li>
-<li><a href="#org63a00a0">Multi-Dimensional Arrays</a></li>
-<li><a href="#orge4f2e7b">Initialization of Pointer Arrays</a></li>
-<li><a href="#org5aee65c">Pointers vs. Multi-Dimensional Array</a></li>
-<li><a href="#org016d092">Command Line Arguments</a></li>
-<li><a href="#org860221e">Pointers To Functions</a></li>
-<li><a href="#orgb71bdb4">Complicated Declarations</a></li>
+<li><a href="#org543f791">Address Arithmetic</a></li>
+<li><a href="#org3bc87da">Character Pointers and Functions</a></li>
+<li><a href="#org3020395">Pointer Arrays; Pointers to Pointers</a></li>
+<li><a href="#org1b19c88">Multi-Dimensional Arrays</a></li>
+<li><a href="#org0aaf020">Initialization of Pointer Arrays</a></li>
+<li><a href="#org214130f">Pointers vs. Multi-Dimensional Array</a></li>
+<li><a href="#org0822853">Command Line Arguments</a></li>
+<li><a href="#orgf6a7bc8">Pointers To Functions</a></li>
+<li><a href="#org8d1192b">Complicated Declarations</a></li>
 </ul>
 </li>
-<li><a href="#orgffd896d">Structures</a>
+<li><a href="#orgbbb6b9a">Structures</a>
 <ul>
-<li><a href="#org996e959">Arrays of Structures</a></li>
-<li><a href="#orgbcb0228">Table Lookup</a></li>
+<li><a href="#org03cb1d2">Arrays of Structures</a></li>
+<li><a href="#orga90a6f7">Table Lookup</a></li>
 </ul>
 </li>
-<li><a href="#orga1a9698">Input and Output</a>
+<li><a href="#org02d3d98">Input and Output</a>
 <ul>
-<li><a href="#orgce0a91a">Command Execution</a></li>
-<li><a href="#org2d512ec">Storage Management</a></li>
+<li><a href="#org33ae63d">Command Execution</a></li>
+<li><a href="#org306ddc2">Storage Management</a></li>
 </ul>
 </li>
-<li><a href="#org0844fac">The UNIX System Interface</a>
+<li><a href="#org9707318">The UNIX System Interface</a>
 <ul>
-<li><a href="#org879ad15">Open, Creat, Close, Unlink</a></li>
-<li><a href="#orgeaa7b49">Random Access - Lseek</a></li>
-<li><a href="#orgfcb21b9">Example - A Storage Allocator</a></li>
+<li><a href="#org8932227">Open, Creat, Close, Unlink</a></li>
+<li><a href="#org8b85798">Random Access - Lseek</a></li>
+<li><a href="#org385f9c8">Example - A Storage Allocator</a></li>
 </ul>
 </li>
 </ul>
@@ -651,13 +651,13 @@ Super simple, and now I can use this one method to parse different files of the 
 I mostly code in C++ and never <i>really</i> spent the time to learn the nuances of C. I recently read through [The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>) and spent the time taking notes. Below is what I found useful and relevant. All diagrams and code snippets are from [The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>).
 </p>
 
-<div id="outline-container-org940022e" class="outline-2">
-<h2 id="org940022e">Types, Operators, and Expressions</h2>
-<div class="outline-text-2" id="text-org940022e">
+<div id="outline-container-orgd73432e" class="outline-2">
+<h2 id="orgd73432e">Types, Operators, and Expressions</h2>
+<div class="outline-text-2" id="text-orgd73432e">
 </div>
-<div id="outline-container-org6cc3116" class="outline-3">
-<h3 id="org6cc3116">Constants</h3>
-<div class="outline-text-3" id="text-org6cc3116">
+<div id="outline-container-org9e7929d" class="outline-3">
+<h3 id="org9e7929d">Constants</h3>
+<div class="outline-text-3" id="text-org9e7929d">
 <p>
 A character constant is an integer, written as one character within single quotes such as &rsquo;x&rsquo;. The value of a character constant is the numeric value of the character in the machine&rsquo;s character set. For example, &rsquo;0&rsquo; has the value 48 in ASCII.
 </p>
@@ -707,9 +707,9 @@ The complete set of escape sequences is:
 </div>
 </div>
 
-<div id="outline-container-orgf06638a" class="outline-3">
-<h3 id="orgf06638a">Increment and Decrement Operators</h3>
-<div class="outline-text-3" id="text-orgf06638a">
+<div id="outline-container-orgaaedb87" class="outline-3">
+<h3 id="orgaaedb87">Increment and Decrement Operators</h3>
+<div class="outline-text-3" id="text-orgaaedb87">
 <p>
 An example of when to use `++i` rather than `i++`:
 </p>
@@ -755,14 +755,14 @@ This is the same code as:
 </div>
 </div>
 
-<div id="outline-container-orgea9fb11" class="outline-3">
-<h3 id="orgea9fb11">Bitwise Operators</h3>
-<div class="outline-text-3" id="text-orgea9fb11">
+<div id="outline-container-org73938b4" class="outline-3">
+<h3 id="org73938b4">Bitwise Operators</h3>
+<div class="outline-text-3" id="text-org73938b4">
 <p>
 C provides six operators for bit manipulation; these may only be applied to integral operands, that is, `char`, `short`, `int`, and `long`, whether signed or unsigned.
 </p>
 
-<pre class="example" id="org80ef437">
+<pre class="example" id="org6ac0712">
 &amp;    bitwise AND
 |    bitwise inclusive OR
 ^    bitwise exclusive OR
@@ -778,13 +778,13 @@ C provides six operators for bit manipulation; these may only be applied to inte
 </div>
 </div>
 
-<div id="outline-container-orge62f1d5" class="outline-2">
-<h2 id="orge62f1d5">Control Flow</h2>
-<div class="outline-text-2" id="text-orge62f1d5">
+<div id="outline-container-orgce00bff" class="outline-2">
+<h2 id="orgce00bff">Control Flow</h2>
+<div class="outline-text-2" id="text-orgce00bff">
 </div>
-<div id="outline-container-org6383b8b" class="outline-3">
-<h3 id="org6383b8b">Break and Continue</h3>
-<div class="outline-text-3" id="text-org6383b8b">
+<div id="outline-container-org9e9854d" class="outline-3">
+<h3 id="org9e9854d">Break and Continue</h3>
+<div class="outline-text-3" id="text-org9e9854d">
 <p>
 The `break` statement provides an early exit from `for`, `while`, and `do`, just as it does from `switch`. <b><b>A `break` causes the innermost enclosing loop or switch to be exited immediately.</b></b>
 </p>
@@ -795,9 +795,9 @@ The `continue` statement is related to `break`, but less often used; <b><b>it ca
 </div>
 </div>
 
-<div id="outline-container-orga6c92fa" class="outline-3">
-<h3 id="orga6c92fa">GoTo and Labels</h3>
-<div class="outline-text-3" id="text-orga6c92fa">
+<div id="outline-container-org88c23ab" class="outline-3">
+<h3 id="org88c23ab">GoTo and Labels</h3>
+<div class="outline-text-3" id="text-org88c23ab">
 <p>
 `goto` is almost never needed, but it can be useful in situations such as abandoning a process in some deeply nested structure, such as breaking out of two or more loops at once as shown below:
 </p>
@@ -825,13 +825,13 @@ error:
 </div>
 </div>
 
-<div id="outline-container-orgc4bc6a0" class="outline-2">
-<h2 id="orgc4bc6a0">Functions and Program Structure</h2>
-<div class="outline-text-2" id="text-orgc4bc6a0">
+<div id="outline-container-org492854c" class="outline-2">
+<h2 id="org492854c">Functions and Program Structure</h2>
+<div class="outline-text-2" id="text-org492854c">
 </div>
-<div id="outline-container-org62d4df2" class="outline-3">
-<h3 id="org62d4df2">Static Variables</h3>
-<div class="outline-text-3" id="text-org62d4df2">
+<div id="outline-container-org72c5139" class="outline-3">
+<h3 id="org72c5139">Static Variables</h3>
+<div class="outline-text-3" id="text-org72c5139">
 <p>
 The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled
 </p>
@@ -839,13 +839,13 @@ The `static` declaration, applied to an external variable or function, limits th
 </div>
 </div>
 
-<div id="outline-container-org817fce4" class="outline-2">
-<h2 id="org817fce4">Types, Operators, and Expressions</h2>
-<div class="outline-text-2" id="text-org817fce4">
+<div id="outline-container-org9f2f7ff" class="outline-2">
+<h2 id="org9f2f7ff">Types, Operators, and Expressions</h2>
+<div class="outline-text-2" id="text-org9f2f7ff">
 </div>
-<div id="outline-container-orgb9d671c" class="outline-3">
-<h3 id="orgb9d671c">Constants</h3>
-<div class="outline-text-3" id="text-orgb9d671c">
+<div id="outline-container-org7ffbe00" class="outline-3">
+<h3 id="org7ffbe00">Constants</h3>
+<div class="outline-text-3" id="text-org7ffbe00">
 <p>
 A character constant is an integer, written as one character within single quotes such as &rsquo;x&rsquo;. The value of a character constant is the numeric value of the character in the machine&rsquo;s character set. For example, &rsquo;0&rsquo; has the value 48 in ASCII.
 </p>
@@ -874,7 +874,7 @@ or in hexadecimal,
 The complete set of escape sequences is:
 </p>
 
-<pre class="example" id="org463d352">
+<pre class="example" id="org3065270">
 \a       alert (bell) character
 \b       backspace
 \f       formfeed
@@ -893,9 +893,9 @@ The complete set of escape sequences is:
 </div>
 </div>
 
-<div id="outline-container-orgb1c4ceb" class="outline-3">
-<h3 id="orgb1c4ceb">Increment and Decrement Operators</h3>
-<div class="outline-text-3" id="text-orgb1c4ceb">
+<div id="outline-container-org1cd9762" class="outline-3">
+<h3 id="org1cd9762">Increment and Decrement Operators</h3>
+<div class="outline-text-3" id="text-org1cd9762">
 <p>
 An example of when to use `++i` rather than `i++`:
 </p>
@@ -941,14 +941,14 @@ This is the same code as:
 </div>
 </div>
 
-<div id="outline-container-org78549e1" class="outline-3">
-<h3 id="org78549e1">Bitwise Operators</h3>
-<div class="outline-text-3" id="text-org78549e1">
+<div id="outline-container-orgd0b6539" class="outline-3">
+<h3 id="orgd0b6539">Bitwise Operators</h3>
+<div class="outline-text-3" id="text-orgd0b6539">
 <p>
 C provides six operators for bit manipulation; these may only be applied to integral operands, that is, `char`, `short`, `int`, and `long`, whether signed or unsigned.
 </p>
 
-<pre class="example" id="orgf0dadbf">
+<pre class="example" id="org5aff720">
 &amp;    bitwise AND
 |    bitwise inclusive OR
 ^    bitwise exclusive OR
@@ -964,13 +964,13 @@ C provides six operators for bit manipulation; these may only be applied to inte
 </div>
 </div>
 
-<div id="outline-container-orgc9e5ed8" class="outline-2">
-<h2 id="orgc9e5ed8">Control Flow</h2>
-<div class="outline-text-2" id="text-orgc9e5ed8">
+<div id="outline-container-org2781555" class="outline-2">
+<h2 id="org2781555">Control Flow</h2>
+<div class="outline-text-2" id="text-org2781555">
 </div>
-<div id="outline-container-org595c373" class="outline-3">
-<h3 id="org595c373">Break and Continue</h3>
-<div class="outline-text-3" id="text-org595c373">
+<div id="outline-container-orgf9ce5eb" class="outline-3">
+<h3 id="orgf9ce5eb">Break and Continue</h3>
+<div class="outline-text-3" id="text-orgf9ce5eb">
 <p>
 The `break` statement provides an early exit from `for`, `while`, and `do`, just as it does from `switch`. <b><b>A `break` causes the innermost enclosing loop or switch to be exited immediately.</b></b>
 </p>
@@ -981,9 +981,9 @@ The `continue` statement is related to `break`, but less often used; <b><b>it ca
 </div>
 </div>
 
-<div id="outline-container-orga871031" class="outline-3">
-<h3 id="orga871031">GoTo and Labels</h3>
-<div class="outline-text-3" id="text-orga871031">
+<div id="outline-container-org206b967" class="outline-3">
+<h3 id="org206b967">GoTo and Labels</h3>
+<div class="outline-text-3" id="text-org206b967">
 <p>
 `goto` is almost never needed, but it can be useful in situations such as abandoning a process in some deeply nested structure, such as breaking out of two or more loops at once as shown below:
 </p>
@@ -1011,13 +1011,13 @@ error:
 </div>
 </div>
 
-<div id="outline-container-org00eb4a7" class="outline-2">
-<h2 id="org00eb4a7">Functions and Program Structure</h2>
-<div class="outline-text-2" id="text-org00eb4a7">
+<div id="outline-container-org5d5cdf5" class="outline-2">
+<h2 id="org5d5cdf5">Functions and Program Structure</h2>
+<div class="outline-text-2" id="text-org5d5cdf5">
 </div>
-<div id="outline-container-orgb8a1dea" class="outline-3">
-<h3 id="orgb8a1dea">Static Variables</h3>
-<div class="outline-text-3" id="text-orgb8a1dea">
+<div id="outline-container-orgae42c7b" class="outline-3">
+<h3 id="orgae42c7b">Static Variables</h3>
+<div class="outline-text-3" id="text-orgae42c7b">
 <p>
 &lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream
 The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled.
@@ -1028,9 +1028,9 @@ The `static` declaration, applied to an external variable or function, limits th
 </div>
 </div>
 
-<div id="outline-container-org0586cef" class="outline-2">
-<h2 id="org0586cef">Pointers and Arrays</h2>
-<div class="outline-text-2" id="text-org0586cef">
+<div id="outline-container-org38ed660" class="outline-2">
+<h2 id="org38ed660">Pointers and Arrays</h2>
+<div class="outline-text-2" id="text-org38ed660">
 <p>
 In C, there is a strong relationship between pointers and arrays. Any operation that can be achieved by array subscripting can also be done with pointers. The pointer version will generally be faster, but at least to the uninitiated, somewhat harder to understand.
 </p>
@@ -1070,9 +1070,9 @@ As far as `foo` is concerned, the fact that the parameter refers to part of a la
 </p>
 </div>
 
-<div id="outline-container-org136273e" class="outline-3">
-<h3 id="org136273e">Address Arithmetic</h3>
-<div class="outline-text-3" id="text-org136273e">
+<div id="outline-container-org543f791" class="outline-3">
+<h3 id="org543f791">Address Arithmetic</h3>
+<div class="outline-text-3" id="text-org543f791">
 <p>
 Because memory is allocated sequentially, we can use mathematical comparisons to see if we have enough memory allocated in a buffer, to see a position of a value in an array, etc. For example:
 </p>
@@ -1086,9 +1086,9 @@ Because memory is allocated sequentially, we can use mathematical comparisons to
 </div>
 </div>
 
-<div id="outline-container-org41aa07f" class="outline-3">
-<h3 id="org41aa07f">Character Pointers and Functions</h3>
-<div class="outline-text-3" id="text-org41aa07f">
+<div id="outline-container-org3bc87da" class="outline-3">
+<h3 id="org3bc87da">Character Pointers and Functions</h3>
+<div class="outline-text-3" id="text-org3bc87da">
 <p>
 A string constant is written as `&ldquo;I am a string&rdquo;`. It is represented as an array of characters and is terminated with a `\0`.
 </p>
@@ -1130,22 +1130,22 @@ Assigns `pmessage` to the &ldquo;Hello, World!&rdquo;. This is <b>not</b> a copy
 </div>
 </div>
 
-<div id="outline-container-orgf0c42ea" class="outline-3">
-<h3 id="orgf0c42ea">Pointer Arrays; Pointers to Pointers</h3>
-<div class="outline-text-3" id="text-orgf0c42ea">
+<div id="outline-container-org3020395" class="outline-3">
+<h3 id="org3020395">Pointer Arrays; Pointers to Pointers</h3>
+<div class="outline-text-3" id="text-org3020395">
 <p>
 To create an array of pointers, we can say:
 </p>
 
-<pre class="example" id="org0100f53">
+<pre class="example" id="org17ff54b">
 char* lineptr[10];	// Array of character pointers
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org63a00a0" class="outline-3">
-<h3 id="org63a00a0">Multi-Dimensional Arrays</h3>
-<div class="outline-text-3" id="text-org63a00a0">
+<div id="outline-container-org1b19c88" class="outline-3">
+<h3 id="org1b19c88">Multi-Dimensional Arrays</h3>
+<div class="outline-text-3" id="text-org1b19c88">
 <p>
 C provides rectangular multi-dimensional arrays, although in practice they are much less used than arrays of pointers.
 </p>
@@ -1177,9 +1177,9 @@ is an array of 13 pointers to integers. More generally, only the first dimension
 </div>
 </div>
 
-<div id="outline-container-orge4f2e7b" class="outline-3">
-<h3 id="orge4f2e7b">Initialization of Pointer Arrays</h3>
-<div class="outline-text-3" id="text-orge4f2e7b">
+<div id="outline-container-org0aaf020" class="outline-3">
+<h3 id="org0aaf020">Initialization of Pointer Arrays</h3>
+<div class="outline-text-3" id="text-org0aaf020">
 <div class="org-src-container">
 <pre class="src src-C"><span style="color: #fabd2f;">char</span>* <span style="color: #83a598;">array_of_pointers</span><span style="color: #fe8019;">[]</span> =
 <span style="color: #fe8019;">{</span>
@@ -1192,9 +1192,9 @@ is an array of 13 pointers to integers. More generally, only the first dimension
 </div>
 </div>
 
-<div id="outline-container-org5aee65c" class="outline-3">
-<h3 id="org5aee65c">Pointers vs. Multi-Dimensional Array</h3>
-<div class="outline-text-3" id="text-org5aee65c">
+<div id="outline-container-org214130f" class="outline-3">
+<h3 id="org214130f">Pointers vs. Multi-Dimensional Array</h3>
+<div class="outline-text-3" id="text-org214130f">
 <p>
 The big difference between
 </p>
@@ -1212,17 +1212,17 @@ Is that the first one allocates all 10x20 array, the second only allocates 10 in
 </div>
 </div>
 
-<div id="outline-container-org016d092" class="outline-3">
-<h3 id="org016d092">Command Line Arguments</h3>
-<div class="outline-text-3" id="text-org016d092">
+<div id="outline-container-org0822853" class="outline-3">
+<h3 id="org0822853">Command Line Arguments</h3>
+<div class="outline-text-3" id="text-org0822853">
 <p>
 When `main` is called, it is called with two arguments. The first (conventionally called `argc` for argument count) is the number of command-line arguments. The second (`argv`, for argument vector), is a pointer to an array of character strings that contain the arguments, one per string. We customarily use multiple levels of pointers to manipulate these character strings.
 </p>
 </div>
 
-<div id="outline-container-orga18974a" class="outline-4">
-<h4 id="orga18974a">Accepting Command Line Flags</h4>
-<div class="outline-text-4" id="text-orga18974a">
+<div id="outline-container-org22fe119" class="outline-4">
+<h4 id="org22fe119">Accepting Command Line Flags</h4>
+<div class="outline-text-4" id="text-org22fe119">
 <div class="org-src-container">
 <pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">stdio.h</span><span style="color: #fe8019;">&gt;</span>
 
@@ -1313,9 +1313,9 @@ When `main` is called, it is called with two arguments. The first (conventionall
 </div>
 </div>
 
-<div id="outline-container-org860221e" class="outline-3">
-<h3 id="org860221e">Pointers To Functions</h3>
-<div class="outline-text-3" id="text-org860221e">
+<div id="outline-container-orgf6a7bc8" class="outline-3">
+<h3 id="orgf6a7bc8">Pointers To Functions</h3>
+<div class="outline-text-3" id="text-orgf6a7bc8">
 <p>
 In C, it is possible to define pointers to functions which can be assigned, placed in arrays, passed to functions, returned by functions, and so on.
 </p>
@@ -1339,9 +1339,9 @@ Says that `comp` is a pointer to a function that has two `void*` as arguments.
 </div>
 </div>
 
-<div id="outline-container-orgb71bdb4" class="outline-3">
-<h3 id="orgb71bdb4">Complicated Declarations</h3>
-<div class="outline-text-3" id="text-orgb71bdb4">
+<div id="outline-container-org8d1192b" class="outline-3">
+<h3 id="org8d1192b">Complicated Declarations</h3>
+<div class="outline-text-3" id="text-org8d1192b">
 <div class="org-src-container">
 <pre class="src src-C"><span style="color: #fabd2f;">char</span> **<span style="color: #b8bb26;">argv</span>
 
@@ -1380,9 +1380,9 @@ Says that `comp` is a pointer to a function that has two `void*` as arguments.
 </div>
 </div>
 
-<div id="outline-container-orgffd896d" class="outline-2">
-<h2 id="orgffd896d">Structures</h2>
-<div class="outline-text-2" id="text-orgffd896d">
+<div id="outline-container-orgbbb6b9a" class="outline-2">
+<h2 id="orgbbb6b9a">Structures</h2>
+<div class="outline-text-2" id="text-orgbbb6b9a">
 <p>
 A `struct` declaration defines a type. The right brace that terminates the list of members may be followed by a list of variables, just as for any basic type. That is,
 </p>
@@ -1406,9 +1406,9 @@ Is analogous to `int c`.
 </p>
 </div>
 
-<div id="outline-container-org996e959" class="outline-3">
-<h3 id="org996e959">Arrays of Structures</h3>
-<div class="outline-text-3" id="text-org996e959">
+<div id="outline-container-org03cb1d2" class="outline-3">
+<h3 id="org03cb1d2">Arrays of Structures</h3>
+<div class="outline-text-3" id="text-org03cb1d2">
 <p>
 When defining an array of structures, it is acceptable to define it in the following manner:
 </p>
@@ -1467,9 +1467,9 @@ However, it is more precise to enclose the initializers for each &ldquo;row&rdqu
 </div>
 </div>
 
-<div id="outline-container-orgbcb0228" class="outline-3">
-<h3 id="orgbcb0228">Table Lookup</h3>
-<div class="outline-text-3" id="text-orgbcb0228">
+<div id="outline-container-orga90a6f7" class="outline-3">
+<h3 id="orga90a6f7">Table Lookup</h3>
+<div class="outline-text-3" id="text-orga90a6f7">
 <p>
 This section will be about writing the innards of a table-lookup package.
 </p>
@@ -1628,13 +1628,13 @@ The hashing process produces a staring index in the array `hashtab`; if the stri
 </div>
 </div>
 
-<div id="outline-container-orga1a9698" class="outline-2">
-<h2 id="orga1a9698">Input and Output</h2>
-<div class="outline-text-2" id="text-orga1a9698">
+<div id="outline-container-org02d3d98" class="outline-2">
+<h2 id="org02d3d98">Input and Output</h2>
+<div class="outline-text-2" id="text-org02d3d98">
 </div>
-<div id="outline-container-orgce0a91a" class="outline-3">
-<h3 id="orgce0a91a">Command Execution</h3>
-<div class="outline-text-3" id="text-orgce0a91a">
+<div id="outline-container-org33ae63d" class="outline-3">
+<h3 id="org33ae63d">Command Execution</h3>
+<div class="outline-text-3" id="text-org33ae63d">
 <p>
 The function `system(char* s)` executes the commands contained in the character string `s`, then resumes execution of the current program.
 </p>
@@ -1646,9 +1646,9 @@ The function `system(char* s)` executes the commands contained in the character 
 </div>
 </div>
 
-<div id="outline-container-org2d512ec" class="outline-3">
-<h3 id="org2d512ec">Storage Management</h3>
-<div class="outline-text-3" id="text-org2d512ec">
+<div id="outline-container-org306ddc2" class="outline-3">
+<h3 id="org306ddc2">Storage Management</h3>
+<div class="outline-text-3" id="text-org306ddc2">
 <div class="org-src-container">
 <pre class="src src-C"><span style="color: #fabd2f;">void</span>* <span style="color: #b8bb26;">malloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">n</span><span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">returns a pointer to n bytes of uninitialized storage</span>
 <span style="color: #fabd2f;">void</span>* <span style="color: #b8bb26;">calloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">n</span>, <span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">size</span><span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">returns a pointer to enough space for an array of n objects of the specified size. </span>
@@ -1659,13 +1659,13 @@ The function `system(char* s)` executes the commands contained in the character 
 </div>
 </div>
 
-<div id="outline-container-org0844fac" class="outline-2">
-<h2 id="org0844fac">The UNIX System Interface</h2>
-<div class="outline-text-2" id="text-org0844fac">
+<div id="outline-container-org9707318" class="outline-2">
+<h2 id="org9707318">The UNIX System Interface</h2>
+<div class="outline-text-2" id="text-org9707318">
 </div>
-<div id="outline-container-org879ad15" class="outline-3">
-<h3 id="org879ad15">Open, Creat, Close, Unlink</h3>
-<div class="outline-text-3" id="text-org879ad15">
+<div id="outline-container-org8932227" class="outline-3">
+<h3 id="org8932227">Open, Creat, Close, Unlink</h3>
+<div class="outline-text-3" id="text-org8932227">
 <p>
 Other than the default standard input, output and error, you must explicitly open files in order to read or write them (such as with I/O manipulation with external hardware).
 </p>
@@ -1676,9 +1676,9 @@ There is a limit (often about 20) on the number of files that a program may have
 </div>
 </div>
 
-<div id="outline-container-orgeaa7b49" class="outline-3">
-<h3 id="orgeaa7b49">Random Access - Lseek</h3>
-<div class="outline-text-3" id="text-orgeaa7b49">
+<div id="outline-container-org8b85798" class="outline-3">
+<h3 id="org8b85798">Random Access - Lseek</h3>
+<div class="outline-text-3" id="text-org8b85798">
 <p>
 When necessary, a file can be read or written in any arbitrary order. The system call `lseek` provides a way to move around in a file without reading or writing any data:
 </p>
@@ -1694,9 +1694,9 @@ When necessary, a file can be read or written in any arbitrary order. The system
 </div>
 </div>
 
-<div id="outline-container-orgfcb21b9" class="outline-3">
-<h3 id="orgfcb21b9">Example - A Storage Allocator</h3>
-<div class="outline-text-3" id="text-orgfcb21b9">
+<div id="outline-container-org385f9c8" class="outline-3">
+<h3 id="org385f9c8">Example - A Storage Allocator</h3>
+<div class="outline-text-3" id="text-org385f9c8">
 <p>
 This example creates a memory allocator that allows for non-continuous and/or segmented memory allocation as shown in Figure \ref{fig:storageexample}.
 </p>
@@ -1912,13 +1912,13 @@ Where `morecore` is used to obtain more storage from the operating system.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0160cd2">What is <code>stow</code>?</a>
+<li><a href="#orgf23a078">What is <code>stow</code>?</a>
 <ul>
-<li><a href="#org5b94fbf">Example 1</a></li>
-<li><a href="#orgdcbfc23">Example 2</a></li>
+<li><a href="#org1c113ba">Example 1</a></li>
+<li><a href="#org1689294">Example 2</a></li>
 </ul>
 </li>
-<li><a href="#orgb590034">My <code>stow</code> Workflow</a></li>
+<li><a href="#org7830696">My <code>stow</code> Workflow</a></li>
 </ul>
 </div>
 </nav>
@@ -1930,9 +1930,9 @@ A few weeks ago I made a post about keeping track of your dotfiles using <code>r
 This post is going to talk about what stow is and how I currently use it.
 </p>
 
-<div id="outline-container-org0160cd2" class="outline-2">
-<h2 id="org0160cd2">What is <code>stow</code>?</h2>
-<div class="outline-text-2" id="text-org0160cd2">
+<div id="outline-container-orgf23a078" class="outline-2">
+<h2 id="orgf23a078">What is <code>stow</code>?</h2>
+<div class="outline-text-2" id="text-orgf23a078">
 <p>
 Pulling this quote directly from the <a href="https://www.youtube.com/watch?v=MJBVA4LeJKA">GNU page</a>:
 </p>
@@ -1956,9 +1956,9 @@ In other words, it symlinks the desired file based of a starting directory and t
 </blockquote>
 </div>
 
-<div id="outline-container-org5b94fbf" class="outline-3">
-<h3 id="org5b94fbf">Example 1</h3>
-<div class="outline-text-3" id="text-org5b94fbf">
+<div id="outline-container-org1c113ba" class="outline-3">
+<h3 id="org1c113ba">Example 1</h3>
+<div class="outline-text-3" id="text-org1c113ba">
 <p>
 You have a vimrc file in <code>~/.vimrc</code>. You want to symlink that. So you have a git repository that you cloned in <code>~/Code/dotfiles</code>. If you want to keep track of your vimrc file, what you do is first do is create a directory called vim (or whatever else you want to call it) in your dotfiles directory. After doing so, move your vimrc into the vim directory you just created. Now, if you type <code>stow ~/ vim</code> while you are in the dotfiles directory you will symlink you vimrc to <code>~/.vimrc</code>.
 </p>
@@ -1969,9 +1969,9 @@ The <code>-t</code> flag sets that starting location for where you want the syml
 </div>
 </div>
 
-<div id="outline-container-orgdcbfc23" class="outline-3">
-<h3 id="orgdcbfc23">Example 2</h3>
-<div class="outline-text-3" id="text-orgdcbfc23">
+<div id="outline-container-org1689294" class="outline-3">
+<h3 id="org1689294">Example 2</h3>
+<div class="outline-text-3" id="text-org1689294">
 <p>
 You have a config file <code>~/.config/nvim/init.vim</code> that you want to keep track of. Following the steps from the previous example, you create a directory called <code>nvim</code> in your dotfiles and create a file structure <code>nvim/.config/nvim/</code>. Copy the init.vim file so you have the structure <code>nvim/.config/nvim/init.vim'. To symlink this file you type =stow -t ~/ nvim</code>.
 </p>
@@ -1983,9 +1983,9 @@ Again, from the point of view of <code>stow</code>, you are linking the path <co
 </div>
 </div>
 
-<div id="outline-container-orgb590034" class="outline-2">
-<h2 id="orgb590034">My <code>stow</code> Workflow</h2>
-<div class="outline-text-2" id="text-orgb590034">
+<div id="outline-container-org7830696" class="outline-2">
+<h2 id="org7830696">My <code>stow</code> Workflow</h2>
+<div class="outline-text-2" id="text-org7830696">
 <p>
 As a TL;DR, my workflow is essentially what I described above. The only difference is that I have a script that has all the name of the directories appended to the stow command. The only difference is that I also keep track of my packages in a different script by running <code>pacman -Qqe &gt; PackageList.txt</code> which creates a list of all the packages you installed in such a way that you can use it as an input to pacman later on. So at the end of the day, you have a little scrip that looks like the following:
 </p>
@@ -2020,17 +2020,17 @@ stow -t ~/ aliasrc dunst <span style="color: #fabd2f;">git</span> Xmodmap zshenv
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga3fd747">Introduction</a></li>
-<li><a href="#org188864b">pandoc</a></li>
-<li><a href="#orgc2bc311">Compile Script</a></li>
-<li><a href="#org8e4cbcb">Tying this all together with Vim</a></li>
+<li><a href="#org0c20eb8">Introduction</a></li>
+<li><a href="#org73090d4">pandoc</a></li>
+<li><a href="#orgcb951f7">Compile Script</a></li>
+<li><a href="#org8221b68">Tying this all together with Vim</a></li>
 </ul>
 </div>
 </nav>
 
-<div id="outline-container-orga3fd747" class="outline-2">
-<h2 id="orga3fd747">Introduction</h2>
-<div class="outline-text-2" id="text-orga3fd747">
+<div id="outline-container-org0c20eb8" class="outline-2">
+<h2 id="org0c20eb8">Introduction</h2>
+<div class="outline-text-2" id="text-org0c20eb8">
 <p>
 Markdown is an extremely quick and convenient way to jot down notes, draft up a quick styled paper, or even with the yaml metada block for pandoc markdown write a full paper. During college I went through a few markdown applications that auto-generated the markdown on the fly, managed your notes into a tree structure for you, or had auto complete commands. I even tried using Vim for a while, but gave up on it for a while. Recently I have rekindled my affinity for Vim because of work and decided to give note taking through Vim another shot. Needless to say that it went well because this post exists.
 </p>
@@ -2041,9 +2041,9 @@ If you don&rsquo;t know the basics of Markdown, you can refer to <a href="https:
 </div>
 </div>
 
-<div id="outline-container-org188864b" class="outline-2">
-<h2 id="org188864b">pandoc</h2>
-<div class="outline-text-2" id="text-org188864b">
+<div id="outline-container-org73090d4" class="outline-2">
+<h2 id="org73090d4">pandoc</h2>
+<div class="outline-text-2" id="text-org73090d4">
 <p>
 Very simply pandoc is a file converter. You can convert LaTeX files into html files, pdf files, or whatever other file type pandoc supports. This is a similar case to markdown. A typical conversion from markdown to pdf using pandoc would be:
 </p>
@@ -2059,9 +2059,9 @@ Which takes a markdown file called &ldquo;markdown&rdquo; and creates a pdf file
 </div>
 </div>
 
-<div id="outline-container-orgc2bc311" class="outline-2">
-<h2 id="orgc2bc311">Compile Script</h2>
-<div class="outline-text-2" id="text-orgc2bc311">
+<div id="outline-container-orgcb951f7" class="outline-2">
+<h2 id="orgcb951f7">Compile Script</h2>
+<div class="outline-text-2" id="text-orgcb951f7">
 <p>
 This is the glue that will make the compiling a breeze. Create a document called &ldquo;compile&rdquo; and insert the following code:
 </p>
@@ -2088,9 +2088,9 @@ All this script does is when it is passed a file it will run a certain command b
 </div>
 </div>
 
-<div id="outline-container-org8e4cbcb" class="outline-2">
-<h2 id="org8e4cbcb">Tying this all together with Vim</h2>
-<div class="outline-text-2" id="text-org8e4cbcb">
+<div id="outline-container-org8221b68" class="outline-2">
+<h2 id="org8221b68">Tying this all together with Vim</h2>
+<div class="outline-text-2" id="text-org8221b68">
 <p>
 Now we want a quick and easy way to run this command and pass the file we are editing from Vim. Fortunately, this is easy enough! Copy the following command into your .vimrc:
 </p>

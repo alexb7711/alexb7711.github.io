@@ -10,12 +10,7 @@
 <title>The C Programming Language Notes</title>
 <meta name="author" content="Alex Brown">
 <meta name="referrer" content="no-referrer">
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/htmlize.css"/>
-<link rel="stylesheet" type="text/css" href="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/css/readtheorg.css"/>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/lib/js/jquery.stickytableheaders.min.js"></script>
-<script type="text/javascript" src="https://fniessen.github.io/org-html-themes/src/readtheorg_theme/js/readtheorg.js"></script>
+<link href= "readtheorg/readtheorg.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
 <body>
 <div id="preamble" class="status"><div class="header">
@@ -27,72 +22,72 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org940022e">Types, Operators, and Expressions</a>
+<li><a href="#orgd73432e">Types, Operators, and Expressions</a>
 <ul>
-<li><a href="#org6cc3116">Constants</a></li>
-<li><a href="#orgf06638a">Increment and Decrement Operators</a></li>
-<li><a href="#orgea9fb11">Bitwise Operators</a></li>
+<li><a href="#org9e7929d">Constants</a></li>
+<li><a href="#orgaaedb87">Increment and Decrement Operators</a></li>
+<li><a href="#org73938b4">Bitwise Operators</a></li>
 </ul>
 </li>
-<li><a href="#orge62f1d5">Control Flow</a>
+<li><a href="#orgce00bff">Control Flow</a>
 <ul>
-<li><a href="#org6383b8b">Break and Continue</a></li>
-<li><a href="#orga6c92fa">GoTo and Labels</a></li>
+<li><a href="#org9e9854d">Break and Continue</a></li>
+<li><a href="#org88c23ab">GoTo and Labels</a></li>
 </ul>
 </li>
-<li><a href="#orgc4bc6a0">Functions and Program Structure</a>
+<li><a href="#org492854c">Functions and Program Structure</a>
 <ul>
-<li><a href="#org62d4df2">Static Variables</a></li>
+<li><a href="#org72c5139">Static Variables</a></li>
 </ul>
 </li>
-<li><a href="#org817fce4">Types, Operators, and Expressions</a>
+<li><a href="#org9f2f7ff">Types, Operators, and Expressions</a>
 <ul>
-<li><a href="#orgb9d671c">Constants</a></li>
-<li><a href="#orgb1c4ceb">Increment and Decrement Operators</a></li>
-<li><a href="#org78549e1">Bitwise Operators</a></li>
+<li><a href="#org7ffbe00">Constants</a></li>
+<li><a href="#org1cd9762">Increment and Decrement Operators</a></li>
+<li><a href="#orgd0b6539">Bitwise Operators</a></li>
 </ul>
 </li>
-<li><a href="#orgc9e5ed8">Control Flow</a>
+<li><a href="#org2781555">Control Flow</a>
 <ul>
-<li><a href="#org595c373">Break and Continue</a></li>
-<li><a href="#orga871031">GoTo and Labels</a></li>
+<li><a href="#orgf9ce5eb">Break and Continue</a></li>
+<li><a href="#org206b967">GoTo and Labels</a></li>
 </ul>
 </li>
-<li><a href="#org00eb4a7">Functions and Program Structure</a>
+<li><a href="#org5d5cdf5">Functions and Program Structure</a>
 <ul>
-<li><a href="#orgb8a1dea">Static Variables</a></li>
+<li><a href="#orgae42c7b">Static Variables</a></li>
 </ul>
 </li>
-<li><a href="#org0586cef">Pointers and Arrays</a>
+<li><a href="#org38ed660">Pointers and Arrays</a>
 <ul>
-<li><a href="#org136273e">Address Arithmetic</a></li>
-<li><a href="#org41aa07f">Character Pointers and Functions</a></li>
-<li><a href="#orgf0c42ea">Pointer Arrays; Pointers to Pointers</a></li>
-<li><a href="#org63a00a0">Multi-Dimensional Arrays</a></li>
-<li><a href="#orge4f2e7b">Initialization of Pointer Arrays</a></li>
-<li><a href="#org5aee65c">Pointers vs. Multi-Dimensional Array</a></li>
-<li><a href="#org016d092">Command Line Arguments</a></li>
-<li><a href="#org860221e">Pointers To Functions</a></li>
-<li><a href="#orgb71bdb4">Complicated Declarations</a></li>
+<li><a href="#org543f791">Address Arithmetic</a></li>
+<li><a href="#org3bc87da">Character Pointers and Functions</a></li>
+<li><a href="#org3020395">Pointer Arrays; Pointers to Pointers</a></li>
+<li><a href="#org1b19c88">Multi-Dimensional Arrays</a></li>
+<li><a href="#org0aaf020">Initialization of Pointer Arrays</a></li>
+<li><a href="#org214130f">Pointers vs. Multi-Dimensional Array</a></li>
+<li><a href="#org0822853">Command Line Arguments</a></li>
+<li><a href="#orgf6a7bc8">Pointers To Functions</a></li>
+<li><a href="#org8d1192b">Complicated Declarations</a></li>
 </ul>
 </li>
-<li><a href="#orgffd896d">Structures</a>
+<li><a href="#orgbbb6b9a">Structures</a>
 <ul>
-<li><a href="#org996e959">Arrays of Structures</a></li>
-<li><a href="#orgbcb0228">Table Lookup</a></li>
+<li><a href="#org03cb1d2">Arrays of Structures</a></li>
+<li><a href="#orga90a6f7">Table Lookup</a></li>
 </ul>
 </li>
-<li><a href="#orga1a9698">Input and Output</a>
+<li><a href="#org02d3d98">Input and Output</a>
 <ul>
-<li><a href="#orgce0a91a">Command Execution</a></li>
-<li><a href="#org2d512ec">Storage Management</a></li>
+<li><a href="#org33ae63d">Command Execution</a></li>
+<li><a href="#org306ddc2">Storage Management</a></li>
 </ul>
 </li>
-<li><a href="#org0844fac">The UNIX System Interface</a>
+<li><a href="#org9707318">The UNIX System Interface</a>
 <ul>
-<li><a href="#org879ad15">Open, Creat, Close, Unlink</a></li>
-<li><a href="#orgeaa7b49">Random Access - Lseek</a></li>
-<li><a href="#orgfcb21b9">Example - A Storage Allocator</a></li>
+<li><a href="#org8932227">Open, Creat, Close, Unlink</a></li>
+<li><a href="#org8b85798">Random Access - Lseek</a></li>
+<li><a href="#org385f9c8">Example - A Storage Allocator</a></li>
 </ul>
 </li>
 </ul>
@@ -106,13 +101,13 @@
 I mostly code in C++ and never <i>really</i> spent the time to learn the nuances of C. I recently read through [The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>) and spent the time taking notes. Below is what I found useful and relevant. All diagrams and code snippets are from [The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>).
 </p>
 
-<div id="outline-container-org940022e" class="outline-2">
-<h2 id="org940022e">Types, Operators, and Expressions</h2>
-<div class="outline-text-2" id="text-org940022e">
+<div id="outline-container-orgd73432e" class="outline-2">
+<h2 id="orgd73432e">Types, Operators, and Expressions</h2>
+<div class="outline-text-2" id="text-orgd73432e">
 </div>
-<div id="outline-container-org6cc3116" class="outline-3">
-<h3 id="org6cc3116">Constants</h3>
-<div class="outline-text-3" id="text-org6cc3116">
+<div id="outline-container-org9e7929d" class="outline-3">
+<h3 id="org9e7929d">Constants</h3>
+<div class="outline-text-3" id="text-org9e7929d">
 <p>
 A character constant is an integer, written as one character within single quotes such as &rsquo;x&rsquo;. The value of a character constant is the numeric value of the character in the machine&rsquo;s character set. For example, &rsquo;0&rsquo; has the value 48 in ASCII.
 </p>
@@ -162,9 +157,9 @@ The complete set of escape sequences is:
 </div>
 </div>
 
-<div id="outline-container-orgf06638a" class="outline-3">
-<h3 id="orgf06638a">Increment and Decrement Operators</h3>
-<div class="outline-text-3" id="text-orgf06638a">
+<div id="outline-container-orgaaedb87" class="outline-3">
+<h3 id="orgaaedb87">Increment and Decrement Operators</h3>
+<div class="outline-text-3" id="text-orgaaedb87">
 <p>
 An example of when to use `++i` rather than `i++`:
 </p>
@@ -210,14 +205,14 @@ This is the same code as:
 </div>
 </div>
 
-<div id="outline-container-orgea9fb11" class="outline-3">
-<h3 id="orgea9fb11">Bitwise Operators</h3>
-<div class="outline-text-3" id="text-orgea9fb11">
+<div id="outline-container-org73938b4" class="outline-3">
+<h3 id="org73938b4">Bitwise Operators</h3>
+<div class="outline-text-3" id="text-org73938b4">
 <p>
 C provides six operators for bit manipulation; these may only be applied to integral operands, that is, `char`, `short`, `int`, and `long`, whether signed or unsigned.
 </p>
 
-<pre class="example" id="org80ef437">
+<pre class="example" id="org6ac0712">
 &amp;    bitwise AND
 |    bitwise inclusive OR
 ^    bitwise exclusive OR
@@ -233,13 +228,13 @@ C provides six operators for bit manipulation; these may only be applied to inte
 </div>
 </div>
 
-<div id="outline-container-orge62f1d5" class="outline-2">
-<h2 id="orge62f1d5">Control Flow</h2>
-<div class="outline-text-2" id="text-orge62f1d5">
+<div id="outline-container-orgce00bff" class="outline-2">
+<h2 id="orgce00bff">Control Flow</h2>
+<div class="outline-text-2" id="text-orgce00bff">
 </div>
-<div id="outline-container-org6383b8b" class="outline-3">
-<h3 id="org6383b8b">Break and Continue</h3>
-<div class="outline-text-3" id="text-org6383b8b">
+<div id="outline-container-org9e9854d" class="outline-3">
+<h3 id="org9e9854d">Break and Continue</h3>
+<div class="outline-text-3" id="text-org9e9854d">
 <p>
 The `break` statement provides an early exit from `for`, `while`, and `do`, just as it does from `switch`. <b><b>A `break` causes the innermost enclosing loop or switch to be exited immediately.</b></b>
 </p>
@@ -250,9 +245,9 @@ The `continue` statement is related to `break`, but less often used; <b><b>it ca
 </div>
 </div>
 
-<div id="outline-container-orga6c92fa" class="outline-3">
-<h3 id="orga6c92fa">GoTo and Labels</h3>
-<div class="outline-text-3" id="text-orga6c92fa">
+<div id="outline-container-org88c23ab" class="outline-3">
+<h3 id="org88c23ab">GoTo and Labels</h3>
+<div class="outline-text-3" id="text-org88c23ab">
 <p>
 `goto` is almost never needed, but it can be useful in situations such as abandoning a process in some deeply nested structure, such as breaking out of two or more loops at once as shown below:
 </p>
@@ -280,13 +275,13 @@ error:
 </div>
 </div>
 
-<div id="outline-container-orgc4bc6a0" class="outline-2">
-<h2 id="orgc4bc6a0">Functions and Program Structure</h2>
-<div class="outline-text-2" id="text-orgc4bc6a0">
+<div id="outline-container-org492854c" class="outline-2">
+<h2 id="org492854c">Functions and Program Structure</h2>
+<div class="outline-text-2" id="text-org492854c">
 </div>
-<div id="outline-container-org62d4df2" class="outline-3">
-<h3 id="org62d4df2">Static Variables</h3>
-<div class="outline-text-3" id="text-org62d4df2">
+<div id="outline-container-org72c5139" class="outline-3">
+<h3 id="org72c5139">Static Variables</h3>
+<div class="outline-text-3" id="text-org72c5139">
 <p>
 The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled
 </p>
@@ -294,13 +289,13 @@ The `static` declaration, applied to an external variable or function, limits th
 </div>
 </div>
 
-<div id="outline-container-org817fce4" class="outline-2">
-<h2 id="org817fce4">Types, Operators, and Expressions</h2>
-<div class="outline-text-2" id="text-org817fce4">
+<div id="outline-container-org9f2f7ff" class="outline-2">
+<h2 id="org9f2f7ff">Types, Operators, and Expressions</h2>
+<div class="outline-text-2" id="text-org9f2f7ff">
 </div>
-<div id="outline-container-orgb9d671c" class="outline-3">
-<h3 id="orgb9d671c">Constants</h3>
-<div class="outline-text-3" id="text-orgb9d671c">
+<div id="outline-container-org7ffbe00" class="outline-3">
+<h3 id="org7ffbe00">Constants</h3>
+<div class="outline-text-3" id="text-org7ffbe00">
 <p>
 A character constant is an integer, written as one character within single quotes such as &rsquo;x&rsquo;. The value of a character constant is the numeric value of the character in the machine&rsquo;s character set. For example, &rsquo;0&rsquo; has the value 48 in ASCII.
 </p>
@@ -329,7 +324,7 @@ or in hexadecimal,
 The complete set of escape sequences is:
 </p>
 
-<pre class="example" id="org463d352">
+<pre class="example" id="org3065270">
 \a       alert (bell) character
 \b       backspace
 \f       formfeed
@@ -348,9 +343,9 @@ The complete set of escape sequences is:
 </div>
 </div>
 
-<div id="outline-container-orgb1c4ceb" class="outline-3">
-<h3 id="orgb1c4ceb">Increment and Decrement Operators</h3>
-<div class="outline-text-3" id="text-orgb1c4ceb">
+<div id="outline-container-org1cd9762" class="outline-3">
+<h3 id="org1cd9762">Increment and Decrement Operators</h3>
+<div class="outline-text-3" id="text-org1cd9762">
 <p>
 An example of when to use `++i` rather than `i++`:
 </p>
@@ -396,14 +391,14 @@ This is the same code as:
 </div>
 </div>
 
-<div id="outline-container-org78549e1" class="outline-3">
-<h3 id="org78549e1">Bitwise Operators</h3>
-<div class="outline-text-3" id="text-org78549e1">
+<div id="outline-container-orgd0b6539" class="outline-3">
+<h3 id="orgd0b6539">Bitwise Operators</h3>
+<div class="outline-text-3" id="text-orgd0b6539">
 <p>
 C provides six operators for bit manipulation; these may only be applied to integral operands, that is, `char`, `short`, `int`, and `long`, whether signed or unsigned.
 </p>
 
-<pre class="example" id="orgf0dadbf">
+<pre class="example" id="org5aff720">
 &amp;    bitwise AND
 |    bitwise inclusive OR
 ^    bitwise exclusive OR
@@ -419,13 +414,13 @@ C provides six operators for bit manipulation; these may only be applied to inte
 </div>
 </div>
 
-<div id="outline-container-orgc9e5ed8" class="outline-2">
-<h2 id="orgc9e5ed8">Control Flow</h2>
-<div class="outline-text-2" id="text-orgc9e5ed8">
+<div id="outline-container-org2781555" class="outline-2">
+<h2 id="org2781555">Control Flow</h2>
+<div class="outline-text-2" id="text-org2781555">
 </div>
-<div id="outline-container-org595c373" class="outline-3">
-<h3 id="org595c373">Break and Continue</h3>
-<div class="outline-text-3" id="text-org595c373">
+<div id="outline-container-orgf9ce5eb" class="outline-3">
+<h3 id="orgf9ce5eb">Break and Continue</h3>
+<div class="outline-text-3" id="text-orgf9ce5eb">
 <p>
 The `break` statement provides an early exit from `for`, `while`, and `do`, just as it does from `switch`. <b><b>A `break` causes the innermost enclosing loop or switch to be exited immediately.</b></b>
 </p>
@@ -436,9 +431,9 @@ The `continue` statement is related to `break`, but less often used; <b><b>it ca
 </div>
 </div>
 
-<div id="outline-container-orga871031" class="outline-3">
-<h3 id="orga871031">GoTo and Labels</h3>
-<div class="outline-text-3" id="text-orga871031">
+<div id="outline-container-org206b967" class="outline-3">
+<h3 id="org206b967">GoTo and Labels</h3>
+<div class="outline-text-3" id="text-org206b967">
 <p>
 `goto` is almost never needed, but it can be useful in situations such as abandoning a process in some deeply nested structure, such as breaking out of two or more loops at once as shown below:
 </p>
@@ -466,13 +461,13 @@ error:
 </div>
 </div>
 
-<div id="outline-container-org00eb4a7" class="outline-2">
-<h2 id="org00eb4a7">Functions and Program Structure</h2>
-<div class="outline-text-2" id="text-org00eb4a7">
+<div id="outline-container-org5d5cdf5" class="outline-2">
+<h2 id="org5d5cdf5">Functions and Program Structure</h2>
+<div class="outline-text-2" id="text-org5d5cdf5">
 </div>
-<div id="outline-container-orgb8a1dea" class="outline-3">
-<h3 id="orgb8a1dea">Static Variables</h3>
-<div class="outline-text-3" id="text-orgb8a1dea">
+<div id="outline-container-orgae42c7b" class="outline-3">
+<h3 id="orgae42c7b">Static Variables</h3>
+<div class="outline-text-3" id="text-orgae42c7b">
 <p>
 &lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream
 The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled.
@@ -483,9 +478,9 @@ The `static` declaration, applied to an external variable or function, limits th
 </div>
 </div>
 
-<div id="outline-container-org0586cef" class="outline-2">
-<h2 id="org0586cef">Pointers and Arrays</h2>
-<div class="outline-text-2" id="text-org0586cef">
+<div id="outline-container-org38ed660" class="outline-2">
+<h2 id="org38ed660">Pointers and Arrays</h2>
+<div class="outline-text-2" id="text-org38ed660">
 <p>
 In C, there is a strong relationship between pointers and arrays. Any operation that can be achieved by array subscripting can also be done with pointers. The pointer version will generally be faster, but at least to the uninitiated, somewhat harder to understand.
 </p>
@@ -525,9 +520,9 @@ As far as `foo` is concerned, the fact that the parameter refers to part of a la
 </p>
 </div>
 
-<div id="outline-container-org136273e" class="outline-3">
-<h3 id="org136273e">Address Arithmetic</h3>
-<div class="outline-text-3" id="text-org136273e">
+<div id="outline-container-org543f791" class="outline-3">
+<h3 id="org543f791">Address Arithmetic</h3>
+<div class="outline-text-3" id="text-org543f791">
 <p>
 Because memory is allocated sequentially, we can use mathematical comparisons to see if we have enough memory allocated in a buffer, to see a position of a value in an array, etc. For example:
 </p>
@@ -541,9 +536,9 @@ Because memory is allocated sequentially, we can use mathematical comparisons to
 </div>
 </div>
 
-<div id="outline-container-org41aa07f" class="outline-3">
-<h3 id="org41aa07f">Character Pointers and Functions</h3>
-<div class="outline-text-3" id="text-org41aa07f">
+<div id="outline-container-org3bc87da" class="outline-3">
+<h3 id="org3bc87da">Character Pointers and Functions</h3>
+<div class="outline-text-3" id="text-org3bc87da">
 <p>
 A string constant is written as `&ldquo;I am a string&rdquo;`. It is represented as an array of characters and is terminated with a `\0`.
 </p>
@@ -585,22 +580,22 @@ Assigns `pmessage` to the &ldquo;Hello, World!&rdquo;. This is <b>not</b> a copy
 </div>
 </div>
 
-<div id="outline-container-orgf0c42ea" class="outline-3">
-<h3 id="orgf0c42ea">Pointer Arrays; Pointers to Pointers</h3>
-<div class="outline-text-3" id="text-orgf0c42ea">
+<div id="outline-container-org3020395" class="outline-3">
+<h3 id="org3020395">Pointer Arrays; Pointers to Pointers</h3>
+<div class="outline-text-3" id="text-org3020395">
 <p>
 To create an array of pointers, we can say:
 </p>
 
-<pre class="example" id="org0100f53">
+<pre class="example" id="org17ff54b">
 char* lineptr[10];	// Array of character pointers
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org63a00a0" class="outline-3">
-<h3 id="org63a00a0">Multi-Dimensional Arrays</h3>
-<div class="outline-text-3" id="text-org63a00a0">
+<div id="outline-container-org1b19c88" class="outline-3">
+<h3 id="org1b19c88">Multi-Dimensional Arrays</h3>
+<div class="outline-text-3" id="text-org1b19c88">
 <p>
 C provides rectangular multi-dimensional arrays, although in practice they are much less used than arrays of pointers.
 </p>
@@ -632,9 +627,9 @@ is an array of 13 pointers to integers. More generally, only the first dimension
 </div>
 </div>
 
-<div id="outline-container-orge4f2e7b" class="outline-3">
-<h3 id="orge4f2e7b">Initialization of Pointer Arrays</h3>
-<div class="outline-text-3" id="text-orge4f2e7b">
+<div id="outline-container-org0aaf020" class="outline-3">
+<h3 id="org0aaf020">Initialization of Pointer Arrays</h3>
+<div class="outline-text-3" id="text-org0aaf020">
 <div class="org-src-container">
 <pre class="src src-C"><span style="color: #fabd2f;">char</span>* <span style="color: #83a598;">array_of_pointers</span><span style="color: #fe8019;">[]</span> =
 <span style="color: #fe8019;">{</span>
@@ -647,9 +642,9 @@ is an array of 13 pointers to integers. More generally, only the first dimension
 </div>
 </div>
 
-<div id="outline-container-org5aee65c" class="outline-3">
-<h3 id="org5aee65c">Pointers vs. Multi-Dimensional Array</h3>
-<div class="outline-text-3" id="text-org5aee65c">
+<div id="outline-container-org214130f" class="outline-3">
+<h3 id="org214130f">Pointers vs. Multi-Dimensional Array</h3>
+<div class="outline-text-3" id="text-org214130f">
 <p>
 The big difference between
 </p>
@@ -667,17 +662,17 @@ Is that the first one allocates all 10x20 array, the second only allocates 10 in
 </div>
 </div>
 
-<div id="outline-container-org016d092" class="outline-3">
-<h3 id="org016d092">Command Line Arguments</h3>
-<div class="outline-text-3" id="text-org016d092">
+<div id="outline-container-org0822853" class="outline-3">
+<h3 id="org0822853">Command Line Arguments</h3>
+<div class="outline-text-3" id="text-org0822853">
 <p>
 When `main` is called, it is called with two arguments. The first (conventionally called `argc` for argument count) is the number of command-line arguments. The second (`argv`, for argument vector), is a pointer to an array of character strings that contain the arguments, one per string. We customarily use multiple levels of pointers to manipulate these character strings.
 </p>
 </div>
 
-<div id="outline-container-orga18974a" class="outline-4">
-<h4 id="orga18974a">Accepting Command Line Flags</h4>
-<div class="outline-text-4" id="text-orga18974a">
+<div id="outline-container-org22fe119" class="outline-4">
+<h4 id="org22fe119">Accepting Command Line Flags</h4>
+<div class="outline-text-4" id="text-org22fe119">
 <div class="org-src-container">
 <pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">stdio.h</span><span style="color: #fe8019;">&gt;</span>
 
@@ -768,9 +763,9 @@ When `main` is called, it is called with two arguments. The first (conventionall
 </div>
 </div>
 
-<div id="outline-container-org860221e" class="outline-3">
-<h3 id="org860221e">Pointers To Functions</h3>
-<div class="outline-text-3" id="text-org860221e">
+<div id="outline-container-orgf6a7bc8" class="outline-3">
+<h3 id="orgf6a7bc8">Pointers To Functions</h3>
+<div class="outline-text-3" id="text-orgf6a7bc8">
 <p>
 In C, it is possible to define pointers to functions which can be assigned, placed in arrays, passed to functions, returned by functions, and so on.
 </p>
@@ -794,9 +789,9 @@ Says that `comp` is a pointer to a function that has two `void*` as arguments.
 </div>
 </div>
 
-<div id="outline-container-orgb71bdb4" class="outline-3">
-<h3 id="orgb71bdb4">Complicated Declarations</h3>
-<div class="outline-text-3" id="text-orgb71bdb4">
+<div id="outline-container-org8d1192b" class="outline-3">
+<h3 id="org8d1192b">Complicated Declarations</h3>
+<div class="outline-text-3" id="text-org8d1192b">
 <div class="org-src-container">
 <pre class="src src-C"><span style="color: #fabd2f;">char</span> **<span style="color: #b8bb26;">argv</span>
 
@@ -835,9 +830,9 @@ Says that `comp` is a pointer to a function that has two `void*` as arguments.
 </div>
 </div>
 
-<div id="outline-container-orgffd896d" class="outline-2">
-<h2 id="orgffd896d">Structures</h2>
-<div class="outline-text-2" id="text-orgffd896d">
+<div id="outline-container-orgbbb6b9a" class="outline-2">
+<h2 id="orgbbb6b9a">Structures</h2>
+<div class="outline-text-2" id="text-orgbbb6b9a">
 <p>
 A `struct` declaration defines a type. The right brace that terminates the list of members may be followed by a list of variables, just as for any basic type. That is,
 </p>
@@ -861,9 +856,9 @@ Is analogous to `int c`.
 </p>
 </div>
 
-<div id="outline-container-org996e959" class="outline-3">
-<h3 id="org996e959">Arrays of Structures</h3>
-<div class="outline-text-3" id="text-org996e959">
+<div id="outline-container-org03cb1d2" class="outline-3">
+<h3 id="org03cb1d2">Arrays of Structures</h3>
+<div class="outline-text-3" id="text-org03cb1d2">
 <p>
 When defining an array of structures, it is acceptable to define it in the following manner:
 </p>
@@ -922,9 +917,9 @@ However, it is more precise to enclose the initializers for each &ldquo;row&rdqu
 </div>
 </div>
 
-<div id="outline-container-orgbcb0228" class="outline-3">
-<h3 id="orgbcb0228">Table Lookup</h3>
-<div class="outline-text-3" id="text-orgbcb0228">
+<div id="outline-container-orga90a6f7" class="outline-3">
+<h3 id="orga90a6f7">Table Lookup</h3>
+<div class="outline-text-3" id="text-orga90a6f7">
 <p>
 This section will be about writing the innards of a table-lookup package.
 </p>
@@ -1083,13 +1078,13 @@ The hashing process produces a staring index in the array `hashtab`; if the stri
 </div>
 </div>
 
-<div id="outline-container-orga1a9698" class="outline-2">
-<h2 id="orga1a9698">Input and Output</h2>
-<div class="outline-text-2" id="text-orga1a9698">
+<div id="outline-container-org02d3d98" class="outline-2">
+<h2 id="org02d3d98">Input and Output</h2>
+<div class="outline-text-2" id="text-org02d3d98">
 </div>
-<div id="outline-container-orgce0a91a" class="outline-3">
-<h3 id="orgce0a91a">Command Execution</h3>
-<div class="outline-text-3" id="text-orgce0a91a">
+<div id="outline-container-org33ae63d" class="outline-3">
+<h3 id="org33ae63d">Command Execution</h3>
+<div class="outline-text-3" id="text-org33ae63d">
 <p>
 The function `system(char* s)` executes the commands contained in the character string `s`, then resumes execution of the current program.
 </p>
@@ -1101,9 +1096,9 @@ The function `system(char* s)` executes the commands contained in the character 
 </div>
 </div>
 
-<div id="outline-container-org2d512ec" class="outline-3">
-<h3 id="org2d512ec">Storage Management</h3>
-<div class="outline-text-3" id="text-org2d512ec">
+<div id="outline-container-org306ddc2" class="outline-3">
+<h3 id="org306ddc2">Storage Management</h3>
+<div class="outline-text-3" id="text-org306ddc2">
 <div class="org-src-container">
 <pre class="src src-C"><span style="color: #fabd2f;">void</span>* <span style="color: #b8bb26;">malloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">n</span><span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">returns a pointer to n bytes of uninitialized storage</span>
 <span style="color: #fabd2f;">void</span>* <span style="color: #b8bb26;">calloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">n</span>, <span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">size</span><span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">returns a pointer to enough space for an array of n objects of the specified size. </span>
@@ -1114,13 +1109,13 @@ The function `system(char* s)` executes the commands contained in the character 
 </div>
 </div>
 
-<div id="outline-container-org0844fac" class="outline-2">
-<h2 id="org0844fac">The UNIX System Interface</h2>
-<div class="outline-text-2" id="text-org0844fac">
+<div id="outline-container-org9707318" class="outline-2">
+<h2 id="org9707318">The UNIX System Interface</h2>
+<div class="outline-text-2" id="text-org9707318">
 </div>
-<div id="outline-container-org879ad15" class="outline-3">
-<h3 id="org879ad15">Open, Creat, Close, Unlink</h3>
-<div class="outline-text-3" id="text-org879ad15">
+<div id="outline-container-org8932227" class="outline-3">
+<h3 id="org8932227">Open, Creat, Close, Unlink</h3>
+<div class="outline-text-3" id="text-org8932227">
 <p>
 Other than the default standard input, output and error, you must explicitly open files in order to read or write them (such as with I/O manipulation with external hardware).
 </p>
@@ -1131,9 +1126,9 @@ There is a limit (often about 20) on the number of files that a program may have
 </div>
 </div>
 
-<div id="outline-container-orgeaa7b49" class="outline-3">
-<h3 id="orgeaa7b49">Random Access - Lseek</h3>
-<div class="outline-text-3" id="text-orgeaa7b49">
+<div id="outline-container-org8b85798" class="outline-3">
+<h3 id="org8b85798">Random Access - Lseek</h3>
+<div class="outline-text-3" id="text-org8b85798">
 <p>
 When necessary, a file can be read or written in any arbitrary order. The system call `lseek` provides a way to move around in a file without reading or writing any data:
 </p>
@@ -1149,9 +1144,9 @@ When necessary, a file can be read or written in any arbitrary order. The system
 </div>
 </div>
 
-<div id="outline-container-orgfcb21b9" class="outline-3">
-<h3 id="orgfcb21b9">Example - A Storage Allocator</h3>
-<div class="outline-text-3" id="text-orgfcb21b9">
+<div id="outline-container-org385f9c8" class="outline-3">
+<h3 id="org385f9c8">Example - A Storage Allocator</h3>
+<div class="outline-text-3" id="text-org385f9c8">
 <p>
 This example creates a memory allocator that allows for non-continuous and/or segmented memory allocation as shown in Figure \ref{fig:storageexample}.
 </p>
