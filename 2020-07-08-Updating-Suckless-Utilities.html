@@ -10,7 +10,7 @@
 <title>Updating Suckless Utilities</title>
 <meta name="author" content="Alex Brown">
 <meta name="referrer" content="no-referrer">
-<link href= "readtheorg/readtheorg.css" rel="stylesheet" type="text/css" />
+<link href= "Theme/style.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
 <body>
 <div id="preamble" class="status"><div class="header">
@@ -22,8 +22,8 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8836853">Creating Another Remote Repository</a></li>
-<li><a href="#org1692f07">Merging Your Source with Suckless&rsquo;s</a></li>
+<li><a href="#orgd517ba8">Creating Another Remote Repository</a></li>
+<li><a href="#org6dd9f7c">Merging Your Source with Suckless&rsquo;s</a></li>
 </ul>
 </div>
 </nav>
@@ -35,9 +35,9 @@
 I never considered the scenario of wanting to upgrade my build of st, dwm, or any other &ldquo;forked&rdquo; project that I may have until I wanted to upgrade st to the latest release in order to try the new <a href="https://www.youtube.com/watch?v=sdeX2S2uOeA">scrolling functionality</a> that they have added. My brain immediately accepted the fact that I was going to download a new copy of st and repatch everything I currently have&#x2026; but that isn&rsquo;t very sustainable for long term use especially if you want to update every so often. I thought about it for an hour or so and was struck with the simple solution of just using git&rsquo;s merge feature. The thing is on how to get it configured simply. Like they always say with programming, &ldquo;think lazy&rdquo;.
 </p>
 
-<div id="outline-container-org8836853" class="outline-2">
-<h2 id="org8836853">Creating Another Remote Repository</h2>
-<div class="outline-text-2" id="text-org8836853">
+<div id="outline-container-orgd517ba8" class="outline-2">
+<h2 id="orgd517ba8">Creating Another Remote Repository</h2>
+<div class="outline-text-2" id="text-orgd517ba8">
 <p>
 Much like how some people use this to keep multiple repositories up to date, multiple remote repositories are also very handy for updating (basically the same thing stated in different words). To take advantage of this feature, you can run:
 </p>
@@ -64,9 +64,9 @@ You can make sure you are up to date on HEAD of suckless&rsquo;s master.
 </div>
 </div>
 
-<div id="outline-container-org1692f07" class="outline-2">
-<h2 id="org1692f07">Merging Your Source with Suckless&rsquo;s</h2>
-<div class="outline-text-2" id="text-org1692f07">
+<div id="outline-container-org6dd9f7c" class="outline-2">
+<h2 id="org6dd9f7c">Merging Your Source with Suckless&rsquo;s</h2>
+<div class="outline-text-2" id="text-org6dd9f7c">
 <p>
 To do this, I like to create a branch to make sure I don&rsquo;t destroy my master branch:
 </p>

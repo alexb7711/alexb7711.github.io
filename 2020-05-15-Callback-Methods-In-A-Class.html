@@ -10,7 +10,7 @@
 <title>Simple Callback Methods In C++</title>
 <meta name="author" content="Alex Brown">
 <meta name="referrer" content="no-referrer">
-<link href= "readtheorg/readtheorg.css" rel="stylesheet" type="text/css" />
+<link href= "Theme/style.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
 <body>
 <div id="preamble" class="status"><div class="header">
@@ -22,12 +22,12 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9708ed9">Callbacks</a></li>
-<li><a href="#org77fdda9">Why Would You Want To Use A Callback?&rsquo;&rsquo;</a></li>
-<li><a href="#org0039a36">A Simple Example</a></li>
-<li><a href="#org36d425d">Shortcomings</a></li>
-<li><a href="#org01769cc">My Problem That Was Fixed With Callbacks</a></li>
-<li><a href="#orgb8f2045">References</a></li>
+<li><a href="#orgeb847e4">Callbacks</a></li>
+<li><a href="#org892b5a4">Why Would You Want To Use A Callback?&rsquo;&rsquo;</a></li>
+<li><a href="#org5cfaad5">A Simple Example</a></li>
+<li><a href="#org6715986">Shortcomings</a></li>
+<li><a href="#org13926d1">My Problem That Was Fixed With Callbacks</a></li>
+<li><a href="#org5fee081">References</a></li>
 </ul>
 </div>
 </nav>
@@ -39,9 +39,9 @@ I have been spending a lot of time as of late creating a small framework for dev
 To start, lets cover what a callback method is and how it can be used to your advantage.
 </p>
 
-<div id="outline-container-org9708ed9" class="outline-2">
-<h2 id="org9708ed9">Callbacks</h2>
-<div class="outline-text-2" id="text-org9708ed9">
+<div id="outline-container-orgeb847e4" class="outline-2">
+<h2 id="orgeb847e4">Callbacks</h2>
+<div class="outline-text-2" id="text-orgeb847e4">
 <p>
 A callback is a piece of code that is used to execute (call back) a specified argument. In other words, if you pass a pointer of a function (foo) to another function (bar) as an argument and execute it, then the function pointer (foo) is a callback. As stated on [GeeksForGeeks](<a href="https://www.geeksforgeeks.org/">https://www.geeksforgeeks.org/</a>).
 </p>
@@ -56,9 +56,9 @@ That is specific enough for our purpose right now. If you would like read more a
 </div>
 </div>
 
-<div id="outline-container-org77fdda9" class="outline-2">
-<h2 id="org77fdda9">Why Would You Want To Use A Callback?&rsquo;&rsquo;</h2>
-<div class="outline-text-2" id="text-org77fdda9">
+<div id="outline-container-org892b5a4" class="outline-2">
+<h2 id="org892b5a4">Why Would You Want To Use A Callback?&rsquo;&rsquo;</h2>
+<div class="outline-text-2" id="text-org892b5a4">
 <p>
 As will all things, it is situational as to why you would like to use it. It doesn&rsquo;t solve all your problems, but it does make a lot of tasks quite easy. It is useful when you can make generic code that can apply different logic. Now what do I mean by that? For example in &ldquo;[The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>)&rdquo; the example they give is a single method that can be used to call different types of sorting methods. They use the same call to sort, but apply different sorting methods on the same bit of data.
 </p>
@@ -68,8 +68,8 @@ Another more useful (but more complex) reason to use callbacks are in the case o
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #b8bb26;">foo</span><span style="color: #fe8019;">(</span>std::string message, <span style="color: #fabd2f;">void</span>* <span style="color: #83a598;">data</span><span style="color: #fe8019;">)</span>
-<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">foo</span><span style="color: #8c8c8c;">(</span>std::string message, <span style="color: #00ff00;">void</span>* <span style="color: #ffff00;">data</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">{</span>...<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -79,45 +79,45 @@ stored as a list. Every time you have an event occur, you can send out a message
 </div>
 </div>
 
-<div id="outline-container-org0039a36" class="outline-2">
-<h2 id="org0039a36">A Simple Example</h2>
-<div class="outline-text-2" id="text-org0039a36">
+<div id="outline-container-org5cfaad5" class="outline-2">
+<h2 id="org5cfaad5">A Simple Example</h2>
+<div class="outline-text-2" id="text-org5cfaad5">
 <p>
 Below is a simple class that uses a callback to count to 10. To start, you can see that we have a method called <code>callback(int count)</code> that all that it knows is to print the integer that it gets if it is smaller than 10. <code>caller(void (Foo::*fnc)(int))</code> is the function that is going to be providing the values to <code>callback</code>, and <code>run()</code> is just the driving code that will be called from <code>main()</code>.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C++"><span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">cstdio</span><span style="color: #fe8019;">&gt;</span>
+<pre class="src src-C++"><span style="color: #0000ff; font-weight: bold;">#include</span> <span style="color: #8c8c8c;">&lt;</span><span style="color: #00ff00;">cstdio</span><span style="color: #8c8c8c;">&gt;</span>
 
-<span style="color: #fb4934;">class</span> <span style="color: #fabd2f;">Foo</span>
-<span style="color: #fe8019;">{</span>
-    <span style="color: #fb4934;">public</span>:
-    <span style="color: #b8bb26;">Foo</span><span style="color: #fb4934;">()</span>
-    <span style="color: #fb4934;">{}</span>
+<span style="color: #00ffff; font-weight: bold;">class</span> <span style="color: #00ff00;">Foo</span>
+<span style="color: #8c8c8c;">{</span>
+    <span style="color: #00ffff; font-weight: bold;">public</span>:
+    <span style="color: #0000ff; font-weight: bold;">Foo</span><span style="color: #93a8c6;">()</span>
+    <span style="color: #93a8c6;">{}</span>
 
-    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">callback</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">count</span><span style="color: #fb4934;">)</span>
-    <span style="color: #fb4934;">{</span>
-        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>count &gt; <span style="color: #d3869b; font-weight: bold;">10</span><span style="color: #cc241d;">)</span> <span style="color: #fb4934;">return</span>;
-        printf<span style="color: #cc241d;">(</span><span style="color: #b8bb26;">"%d\n"</span>, count++<span style="color: #cc241d;">)</span>;
-    <span style="color: #fb4934;">}</span>
+    <span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">callback</span><span style="color: #93a8c6;">(</span><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">count</span><span style="color: #93a8c6;">)</span>
+    <span style="color: #93a8c6;">{</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #b0b1a3;">(</span>count &gt; <span style="color: #ff00ff;">10</span><span style="color: #b0b1a3;">)</span> <span style="color: #00ffff; font-weight: bold;">return</span>;
+        printf<span style="color: #b0b1a3;">(</span><span style="color: #00ff00;">"%d\n"</span>, count++<span style="color: #b0b1a3;">)</span>;
+    <span style="color: #93a8c6;">}</span>
 
-    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #cc241d;">(</span><span style="color: #d3869b;">Foo</span>::*<span style="color: #fabd2f;">fnc</span><span style="color: #cc241d;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>
-    <span style="color: #fb4934;">{</span>
-        <span style="color: #fb4934;">for</span> <span style="color: #cc241d;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span> = <span style="color: #d3869b; font-weight: bold;">1</span>; i &lt; <span style="color: #d3869b; font-weight: bold;">12</span>; ++i<span style="color: #cc241d;">)</span>
-            <span style="color: #cc241d;">(</span><span style="color: #fb4934;">this</span>-&gt;*fnc<span style="color: #cc241d;">)(</span>i<span style="color: #cc241d;">)</span>;
-    <span style="color: #fb4934;">}</span>
+    <span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">caller</span><span style="color: #93a8c6;">(</span><span style="color: #00ff00;">void</span> <span style="color: #b0b1a3;">(</span><span style="color: #ff00ff;">Foo</span>::*<span style="color: #00ff00;">fnc</span><span style="color: #b0b1a3;">)(</span><span style="color: #00ff00;">int</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+    <span style="color: #93a8c6;">{</span>
+        <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #b0b1a3;">(</span><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">i</span> = <span style="color: #ff00ff;">1</span>; i &lt; <span style="color: #ff00ff;">12</span>; ++i<span style="color: #b0b1a3;">)</span>
+            <span style="color: #b0b1a3;">(</span><span style="color: #00ffff; font-weight: bold;">this</span>-&gt;*fnc<span style="color: #b0b1a3;">)(</span>i<span style="color: #b0b1a3;">)</span>;
+    <span style="color: #93a8c6;">}</span>
 
-    <span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">run</span><span style="color: #fb4934;">()</span>
-    <span style="color: #fb4934;">{</span>
-        caller<span style="color: #cc241d;">(</span>&amp;<span style="color: #d3869b;">Foo</span>::callback<span style="color: #cc241d;">)</span>;
-    <span style="color: #fb4934;">}</span>
-<span style="color: #fe8019;">}</span>;
+    <span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">run</span><span style="color: #93a8c6;">()</span>
+    <span style="color: #93a8c6;">{</span>
+        caller<span style="color: #b0b1a3;">(</span>&amp;<span style="color: #ff00ff;">Foo</span>::callback<span style="color: #b0b1a3;">)</span>;
+    <span style="color: #93a8c6;">}</span>
+<span style="color: #8c8c8c;">}</span>;
 
-<span style="color: #fabd2f;">int</span> <span style="color: #b8bb26;">main</span><span style="color: #fe8019;">()</span>
-<span style="color: #fe8019;">{</span>
-    <span style="color: #fabd2f;">Foo</span> <span style="color: #83a598;">foo</span>;
-    foo.run<span style="color: #fb4934;">()</span>;
-<span style="color: #fe8019;">}</span>
+<span style="color: #00ff00;">int</span> <span style="color: #0000ff; font-weight: bold;">main</span><span style="color: #8c8c8c;">()</span>
+<span style="color: #8c8c8c;">{</span>
+    <span style="color: #00ff00;">Foo</span> <span style="color: #ffff00;">foo</span>;
+    foo.run<span style="color: #93a8c6;">()</span>;
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -130,11 +130,11 @@ At this point, we don&rsquo;t know what method is coming in, but we know what th
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>Foo::*fnc<span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span>
-<span style="color: #fe8019;">{</span>
-    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span> = <span style="color: #d3869b; font-weight: bold;">1</span>; i &lt; <span style="color: #d3869b; font-weight: bold;">12</span>; ++i<span style="color: #fb4934;">)</span>
-        <span style="color: #fb4934;">(</span>this-&gt;*fnc<span style="color: #fb4934;">)(</span>i<span style="color: #fb4934;">)</span>;
-<span style="color: #fe8019;">}</span>
+<pre class="src src-C"><span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">caller</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">void</span> <span style="color: #93a8c6;">(</span>Foo::*fnc<span style="color: #93a8c6;">)(</span><span style="color: #00ff00;">int</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">{</span>
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #93a8c6;">(</span><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">i</span> = <span style="color: #ff00ff;">1</span>; i &lt; <span style="color: #ff00ff;">12</span>; ++i<span style="color: #93a8c6;">)</span>
+        <span style="color: #93a8c6;">(</span>this-&gt;*fnc<span style="color: #93a8c6;">)(</span>i<span style="color: #93a8c6;">)</span>;
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -147,25 +147,25 @@ As for <code>run</code>, that is simple. We just need to pass the pointer to the
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">run</span><span style="color: #fe8019;">()</span>
-<span style="color: #fe8019;">{</span>
-    caller<span style="color: #fb4934;">(</span>&amp;Foo::callback<span style="color: #fb4934;">)</span>
-<span style="color: #fe8019;">}</span>
+<pre class="src src-C"><span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">run</span><span style="color: #8c8c8c;">()</span>
+<span style="color: #8c8c8c;">{</span>
+    caller<span style="color: #93a8c6;">(</span>&amp;Foo::callback<span style="color: #93a8c6;">)</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org36d425d" class="outline-2">
-<h2 id="org36d425d">Shortcomings</h2>
-<div class="outline-text-2" id="text-org36d425d">
+<div id="outline-container-org6715986" class="outline-2">
+<h2 id="org6715986">Shortcomings</h2>
+<div class="outline-text-2" id="text-org6715986">
 <p>
 Pretty simple once you have done it once, right? It can&rsquo;t be all good though as you probably guessed from the heading. The drawback of this type of declaration is that the method calls must be from inside the same class. Why is that the case though? Couldn&rsquo;t you just do something like:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>Bar::*fnc<span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span>
-<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+<pre class="src src-C"><span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">caller</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">void</span> <span style="color: #93a8c6;">(</span>Bar::*fnc<span style="color: #93a8c6;">)(</span><span style="color: #00ff00;">int</span><span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">{</span>...<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -182,8 +182,8 @@ Rather than doing it the way we stated above, try:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">caller</span> <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span>*<span style="color: #b8bb26;">fnc</span><span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span>, <span style="color: #fabd2f;">void</span>* <span style="color: #83a598;">instance</span><span style="color: #fe8019;">)</span>
-<span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+<pre class="src src-C"><span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">caller</span> <span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">void</span> <span style="color: #93a8c6;">(</span>*<span style="color: #0000ff; font-weight: bold;">fnc</span><span style="color: #93a8c6;">)(</span><span style="color: #00ff00;">int</span><span style="color: #93a8c6;">)</span>, <span style="color: #00ff00;">void</span>* <span style="color: #ffff00;">instance</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">{</span>...<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -193,14 +193,14 @@ Everything will be more or less the same. The only difference is now that you ha
 </div>
 </div>
 
-<div id="outline-container-org01769cc" class="outline-2">
-<h2 id="org01769cc">My Problem That Was Fixed With Callbacks</h2>
-<div class="outline-text-2" id="text-org01769cc">
+<div id="outline-container-org13926d1" class="outline-2">
+<h2 id="org13926d1">My Problem That Was Fixed With Callbacks</h2>
+<div class="outline-text-2" id="text-org13926d1">
 <p>
 As for my case, it is a lot simpler than some of the examples I gave above. My problem is that I wanted to open and parse two different files that will similar formatting but contain two different types of data. More specifically, for my game framework I want to be able to load/save files from a text file. To do this I am currently employing two files: <code>Maps.txt</code> and <code>Dictionary.txt</code>. <code>Maps.txt</code> looks like:
 </p>
 
-<pre class="example" id="orgeb289c6">
+<pre class="example" id="org234f63e">
 [Default]
 0 0 1
 1 1 0
@@ -211,7 +211,7 @@ As for my case, it is a lot simpler than some of the examples I gave above. My p
 Where <code>[Default]</code> is the name of the map, and the matrix underneath specified the type of tiles that will be placed in that specific area. But what do those tiles mean? Thats what <code>Dictionary.txt</code> is for. That file looks like this:
 </p>
 
-<pre class="example" id="orgcdbc73f">
+<pre class="example" id="org94b1a31">
 [Default]
 0 0 256 64
 1 0 128 64
@@ -226,33 +226,33 @@ Similarly to the examples given above I wrote a generic method that will execute
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C++"><span style="color: #928374;">/*</span>
-<span style="color: #928374;"> *--------------------------------------------------------------------------------------</span>
-<span style="color: #928374;"> *       Class:  TileMap</span>
-<span style="color: #928374;"> *      Method:  TileMap :: readFromFileCallback</span>
-<span style="color: #928374;"> * Description:  Callback method used to read from config files.</span>
-<span style="color: #928374;"> *--------------------------------------------------------------------------------------</span>
-<span style="color: #928374;"> */</span>
-<span style="color: #fabd2f;">void</span> <span style="color: #d3869b;">TileMap</span>::<span style="color: #b8bb26;">readFromFileCallback</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> <span style="color: #fb4934;">(</span><span style="color: #d3869b;">TileMap</span>::*<span style="color: #b8bb26;">method</span><span style="color: #fb4934;">)(</span><span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">ifstream</span>&amp;, <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span>&amp;<span style="color: #fb4934;">)</span>,
-                                   <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span>&amp; <span style="color: #83a598;">map_name</span><span style="color: #fe8019;">)</span>
-<span style="color: #fe8019;">{</span>
-  <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">ifstream</span> <span style="color: #83a598;">file_in</span><span style="color: #fb4934;">(</span>m_map_text_file<span style="color: #fb4934;">)</span>;
-  <span style="color: #d3869b;">std</span>::<span style="color: #fabd2f;">string</span> <span style="color: #83a598;">line</span>;
+<pre class="src src-C++"><span style="color: #ffff00;">/*</span>
+<span style="color: #ffff00;"> *--------------------------------------------------------------------------------------</span>
+<span style="color: #ffff00;"> *       Class:  TileMap</span>
+<span style="color: #ffff00;"> *      Method:  TileMap :: readFromFileCallback</span>
+<span style="color: #ffff00;"> * Description:  Callback method used to read from config files.</span>
+<span style="color: #ffff00;"> *--------------------------------------------------------------------------------------</span>
+<span style="color: #ffff00;"> */</span>
+<span style="color: #00ff00;">void</span> <span style="color: #ff00ff;">TileMap</span>::<span style="color: #0000ff; font-weight: bold;">readFromFileCallback</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">void</span> <span style="color: #93a8c6;">(</span><span style="color: #ff00ff;">TileMap</span>::*<span style="color: #0000ff; font-weight: bold;">method</span><span style="color: #93a8c6;">)(</span><span style="color: #ff00ff;">std</span>::<span style="color: #00ff00;">ifstream</span>&amp;, <span style="color: #ff00ff;">std</span>::<span style="color: #00ff00;">string</span>&amp;<span style="color: #93a8c6;">)</span>,
+                                   <span style="color: #ff00ff;">std</span>::<span style="color: #00ff00;">string</span>&amp; <span style="color: #ffff00;">map_name</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">{</span>
+  <span style="color: #ff00ff;">std</span>::<span style="color: #00ff00;">ifstream</span> <span style="color: #ffff00;">file_in</span><span style="color: #93a8c6;">(</span>m_map_text_file<span style="color: #93a8c6;">)</span>;
+  <span style="color: #ff00ff;">std</span>::<span style="color: #00ff00;">string</span> <span style="color: #ffff00;">line</span>;
 
-  <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>file_in.is_open<span style="color: #cc241d;">()</span><span style="color: #fb4934;">)</span>
-  <span style="color: #fb4934;">{</span>
-    <span style="color: #fb4934;">while</span> <span style="color: #cc241d;">(</span><span style="color: #d3869b;">std</span>::getline<span style="color: #fe8019;">(</span>file_in, line<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span>
-    <span style="color: #cc241d;">{</span>
-      <span style="color: #fe8019;">(</span><span style="color: #fb4934;">this</span>-&gt;*method<span style="color: #fe8019;">)(</span>file_in, map_name<span style="color: #fe8019;">)</span>;
-    <span style="color: #cc241d;">}</span>
+  <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>file_in.is_open<span style="color: #b0b1a3;">()</span><span style="color: #93a8c6;">)</span>
+  <span style="color: #93a8c6;">{</span>
+    <span style="color: #00ffff; font-weight: bold;">while</span> <span style="color: #b0b1a3;">(</span><span style="color: #ff00ff;">std</span>::getline<span style="color: #8c8c8c;">(</span>file_in, line<span style="color: #8c8c8c;">)</span><span style="color: #b0b1a3;">)</span>
+    <span style="color: #b0b1a3;">{</span>
+      <span style="color: #8c8c8c;">(</span><span style="color: #00ffff; font-weight: bold;">this</span>-&gt;*method<span style="color: #8c8c8c;">)(</span>file_in, map_name<span style="color: #8c8c8c;">)</span>;
+    <span style="color: #b0b1a3;">}</span>
 
-    file_in.close<span style="color: #cc241d;">()</span>;
-  <span style="color: #fb4934;">}</span>
-   <span style="color: #fb4934;">else</span>
-     printf<span style="color: #fb4934;">(</span><span style="color: #b8bb26;">"ERROR: COULD NOT LOAD FILE!\n"</span><span style="color: #fb4934;">)</span>;
+    file_in.close<span style="color: #b0b1a3;">()</span>;
+  <span style="color: #93a8c6;">}</span>
+   <span style="color: #00ffff; font-weight: bold;">else</span>
+     printf<span style="color: #93a8c6;">(</span><span style="color: #00ff00;">"ERROR: COULD NOT LOAD FILE!\n"</span><span style="color: #93a8c6;">)</span>;
 
-  <span style="color: #fb4934;">return</span>;
-<span style="color: #fe8019;">}</span>
+  <span style="color: #00ffff; font-weight: bold;">return</span>;
+<span style="color: #8c8c8c;">}</span>
 
 </pre>
 </div>
@@ -267,9 +267,9 @@ Super simple, and now I can use this one method to parse different files of the 
 </div>
 </div>
 
-<div id="outline-container-orgb8f2045" class="outline-2">
-<h2 id="orgb8f2045">References</h2>
-<div class="outline-text-2" id="text-orgb8f2045">
+<div id="outline-container-org5fee081" class="outline-2">
+<h2 id="org5fee081">References</h2>
+<div class="outline-text-2" id="text-org5fee081">
 <ul class="org-ul">
 <li><a href="https://www.geeksforgeeks.org/callbacks-in-c/">GeeksForGeeks</a></li>
 <li><a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">The C Programming Language</a></li>

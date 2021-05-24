@@ -10,7 +10,7 @@
 <title>Using =stow= To Manage Your Dotfiles</title>
 <meta name="author" content="Alex Brown">
 <meta name="referrer" content="no-referrer">
-<link href= "readtheorg/readtheorg.css" rel="stylesheet" type="text/css" />
+<link href= "Theme/style.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
 <body>
 <div id="preamble" class="status"><div class="header">
@@ -22,13 +22,13 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgf23a078">What is <code>stow</code>?</a>
+<li><a href="#org29214e4">What is <code>stow</code>?</a>
 <ul>
-<li><a href="#org1c113ba">Example 1</a></li>
-<li><a href="#org1689294">Example 2</a></li>
+<li><a href="#org6346718">Example 1</a></li>
+<li><a href="#org269ff87">Example 2</a></li>
 </ul>
 </li>
-<li><a href="#org7830696">My <code>stow</code> Workflow</a></li>
+<li><a href="#org588c883">My <code>stow</code> Workflow</a></li>
 </ul>
 </div>
 </nav>
@@ -40,9 +40,9 @@ A few weeks ago I made a post about keeping track of your dotfiles using <code>r
 This post is going to talk about what stow is and how I currently use it.
 </p>
 
-<div id="outline-container-orgf23a078" class="outline-2">
-<h2 id="orgf23a078">What is <code>stow</code>?</h2>
-<div class="outline-text-2" id="text-orgf23a078">
+<div id="outline-container-org29214e4" class="outline-2">
+<h2 id="org29214e4">What is <code>stow</code>?</h2>
+<div class="outline-text-2" id="text-org29214e4">
 <p>
 Pulling this quote directly from the <a href="https://www.youtube.com/watch?v=MJBVA4LeJKA">GNU page</a>:
 </p>
@@ -66,9 +66,9 @@ In other words, it symlinks the desired file based of a starting directory and t
 </blockquote>
 </div>
 
-<div id="outline-container-org1c113ba" class="outline-3">
-<h3 id="org1c113ba">Example 1</h3>
-<div class="outline-text-3" id="text-org1c113ba">
+<div id="outline-container-org6346718" class="outline-3">
+<h3 id="org6346718">Example 1</h3>
+<div class="outline-text-3" id="text-org6346718">
 <p>
 You have a vimrc file in <code>~/.vimrc</code>. You want to symlink that. So you have a git repository that you cloned in <code>~/Code/dotfiles</code>. If you want to keep track of your vimrc file, what you do is first do is create a directory called vim (or whatever else you want to call it) in your dotfiles directory. After doing so, move your vimrc into the vim directory you just created. Now, if you type <code>stow ~/ vim</code> while you are in the dotfiles directory you will symlink you vimrc to <code>~/.vimrc</code>.
 </p>
@@ -79,9 +79,9 @@ The <code>-t</code> flag sets that starting location for where you want the syml
 </div>
 </div>
 
-<div id="outline-container-org1689294" class="outline-3">
-<h3 id="org1689294">Example 2</h3>
-<div class="outline-text-3" id="text-org1689294">
+<div id="outline-container-org269ff87" class="outline-3">
+<h3 id="org269ff87">Example 2</h3>
+<div class="outline-text-3" id="text-org269ff87">
 <p>
 You have a config file <code>~/.config/nvim/init.vim</code> that you want to keep track of. Following the steps from the previous example, you create a directory called <code>nvim</code> in your dotfiles and create a file structure <code>nvim/.config/nvim/</code>. Copy the init.vim file so you have the structure <code>nvim/.config/nvim/init.vim'. To symlink this file you type =stow -t ~/ nvim</code>.
 </p>
@@ -93,9 +93,9 @@ Again, from the point of view of <code>stow</code>, you are linking the path <co
 </div>
 </div>
 
-<div id="outline-container-org7830696" class="outline-2">
-<h2 id="org7830696">My <code>stow</code> Workflow</h2>
-<div class="outline-text-2" id="text-org7830696">
+<div id="outline-container-org588c883" class="outline-2">
+<h2 id="org588c883">My <code>stow</code> Workflow</h2>
+<div class="outline-text-2" id="text-org588c883">
 <p>
 As a TL;DR, my workflow is essentially what I described above. The only difference is that I have a script that has all the name of the directories appended to the stow command. The only difference is that I also keep track of my packages in a different script by running <code>pacman -Qqe &gt; PackageList.txt</code> which creates a list of all the packages you installed in such a way that you can use it as an input to pacman later on. So at the end of the day, you have a little scrip that looks like the following:
 </p>
@@ -104,9 +104,9 @@ As a TL;DR, my workflow is essentially what I described above. The only differen
 <code>setConfig.sh</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #928374;">#</span><span style="color: #928374;">!/bin/</span><span style="color: #fb4934;">sh</span>
+<pre class="src src-shell"><span style="color: #ffff00;">#</span><span style="color: #ffff00;">!/bin/</span><span style="color: #00ffff; font-weight: bold;">sh</span>
 
-stow -t ~/ aliasrc dunst <span style="color: #fabd2f;">git</span> Xmodmap zshenv compton env nvim shortcutrc zsh xinitrc rofi mbsync notmuch mutt password-store gnupg ncspot vifm
+stow -t ~/ aliasrc dunst <span style="color: #00ff00;">git</span> Xmodmap zshenv compton env nvim shortcutrc zsh xinitrc rofi mbsync notmuch mutt password-store gnupg ncspot vifm
 </pre>
 </div>
 

@@ -10,7 +10,7 @@
 <title>The C Programming Language Notes</title>
 <meta name="author" content="Alex Brown">
 <meta name="referrer" content="no-referrer">
-<link href= "readtheorg/readtheorg.css" rel="stylesheet" type="text/css" />
+<link href= "Theme/style.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
 <body>
 <div id="preamble" class="status"><div class="header">
@@ -22,72 +22,72 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgd73432e">Types, Operators, and Expressions</a>
+<li><a href="#org3990e2c">Types, Operators, and Expressions</a>
 <ul>
-<li><a href="#org9e7929d">Constants</a></li>
-<li><a href="#orgaaedb87">Increment and Decrement Operators</a></li>
-<li><a href="#org73938b4">Bitwise Operators</a></li>
+<li><a href="#orgb5273e4">Constants</a></li>
+<li><a href="#orgbdc1cd5">Increment and Decrement Operators</a></li>
+<li><a href="#orgfcc7d8d">Bitwise Operators</a></li>
 </ul>
 </li>
-<li><a href="#orgce00bff">Control Flow</a>
+<li><a href="#org546387c">Control Flow</a>
 <ul>
-<li><a href="#org9e9854d">Break and Continue</a></li>
-<li><a href="#org88c23ab">GoTo and Labels</a></li>
+<li><a href="#org86979e0">Break and Continue</a></li>
+<li><a href="#orgc9d37fd">GoTo and Labels</a></li>
 </ul>
 </li>
-<li><a href="#org492854c">Functions and Program Structure</a>
+<li><a href="#org4b521c0">Functions and Program Structure</a>
 <ul>
-<li><a href="#org72c5139">Static Variables</a></li>
+<li><a href="#orgf990b75">Static Variables</a></li>
 </ul>
 </li>
-<li><a href="#org9f2f7ff">Types, Operators, and Expressions</a>
+<li><a href="#org7f7ebb7">Types, Operators, and Expressions</a>
 <ul>
-<li><a href="#org7ffbe00">Constants</a></li>
-<li><a href="#org1cd9762">Increment and Decrement Operators</a></li>
-<li><a href="#orgd0b6539">Bitwise Operators</a></li>
+<li><a href="#orge098547">Constants</a></li>
+<li><a href="#orgef71797">Increment and Decrement Operators</a></li>
+<li><a href="#org79e7245">Bitwise Operators</a></li>
 </ul>
 </li>
-<li><a href="#org2781555">Control Flow</a>
+<li><a href="#orgfc455b0">Control Flow</a>
 <ul>
-<li><a href="#orgf9ce5eb">Break and Continue</a></li>
-<li><a href="#org206b967">GoTo and Labels</a></li>
+<li><a href="#org62703ac">Break and Continue</a></li>
+<li><a href="#orge7e65ec">GoTo and Labels</a></li>
 </ul>
 </li>
-<li><a href="#org5d5cdf5">Functions and Program Structure</a>
+<li><a href="#org70b05c0">Functions and Program Structure</a>
 <ul>
-<li><a href="#orgae42c7b">Static Variables</a></li>
+<li><a href="#org3a7ff70">Static Variables</a></li>
 </ul>
 </li>
-<li><a href="#org38ed660">Pointers and Arrays</a>
+<li><a href="#orgac22ccf">Pointers and Arrays</a>
 <ul>
-<li><a href="#org543f791">Address Arithmetic</a></li>
-<li><a href="#org3bc87da">Character Pointers and Functions</a></li>
-<li><a href="#org3020395">Pointer Arrays; Pointers to Pointers</a></li>
-<li><a href="#org1b19c88">Multi-Dimensional Arrays</a></li>
-<li><a href="#org0aaf020">Initialization of Pointer Arrays</a></li>
-<li><a href="#org214130f">Pointers vs. Multi-Dimensional Array</a></li>
-<li><a href="#org0822853">Command Line Arguments</a></li>
-<li><a href="#orgf6a7bc8">Pointers To Functions</a></li>
-<li><a href="#org8d1192b">Complicated Declarations</a></li>
+<li><a href="#org5b331c7">Address Arithmetic</a></li>
+<li><a href="#org7e4f7ad">Character Pointers and Functions</a></li>
+<li><a href="#org90179c8">Pointer Arrays; Pointers to Pointers</a></li>
+<li><a href="#org232f73a">Multi-Dimensional Arrays</a></li>
+<li><a href="#org5d1c578">Initialization of Pointer Arrays</a></li>
+<li><a href="#org94450c6">Pointers vs. Multi-Dimensional Array</a></li>
+<li><a href="#org72136b8">Command Line Arguments</a></li>
+<li><a href="#org37e0a30">Pointers To Functions</a></li>
+<li><a href="#org3d1e9a1">Complicated Declarations</a></li>
 </ul>
 </li>
-<li><a href="#orgbbb6b9a">Structures</a>
+<li><a href="#orga6de34c">Structures</a>
 <ul>
-<li><a href="#org03cb1d2">Arrays of Structures</a></li>
-<li><a href="#orga90a6f7">Table Lookup</a></li>
+<li><a href="#org68af864">Arrays of Structures</a></li>
+<li><a href="#org85040a5">Table Lookup</a></li>
 </ul>
 </li>
-<li><a href="#org02d3d98">Input and Output</a>
+<li><a href="#org89e7116">Input and Output</a>
 <ul>
-<li><a href="#org33ae63d">Command Execution</a></li>
-<li><a href="#org306ddc2">Storage Management</a></li>
+<li><a href="#orgf7771d7">Command Execution</a></li>
+<li><a href="#orgc004e30">Storage Management</a></li>
 </ul>
 </li>
-<li><a href="#org9707318">The UNIX System Interface</a>
+<li><a href="#orgf473efd">The UNIX System Interface</a>
 <ul>
-<li><a href="#org8932227">Open, Creat, Close, Unlink</a></li>
-<li><a href="#org8b85798">Random Access - Lseek</a></li>
-<li><a href="#org385f9c8">Example - A Storage Allocator</a></li>
+<li><a href="#org2c2ddde">Open, Creat, Close, Unlink</a></li>
+<li><a href="#org4be1eca">Random Access - Lseek</a></li>
+<li><a href="#orgfc2f1d0">Example - A Storage Allocator</a></li>
 </ul>
 </li>
 </ul>
@@ -101,13 +101,13 @@
 I mostly code in C++ and never <i>really</i> spent the time to learn the nuances of C. I recently read through [The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>) and spent the time taking notes. Below is what I found useful and relevant. All diagrams and code snippets are from [The C Programming Language](<a href="https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1">https://www.amazon.com/dp/0131103628?tag=duckduckgo-brave-20&amp;linkCode=osi&amp;th=1&amp;psc=1</a>).
 </p>
 
-<div id="outline-container-orgd73432e" class="outline-2">
-<h2 id="orgd73432e">Types, Operators, and Expressions</h2>
-<div class="outline-text-2" id="text-orgd73432e">
+<div id="outline-container-org3990e2c" class="outline-2">
+<h2 id="org3990e2c">Types, Operators, and Expressions</h2>
+<div class="outline-text-2" id="text-org3990e2c">
 </div>
-<div id="outline-container-org9e7929d" class="outline-3">
-<h3 id="org9e7929d">Constants</h3>
-<div class="outline-text-3" id="text-org9e7929d">
+<div id="outline-container-orgb5273e4" class="outline-3">
+<h3 id="orgb5273e4">Constants</h3>
+<div class="outline-text-3" id="text-orgb5273e4">
 <p>
 A character constant is an integer, written as one character within single quotes such as &rsquo;x&rsquo;. The value of a character constant is the numeric value of the character in the machine&rsquo;s character set. For example, &rsquo;0&rsquo; has the value 48 in ASCII.
 </p>
@@ -117,8 +117,8 @@ Certain characters can be expressed in character and string constants by escape 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">VTAB</span> <span style="color: #b8bb26;">'\013'</span> <span style="color: #928374;">// </span><span style="color: #928374;">ASCII vertical tab</span>
-<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">BELL</span> <span style="color: #b8bb26;">'\007'</span> <span style="color: #928374;">// </span><span style="color: #928374;">ASCII bell character</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">VTAB</span> <span style="color: #00ff00;">'\013'</span> <span style="color: #ffff00;">// </span><span style="color: #ffff00;">ASCII vertical tab</span>
+<span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">BELL</span> <span style="color: #00ff00;">'\007'</span> <span style="color: #ffff00;">// </span><span style="color: #ffff00;">ASCII bell character</span>
 </pre>
 </div>
 
@@ -127,8 +127,8 @@ or in hexadecimal,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">VTAB</span> <span style="color: #b8bb26;">'\xb'</span>  <span style="color: #928374;">// </span><span style="color: #928374;">ASCII vertical tab</span>
-<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">BELL</span> <span style="color: #b8bb26;">'\x7'</span>  <span style="color: #928374;">// </span><span style="color: #928374;">ASCII bell character</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">VTAB</span> <span style="color: #00ff00;">'\xb'</span>  <span style="color: #ffff00;">// </span><span style="color: #ffff00;">ASCII vertical tab</span>
+<span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">BELL</span> <span style="color: #00ff00;">'\x7'</span>  <span style="color: #ffff00;">// </span><span style="color: #ffff00;">ASCII bell character</span>
 </pre>
 </div>
 
@@ -157,33 +157,33 @@ The complete set of escape sequences is:
 </div>
 </div>
 
-<div id="outline-container-orgaaedb87" class="outline-3">
-<h3 id="orgaaedb87">Increment and Decrement Operators</h3>
-<div class="outline-text-3" id="text-orgaaedb87">
+<div id="outline-container-orgbdc1cd5" class="outline-3">
+<h3 id="orgbdc1cd5">Increment and Decrement Operators</h3>
+<div class="outline-text-3" id="text-orgbdc1cd5">
 <p>
 An example of when to use `++i` rather than `i++`:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">squeeze:  delete all c from s</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #ffff00;">/* </span><span style="color: #ffff00;">squeeze:  delete all c from s</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">squeeze</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> <span style="color: #83a598;">s</span><span style="color: #fb4934;">[]</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">c</span><span style="color: #fe8019;">)</span>
+<span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">squeeze</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">char</span> <span style="color: #ffff00;">s</span><span style="color: #93a8c6;">[]</span>, <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">c</span><span style="color: #8c8c8c;">)</span>
 
-<span style="color: #fe8019;">{</span>
+<span style="color: #8c8c8c;">{</span>
 
-    <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span>, <span style="color: #83a598;">j</span>;
+    <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">i</span>, <span style="color: #ffff00;">j</span>;
 
 
 
-    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>i = j = <span style="color: #d3869b; font-weight: bold;">0</span>; s<span style="color: #cc241d;">[</span>i<span style="color: #cc241d;">]</span> != &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;; i++<span style="color: #fb4934;">)</span>
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #93a8c6;">(</span>i = j = <span style="color: #ff00ff;">0</span>; s<span style="color: #b0b1a3;">[</span>i<span style="color: #b0b1a3;">]</span> != &#8242;\<span style="color: #ff00ff;">0</span>&#8242;; i++<span style="color: #93a8c6;">)</span>
 
-        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>s<span style="color: #cc241d;">[</span>i<span style="color: #cc241d;">]</span> != c<span style="color: #fb4934;">)</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>s<span style="color: #b0b1a3;">[</span>i<span style="color: #b0b1a3;">]</span> != c<span style="color: #93a8c6;">)</span>
 
-            s<span style="color: #fb4934;">[</span>j++<span style="color: #fb4934;">]</span> = s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span>;
+            s<span style="color: #93a8c6;">[</span>j++<span style="color: #93a8c6;">]</span> = s<span style="color: #93a8c6;">[</span>i<span style="color: #93a8c6;">]</span>;
 
-    s<span style="color: #fb4934;">[</span>j<span style="color: #fb4934;">]</span> = &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;;
+    s<span style="color: #93a8c6;">[</span>j<span style="color: #93a8c6;">]</span> = &#8242;\<span style="color: #ff00ff;">0</span>&#8242;;
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -192,27 +192,27 @@ This is the same code as:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span> != c<span style="color: #fe8019;">)</span>
-<span style="color: #fe8019;">{</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #8c8c8c;">(</span>s<span style="color: #93a8c6;">[</span>i<span style="color: #93a8c6;">]</span> != c<span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">{</span>
 
-    s<span style="color: #fb4934;">[</span>j<span style="color: #fb4934;">]</span> = s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span>;
+    s<span style="color: #93a8c6;">[</span>j<span style="color: #93a8c6;">]</span> = s<span style="color: #93a8c6;">[</span>i<span style="color: #93a8c6;">]</span>;
 
     j++;
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org73938b4" class="outline-3">
-<h3 id="org73938b4">Bitwise Operators</h3>
-<div class="outline-text-3" id="text-org73938b4">
+<div id="outline-container-orgfcc7d8d" class="outline-3">
+<h3 id="orgfcc7d8d">Bitwise Operators</h3>
+<div class="outline-text-3" id="text-orgfcc7d8d">
 <p>
 C provides six operators for bit manipulation; these may only be applied to integral operands, that is, `char`, `short`, `int`, and `long`, whether signed or unsigned.
 </p>
 
-<pre class="example" id="org6ac0712">
+<pre class="example" id="orgecb6ad2">
 &amp;    bitwise AND
 |    bitwise inclusive OR
 ^    bitwise exclusive OR
@@ -228,13 +228,13 @@ C provides six operators for bit manipulation; these may only be applied to inte
 </div>
 </div>
 
-<div id="outline-container-orgce00bff" class="outline-2">
-<h2 id="orgce00bff">Control Flow</h2>
-<div class="outline-text-2" id="text-orgce00bff">
+<div id="outline-container-org546387c" class="outline-2">
+<h2 id="org546387c">Control Flow</h2>
+<div class="outline-text-2" id="text-org546387c">
 </div>
-<div id="outline-container-org9e9854d" class="outline-3">
-<h3 id="org9e9854d">Break and Continue</h3>
-<div class="outline-text-3" id="text-org9e9854d">
+<div id="outline-container-org86979e0" class="outline-3">
+<h3 id="org86979e0">Break and Continue</h3>
+<div class="outline-text-3" id="text-org86979e0">
 <p>
 The `break` statement provides an early exit from `for`, `while`, and `do`, just as it does from `switch`. <b><b>A `break` causes the innermost enclosing loop or switch to be exited immediately.</b></b>
 </p>
@@ -245,43 +245,43 @@ The `continue` statement is related to `break`, but less often used; <b><b>it ca
 </div>
 </div>
 
-<div id="outline-container-org88c23ab" class="outline-3">
-<h3 id="org88c23ab">GoTo and Labels</h3>
-<div class="outline-text-3" id="text-org88c23ab">
+<div id="outline-container-orgc9d37fd" class="outline-3">
+<h3 id="orgc9d37fd">GoTo and Labels</h3>
+<div class="outline-text-3" id="text-orgc9d37fd">
 <p>
 `goto` is almost never needed, but it can be useful in situations such as abandoning a process in some deeply nested structure, such as breaking out of two or more loops at once as shown below:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">for</span> <span style="color: #fe8019;">(</span> ... <span style="color: #fe8019;">)</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #8c8c8c;">(</span> ... <span style="color: #8c8c8c;">)</span>
 
-    <span style="color: #fb4934;">for</span> <span style="color: #fe8019;">(</span> ... <span style="color: #fe8019;">)</span> <span style="color: #fe8019;">{</span>
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #8c8c8c;">(</span> ... <span style="color: #8c8c8c;">)</span> <span style="color: #8c8c8c;">{</span>
 
         ...
 
-        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>disaster<span style="color: #fb4934;">)</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>disaster<span style="color: #93a8c6;">)</span>
 
-            <span style="color: #fb4934;">goto</span> <span style="color: #d3869b;">error</span>;
+            <span style="color: #00ffff; font-weight: bold;">goto</span> <span style="color: #ff00ff;">error</span>;
 
-    <span style="color: #fe8019;">}</span>
+    <span style="color: #8c8c8c;">}</span>
 
 ...
 
 error:
-    <span style="color: #928374;">// </span><span style="color: #928374;">Clean up the mess</span>
+    <span style="color: #ffff00;">// </span><span style="color: #ffff00;">Clean up the mess</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org492854c" class="outline-2">
-<h2 id="org492854c">Functions and Program Structure</h2>
-<div class="outline-text-2" id="text-org492854c">
+<div id="outline-container-org4b521c0" class="outline-2">
+<h2 id="org4b521c0">Functions and Program Structure</h2>
+<div class="outline-text-2" id="text-org4b521c0">
 </div>
-<div id="outline-container-org72c5139" class="outline-3">
-<h3 id="org72c5139">Static Variables</h3>
-<div class="outline-text-3" id="text-org72c5139">
+<div id="outline-container-orgf990b75" class="outline-3">
+<h3 id="orgf990b75">Static Variables</h3>
+<div class="outline-text-3" id="text-orgf990b75">
 <p>
 The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled
 </p>
@@ -289,13 +289,13 @@ The `static` declaration, applied to an external variable or function, limits th
 </div>
 </div>
 
-<div id="outline-container-org9f2f7ff" class="outline-2">
-<h2 id="org9f2f7ff">Types, Operators, and Expressions</h2>
-<div class="outline-text-2" id="text-org9f2f7ff">
+<div id="outline-container-org7f7ebb7" class="outline-2">
+<h2 id="org7f7ebb7">Types, Operators, and Expressions</h2>
+<div class="outline-text-2" id="text-org7f7ebb7">
 </div>
-<div id="outline-container-org7ffbe00" class="outline-3">
-<h3 id="org7ffbe00">Constants</h3>
-<div class="outline-text-3" id="text-org7ffbe00">
+<div id="outline-container-orge098547" class="outline-3">
+<h3 id="orge098547">Constants</h3>
+<div class="outline-text-3" id="text-orge098547">
 <p>
 A character constant is an integer, written as one character within single quotes such as &rsquo;x&rsquo;. The value of a character constant is the numeric value of the character in the machine&rsquo;s character set. For example, &rsquo;0&rsquo; has the value 48 in ASCII.
 </p>
@@ -305,8 +305,8 @@ Certain characters can be expressed in character and string constants by escape 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">VTAB</span> <span style="color: #b8bb26;">'\013'</span> <span style="color: #928374;">// </span><span style="color: #928374;">ASCII vertical tab</span>
-<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">BELL</span> <span style="color: #b8bb26;">'\007'</span> <span style="color: #928374;">// </span><span style="color: #928374;">ASCII bell character</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">VTAB</span> <span style="color: #00ff00;">'\013'</span> <span style="color: #ffff00;">// </span><span style="color: #ffff00;">ASCII vertical tab</span>
+<span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">BELL</span> <span style="color: #00ff00;">'\007'</span> <span style="color: #ffff00;">// </span><span style="color: #ffff00;">ASCII bell character</span>
 </pre>
 </div>
 
@@ -315,8 +315,8 @@ or in hexadecimal,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">VTAB</span> <span style="color: #b8bb26;">'\xb'</span>  <span style="color: #928374;">// </span><span style="color: #928374;">ASCII vertical tab</span>
-<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">BELL</span> <span style="color: #b8bb26;">'\x7'</span>  <span style="color: #928374;">// </span><span style="color: #928374;">ASCII bell character</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">VTAB</span> <span style="color: #00ff00;">'\xb'</span>  <span style="color: #ffff00;">// </span><span style="color: #ffff00;">ASCII vertical tab</span>
+<span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">BELL</span> <span style="color: #00ff00;">'\x7'</span>  <span style="color: #ffff00;">// </span><span style="color: #ffff00;">ASCII bell character</span>
 </pre>
 </div>
 
@@ -324,7 +324,7 @@ or in hexadecimal,
 The complete set of escape sequences is:
 </p>
 
-<pre class="example" id="org3065270">
+<pre class="example" id="org8434c57">
 \a       alert (bell) character
 \b       backspace
 \f       formfeed
@@ -343,33 +343,33 @@ The complete set of escape sequences is:
 </div>
 </div>
 
-<div id="outline-container-org1cd9762" class="outline-3">
-<h3 id="org1cd9762">Increment and Decrement Operators</h3>
-<div class="outline-text-3" id="text-org1cd9762">
+<div id="outline-container-orgef71797" class="outline-3">
+<h3 id="orgef71797">Increment and Decrement Operators</h3>
+<div class="outline-text-3" id="text-orgef71797">
 <p>
 An example of when to use `++i` rather than `i++`:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">squeeze:  delete all c from s</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #ffff00;">/* </span><span style="color: #ffff00;">squeeze:  delete all c from s</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">squeeze</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> <span style="color: #83a598;">s</span><span style="color: #fb4934;">[]</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">c</span><span style="color: #fe8019;">)</span>
+<span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">squeeze</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">char</span> <span style="color: #ffff00;">s</span><span style="color: #93a8c6;">[]</span>, <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">c</span><span style="color: #8c8c8c;">)</span>
 
-<span style="color: #fe8019;">{</span>
+<span style="color: #8c8c8c;">{</span>
 
-    <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">i</span>, <span style="color: #83a598;">j</span>;
+    <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">i</span>, <span style="color: #ffff00;">j</span>;
 
 
 
-    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>i = j = <span style="color: #d3869b; font-weight: bold;">0</span>; s<span style="color: #cc241d;">[</span>i<span style="color: #cc241d;">]</span> != &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;; i++<span style="color: #fb4934;">)</span>
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #93a8c6;">(</span>i = j = <span style="color: #ff00ff;">0</span>; s<span style="color: #b0b1a3;">[</span>i<span style="color: #b0b1a3;">]</span> != &#8242;\<span style="color: #ff00ff;">0</span>&#8242;; i++<span style="color: #93a8c6;">)</span>
 
-        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>s<span style="color: #cc241d;">[</span>i<span style="color: #cc241d;">]</span> != c<span style="color: #fb4934;">)</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>s<span style="color: #b0b1a3;">[</span>i<span style="color: #b0b1a3;">]</span> != c<span style="color: #93a8c6;">)</span>
 
-            s<span style="color: #fb4934;">[</span>j++<span style="color: #fb4934;">]</span> = s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span>;
+            s<span style="color: #93a8c6;">[</span>j++<span style="color: #93a8c6;">]</span> = s<span style="color: #93a8c6;">[</span>i<span style="color: #93a8c6;">]</span>;
 
-    s<span style="color: #fb4934;">[</span>j<span style="color: #fb4934;">]</span> = &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;;
+    s<span style="color: #93a8c6;">[</span>j<span style="color: #93a8c6;">]</span> = &#8242;\<span style="color: #ff00ff;">0</span>&#8242;;
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -378,27 +378,27 @@ This is the same code as:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span> != c<span style="color: #fe8019;">)</span>
-<span style="color: #fe8019;">{</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #8c8c8c;">(</span>s<span style="color: #93a8c6;">[</span>i<span style="color: #93a8c6;">]</span> != c<span style="color: #8c8c8c;">)</span>
+<span style="color: #8c8c8c;">{</span>
 
-    s<span style="color: #fb4934;">[</span>j<span style="color: #fb4934;">]</span> = s<span style="color: #fb4934;">[</span>i<span style="color: #fb4934;">]</span>;
+    s<span style="color: #93a8c6;">[</span>j<span style="color: #93a8c6;">]</span> = s<span style="color: #93a8c6;">[</span>i<span style="color: #93a8c6;">]</span>;
 
     j++;
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgd0b6539" class="outline-3">
-<h3 id="orgd0b6539">Bitwise Operators</h3>
-<div class="outline-text-3" id="text-orgd0b6539">
+<div id="outline-container-org79e7245" class="outline-3">
+<h3 id="org79e7245">Bitwise Operators</h3>
+<div class="outline-text-3" id="text-org79e7245">
 <p>
 C provides six operators for bit manipulation; these may only be applied to integral operands, that is, `char`, `short`, `int`, and `long`, whether signed or unsigned.
 </p>
 
-<pre class="example" id="org5aff720">
+<pre class="example" id="orgf3e8b5c">
 &amp;    bitwise AND
 |    bitwise inclusive OR
 ^    bitwise exclusive OR
@@ -414,13 +414,13 @@ C provides six operators for bit manipulation; these may only be applied to inte
 </div>
 </div>
 
-<div id="outline-container-org2781555" class="outline-2">
-<h2 id="org2781555">Control Flow</h2>
-<div class="outline-text-2" id="text-org2781555">
+<div id="outline-container-orgfc455b0" class="outline-2">
+<h2 id="orgfc455b0">Control Flow</h2>
+<div class="outline-text-2" id="text-orgfc455b0">
 </div>
-<div id="outline-container-orgf9ce5eb" class="outline-3">
-<h3 id="orgf9ce5eb">Break and Continue</h3>
-<div class="outline-text-3" id="text-orgf9ce5eb">
+<div id="outline-container-org62703ac" class="outline-3">
+<h3 id="org62703ac">Break and Continue</h3>
+<div class="outline-text-3" id="text-org62703ac">
 <p>
 The `break` statement provides an early exit from `for`, `while`, and `do`, just as it does from `switch`. <b><b>A `break` causes the innermost enclosing loop or switch to be exited immediately.</b></b>
 </p>
@@ -431,43 +431,43 @@ The `continue` statement is related to `break`, but less often used; <b><b>it ca
 </div>
 </div>
 
-<div id="outline-container-org206b967" class="outline-3">
-<h3 id="org206b967">GoTo and Labels</h3>
-<div class="outline-text-3" id="text-org206b967">
+<div id="outline-container-orge7e65ec" class="outline-3">
+<h3 id="orge7e65ec">GoTo and Labels</h3>
+<div class="outline-text-3" id="text-orge7e65ec">
 <p>
 `goto` is almost never needed, but it can be useful in situations such as abandoning a process in some deeply nested structure, such as breaking out of two or more loops at once as shown below:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">for</span> <span style="color: #fe8019;">(</span> ... <span style="color: #fe8019;">)</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #8c8c8c;">(</span> ... <span style="color: #8c8c8c;">)</span>
 
-    <span style="color: #fb4934;">for</span> <span style="color: #fe8019;">(</span> ... <span style="color: #fe8019;">)</span> <span style="color: #fe8019;">{</span>
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #8c8c8c;">(</span> ... <span style="color: #8c8c8c;">)</span> <span style="color: #8c8c8c;">{</span>
 
         ...
 
-        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>disaster<span style="color: #fb4934;">)</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>disaster<span style="color: #93a8c6;">)</span>
 
-            <span style="color: #fb4934;">goto</span> <span style="color: #d3869b;">error</span>;
+            <span style="color: #00ffff; font-weight: bold;">goto</span> <span style="color: #ff00ff;">error</span>;
 
-    <span style="color: #fe8019;">}</span>
+    <span style="color: #8c8c8c;">}</span>
 
 ...
 
 error:
-    <span style="color: #928374;">// </span><span style="color: #928374;">Clean up the mess</span>
+    <span style="color: #ffff00;">// </span><span style="color: #ffff00;">Clean up the mess</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org5d5cdf5" class="outline-2">
-<h2 id="org5d5cdf5">Functions and Program Structure</h2>
-<div class="outline-text-2" id="text-org5d5cdf5">
+<div id="outline-container-org70b05c0" class="outline-2">
+<h2 id="org70b05c0">Functions and Program Structure</h2>
+<div class="outline-text-2" id="text-org70b05c0">
 </div>
-<div id="outline-container-orgae42c7b" class="outline-3">
-<h3 id="orgae42c7b">Static Variables</h3>
-<div class="outline-text-3" id="text-orgae42c7b">
+<div id="outline-container-org3a7ff70" class="outline-3">
+<h3 id="org3a7ff70">Static Variables</h3>
+<div class="outline-text-3" id="text-org3a7ff70">
 <p>
 &lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream
 The `static` declaration, applied to an external variable or function, limits the scope of that object to the rest of the source file being compiled.
@@ -478,9 +478,9 @@ The `static` declaration, applied to an external variable or function, limits th
 </div>
 </div>
 
-<div id="outline-container-org38ed660" class="outline-2">
-<h2 id="org38ed660">Pointers and Arrays</h2>
-<div class="outline-text-2" id="text-org38ed660">
+<div id="outline-container-orgac22ccf" class="outline-2">
+<h2 id="orgac22ccf">Pointers and Arrays</h2>
+<div class="outline-text-2" id="text-orgac22ccf">
 <p>
 In C, there is a strong relationship between pointers and arrays. Any operation that can be achieved by array subscripting can also be done with pointers. The pointer version will generally be faster, but at least to the uninitiated, somewhat harder to understand.
 </p>
@@ -498,9 +498,9 @@ Using this line of thinking, it is possible to then pass part of an array to a f
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C">foo<span style="color: #fe8019;">(</span>&amp;a<span style="color: #fb4934;">[</span><span style="color: #d3869b; font-weight: bold;">2</span><span style="color: #fb4934;">]</span><span style="color: #fe8019;">)</span>;
-<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
-<span style="color: #b8bb26;">foo</span><span style="color: #fe8019;">(</span>a+<span style="color: #d3869b; font-weight: bold;">2</span><span style="color: #fe8019;">)</span>;
+<pre class="src src-C">foo<span style="color: #8c8c8c;">(</span>&amp;a<span style="color: #93a8c6;">[</span><span style="color: #ff00ff;">2</span><span style="color: #93a8c6;">]</span><span style="color: #8c8c8c;">)</span>;
+<span style="color: #ffff00;">// </span><span style="color: #ffff00;">or</span>
+<span style="color: #0000ff; font-weight: bold;">foo</span><span style="color: #8c8c8c;">(</span>a+<span style="color: #ff00ff;">2</span><span style="color: #8c8c8c;">)</span>;
 </pre>
 </div>
 
@@ -509,9 +509,9 @@ Where the function `foo`&rsquo;s arguments have the form of:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #b8bb26;">foo</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">arr</span><span style="color: #fb4934;">[]</span><span style="color: #fe8019;">)</span> <span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
-<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
-<span style="color: #b8bb26;">fo</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span>* <span style="color: #83a598;">arr</span><span style="color: #fe8019;">)</span> <span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">foo</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">arr</span><span style="color: #93a8c6;">[]</span><span style="color: #8c8c8c;">)</span> <span style="color: #8c8c8c;">{</span>...<span style="color: #8c8c8c;">}</span>
+<span style="color: #ffff00;">// </span><span style="color: #ffff00;">or</span>
+<span style="color: #0000ff; font-weight: bold;">fo</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">int</span>* <span style="color: #ffff00;">arr</span><span style="color: #8c8c8c;">)</span> <span style="color: #8c8c8c;">{</span>...<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -520,25 +520,25 @@ As far as `foo` is concerned, the fact that the parameter refers to part of a la
 </p>
 </div>
 
-<div id="outline-container-org543f791" class="outline-3">
-<h3 id="org543f791">Address Arithmetic</h3>
-<div class="outline-text-3" id="text-org543f791">
+<div id="outline-container-org5b331c7" class="outline-3">
+<h3 id="org5b331c7">Address Arithmetic</h3>
+<div class="outline-text-3" id="text-org5b331c7">
 <p>
 Because memory is allocated sequentially, we can use mathematical comparisons to see if we have enough memory allocated in a buffer, to see a position of a value in an array, etc. For example:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>allocbuf + <span style="color: #d3869b;">ALLOCSIZE</span> - allocp &gt;= n<span style="color: #fe8019;">)</span>     <span style="color: #928374;">// </span><span style="color: #928374;">Checks if the buffer is large enough</span>
-<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
-<span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>p &gt;= allocbuf &amp;&amp; p &lt; allocbuf + <span style="color: #d3869b;">ALLOCSIZE</span><span style="color: #fe8019;">)</span>  <span style="color: #928374;">// </span><span style="color: #928374;">Checks if the pointer is within the buffer range</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #8c8c8c;">(</span>allocbuf + <span style="color: #ff00ff;">ALLOCSIZE</span> - allocp &gt;= n<span style="color: #8c8c8c;">)</span>     <span style="color: #ffff00;">// </span><span style="color: #ffff00;">Checks if the buffer is large enough</span>
+<span style="color: #ffff00;">// </span><span style="color: #ffff00;">or</span>
+<span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #8c8c8c;">(</span>p &gt;= allocbuf &amp;&amp; p &lt; allocbuf + <span style="color: #ff00ff;">ALLOCSIZE</span><span style="color: #8c8c8c;">)</span>  <span style="color: #ffff00;">// </span><span style="color: #ffff00;">Checks if the pointer is within the buffer range</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3bc87da" class="outline-3">
-<h3 id="org3bc87da">Character Pointers and Functions</h3>
-<div class="outline-text-3" id="text-org3bc87da">
+<div id="outline-container-org7e4f7ad" class="outline-3">
+<h3 id="org7e4f7ad">Character Pointers and Functions</h3>
+<div class="outline-text-3" id="text-org7e4f7ad">
 <p>
 A string constant is written as `&ldquo;I am a string&rdquo;`. It is represented as an array of characters and is terminated with a `\0`.
 </p>
@@ -548,7 +548,7 @@ When a character string appears, it is accessed through a character pointer. For
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C">printf<span style="color: #fe8019;">(</span><span style="color: #b8bb26;">"Hello, World!\n"</span><span style="color: #fe8019;">)</span>;
+<pre class="src src-C">printf<span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">"Hello, World!\n"</span><span style="color: #8c8c8c;">)</span>;
 </pre>
 </div>
 
@@ -561,7 +561,7 @@ If you declare a character pointer as follows:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">char</span>* <span style="color: #83a598;">pmessage</span>;
+<pre class="src src-C"><span style="color: #00ff00;">char</span>* <span style="color: #ffff00;">pmessage</span>;
 </pre>
 </div>
 
@@ -570,7 +570,7 @@ then the statement
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C">pmessage = <span style="color: #b8bb26;">"Hello, World!"</span>;
+<pre class="src src-C">pmessage = <span style="color: #00ff00;">"Hello, World!"</span>;
 </pre>
 </div>
 
@@ -580,22 +580,22 @@ Assigns `pmessage` to the &ldquo;Hello, World!&rdquo;. This is <b>not</b> a copy
 </div>
 </div>
 
-<div id="outline-container-org3020395" class="outline-3">
-<h3 id="org3020395">Pointer Arrays; Pointers to Pointers</h3>
-<div class="outline-text-3" id="text-org3020395">
+<div id="outline-container-org90179c8" class="outline-3">
+<h3 id="org90179c8">Pointer Arrays; Pointers to Pointers</h3>
+<div class="outline-text-3" id="text-org90179c8">
 <p>
 To create an array of pointers, we can say:
 </p>
 
-<pre class="example" id="org17ff54b">
+<pre class="example" id="org244710e">
 char* lineptr[10];	// Array of character pointers
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org1b19c88" class="outline-3">
-<h3 id="org1b19c88">Multi-Dimensional Arrays</h3>
-<div class="outline-text-3" id="text-org1b19c88">
+<div id="outline-container-org232f73a" class="outline-3">
+<h3 id="org232f73a">Multi-Dimensional Arrays</h3>
+<div class="outline-text-3" id="text-org232f73a">
 <p>
 C provides rectangular multi-dimensional arrays, although in practice they are much less used than arrays of pointers.
 </p>
@@ -605,11 +605,11 @@ C provides rectangular multi-dimensional arrays, although in practice they are m
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C">foo <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">daytab</span><span style="color: #fb4934;">[</span><span style="color: #d3869b; font-weight: bold;">2</span><span style="color: #fb4934;">][</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fb4934;">]</span> <span style="color: #fb4934;">{</span>...<span style="color: #fb4934;">}</span>
-<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
-foo <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">daytab</span><span style="color: #cc241d;">[][</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #cc241d;">]</span> <span style="color: #cc241d;">{</span>...<span style="color: #cc241d;">}</span>
-<span style="color: #928374;">// </span><span style="color: #928374;">or</span>
-foo <span style="color: #cc241d;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #fe8019;">(</span>*<span style="color: #83a598;">daytab</span><span style="color: #fe8019;">)[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span> <span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span>
+<pre class="src src-C">foo <span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">daytab</span><span style="color: #93a8c6;">[</span><span style="color: #ff00ff;">2</span><span style="color: #93a8c6;">][</span><span style="color: #ff00ff;">13</span><span style="color: #93a8c6;">]</span> <span style="color: #93a8c6;">{</span>...<span style="color: #93a8c6;">}</span>
+<span style="color: #ffff00;">// </span><span style="color: #ffff00;">or</span>
+foo <span style="color: #93a8c6;">(</span><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">daytab</span><span style="color: #b0b1a3;">[][</span><span style="color: #ff00ff;">13</span><span style="color: #b0b1a3;">]</span> <span style="color: #b0b1a3;">{</span>...<span style="color: #b0b1a3;">}</span>
+<span style="color: #ffff00;">// </span><span style="color: #ffff00;">or</span>
+foo <span style="color: #b0b1a3;">(</span><span style="color: #00ff00;">int</span> <span style="color: #8c8c8c;">(</span>*<span style="color: #ffff00;">daytab</span><span style="color: #8c8c8c;">)[</span><span style="color: #ff00ff;">13</span><span style="color: #8c8c8c;">]</span> <span style="color: #8c8c8c;">{</span>...<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 <p>
@@ -617,7 +617,7 @@ It is necessary to have the parenthesis in the last version since brackets `[]` 
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">int</span>* <span style="color: #83a598;">daytab</span><span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span>
+<pre class="src src-C"><span style="color: #00ff00;">int</span>* <span style="color: #ffff00;">daytab</span><span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">13</span><span style="color: #8c8c8c;">]</span>
 </pre>
 </div>
 
@@ -627,32 +627,32 @@ is an array of 13 pointers to integers. More generally, only the first dimension
 </div>
 </div>
 
-<div id="outline-container-org0aaf020" class="outline-3">
-<h3 id="org0aaf020">Initialization of Pointer Arrays</h3>
-<div class="outline-text-3" id="text-org0aaf020">
+<div id="outline-container-org5d1c578" class="outline-3">
+<h3 id="org5d1c578">Initialization of Pointer Arrays</h3>
+<div class="outline-text-3" id="text-org5d1c578">
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">char</span>* <span style="color: #83a598;">array_of_pointers</span><span style="color: #fe8019;">[]</span> =
-<span style="color: #fe8019;">{</span>
-    <span style="color: #b8bb26;">"Item 1"</span>,
-    <span style="color: #b8bb26;">"Item 2"</span>,
+<pre class="src src-C"><span style="color: #00ff00;">char</span>* <span style="color: #ffff00;">array_of_pointers</span><span style="color: #8c8c8c;">[]</span> =
+<span style="color: #8c8c8c;">{</span>
+    <span style="color: #00ff00;">"Item 1"</span>,
+    <span style="color: #00ff00;">"Item 2"</span>,
     ...
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org214130f" class="outline-3">
-<h3 id="org214130f">Pointers vs. Multi-Dimensional Array</h3>
-<div class="outline-text-3" id="text-org214130f">
+<div id="outline-container-org94450c6" class="outline-3">
+<h3 id="org94450c6">Pointers vs. Multi-Dimensional Array</h3>
+<div class="outline-text-3" id="text-org94450c6">
 <p>
 The big difference between
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">a</span><span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">10</span><span style="color: #fe8019;">][</span><span style="color: #d3869b; font-weight: bold;">20</span><span style="color: #fe8019;">]</span>;
-<span style="color: #928374;">// </span><span style="color: #928374;">and</span>
-<span style="color: #fabd2f;">int</span>* <span style="color: #83a598;">b</span><span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">10</span><span style="color: #fe8019;">]</span>;
+<pre class="src src-C"><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">a</span><span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">10</span><span style="color: #8c8c8c;">][</span><span style="color: #ff00ff;">20</span><span style="color: #8c8c8c;">]</span>;
+<span style="color: #ffff00;">// </span><span style="color: #ffff00;">and</span>
+<span style="color: #00ff00;">int</span>* <span style="color: #ffff00;">b</span><span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">10</span><span style="color: #8c8c8c;">]</span>;
 </pre>
 </div>
 
@@ -662,110 +662,110 @@ Is that the first one allocates all 10x20 array, the second only allocates 10 in
 </div>
 </div>
 
-<div id="outline-container-org0822853" class="outline-3">
-<h3 id="org0822853">Command Line Arguments</h3>
-<div class="outline-text-3" id="text-org0822853">
+<div id="outline-container-org72136b8" class="outline-3">
+<h3 id="org72136b8">Command Line Arguments</h3>
+<div class="outline-text-3" id="text-org72136b8">
 <p>
 When `main` is called, it is called with two arguments. The first (conventionally called `argc` for argument count) is the number of command-line arguments. The second (`argv`, for argument vector), is a pointer to an array of character strings that contain the arguments, one per string. We customarily use multiple levels of pointers to manipulate these character strings.
 </p>
 </div>
 
-<div id="outline-container-org22fe119" class="outline-4">
-<h4 id="org22fe119">Accepting Command Line Flags</h4>
-<div class="outline-text-4" id="text-org22fe119">
+<div id="outline-container-org02f01d3" class="outline-4">
+<h4 id="org02f01d3">Accepting Command Line Flags</h4>
+<div class="outline-text-4" id="text-org02f01d3">
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">stdio.h</span><span style="color: #fe8019;">&gt;</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">#include</span> <span style="color: #8c8c8c;">&lt;</span><span style="color: #00ff00;">stdio.h</span><span style="color: #8c8c8c;">&gt;</span>
 
-<span style="color: #ebdbb2; font-weight: bold;">#include</span> <span style="color: #fe8019;">&lt;</span><span style="color: #b8bb26;">string.h</span><span style="color: #fe8019;">&gt;</span>
+<span style="color: #0000ff; font-weight: bold;">#include</span> <span style="color: #8c8c8c;">&lt;</span><span style="color: #00ff00;">string.h</span><span style="color: #8c8c8c;">&gt;</span>
 
-<span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">MAXLINE</span> <span style="color: #d3869b; font-weight: bold;">1000</span>
-
-
-
-<span style="color: #fabd2f;">int</span> <span style="color: #b8bb26;">getline</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">line</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">max</span><span style="color: #fe8019;">)</span>;
+<span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">MAXLINE</span> <span style="color: #ff00ff;">1000</span>
 
 
 
-<span style="color: #928374;">/* </span><span style="color: #928374;">find:  print lines that match pattern from 1st arg</span><span style="color: #928374;"> */</span>
-
-<span style="color: #b8bb26;">main</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">argc</span>, <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">argv</span><span style="color: #fb4934;">[]</span><span style="color: #fe8019;">)</span>
-
-<span style="color: #fe8019;">{</span>
-
-    <span style="color: #fabd2f;">char</span> <span style="color: #83a598;">line</span><span style="color: #fb4934;">[</span><span style="color: #d3869b;">MAXLINE</span><span style="color: #fb4934;">]</span>;
-
-    <span style="color: #fabd2f;">long</span> <span style="color: #83a598;">lineno</span> = <span style="color: #d3869b; font-weight: bold;">0</span>;
-
-    <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">c</span>, <span style="color: #83a598;">except</span> = <span style="color: #d3869b; font-weight: bold;">0</span>, <span style="color: #83a598;">number</span> = <span style="color: #d3869b; font-weight: bold;">0</span>, <span style="color: #83a598;">found</span> = <span style="color: #d3869b; font-weight: bold;">0</span>;
+<span style="color: #00ff00;">int</span> <span style="color: #0000ff; font-weight: bold;">getline</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">line</span>, <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">max</span><span style="color: #8c8c8c;">)</span>;
 
 
 
-    <span style="color: #fb4934;">while</span> <span style="color: #fb4934;">(</span>--argc &gt; <span style="color: #d3869b; font-weight: bold;">0</span> &amp;&amp; <span style="color: #cc241d;">(</span>*++argv<span style="color: #cc241d;">)[</span><span style="color: #d3869b; font-weight: bold;">0</span><span style="color: #cc241d;">]</span> == &#8242;-&#8242;<span style="color: #fb4934;">)</span>
+<span style="color: #ffff00;">/* </span><span style="color: #ffff00;">find:  print lines that match pattern from 1st arg</span><span style="color: #ffff00;"> */</span>
 
-        <span style="color: #fb4934;">while</span> <span style="color: #fb4934;">(</span>c = *++argv<span style="color: #cc241d;">[</span><span style="color: #d3869b; font-weight: bold;">0</span><span style="color: #cc241d;">]</span><span style="color: #fb4934;">)</span>
+<span style="color: #0000ff; font-weight: bold;">main</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">argc</span>, <span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">argv</span><span style="color: #93a8c6;">[]</span><span style="color: #8c8c8c;">)</span>
 
-            <span style="color: #fb4934;">switch</span> <span style="color: #fb4934;">(</span>c<span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>
+<span style="color: #8c8c8c;">{</span>
 
-            <span style="color: #fb4934;">case</span> &#8242;x&#8242;:
+    <span style="color: #00ff00;">char</span> <span style="color: #ffff00;">line</span><span style="color: #93a8c6;">[</span><span style="color: #ff00ff;">MAXLINE</span><span style="color: #93a8c6;">]</span>;
 
-                except = <span style="color: #d3869b; font-weight: bold;">1</span>;
+    <span style="color: #00ff00;">long</span> <span style="color: #ffff00;">lineno</span> = <span style="color: #ff00ff;">0</span>;
 
-                <span style="color: #fb4934;">break</span>;
+    <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">c</span>, <span style="color: #ffff00;">except</span> = <span style="color: #ff00ff;">0</span>, <span style="color: #ffff00;">number</span> = <span style="color: #ff00ff;">0</span>, <span style="color: #ffff00;">found</span> = <span style="color: #ff00ff;">0</span>;
 
-            <span style="color: #fb4934;">case</span> &#8242;n&#8242;:
 
-                number = <span style="color: #d3869b; font-weight: bold;">1</span>;
 
-                <span style="color: #fb4934;">break</span>;
+    <span style="color: #00ffff; font-weight: bold;">while</span> <span style="color: #93a8c6;">(</span>--argc &gt; <span style="color: #ff00ff;">0</span> &amp;&amp; <span style="color: #b0b1a3;">(</span>*++argv<span style="color: #b0b1a3;">)[</span><span style="color: #ff00ff;">0</span><span style="color: #b0b1a3;">]</span> == &#8242;-&#8242;<span style="color: #93a8c6;">)</span>
 
-            <span style="color: #fb4934;">default</span>:
+        <span style="color: #00ffff; font-weight: bold;">while</span> <span style="color: #93a8c6;">(</span>c = *++argv<span style="color: #b0b1a3;">[</span><span style="color: #ff00ff;">0</span><span style="color: #b0b1a3;">]</span><span style="color: #93a8c6;">)</span>
 
-                printf<span style="color: #cc241d;">(</span><span style="color: #b8bb26;">"find: illegal option %c\n"</span>, c<span style="color: #cc241d;">)</span>;
+            <span style="color: #00ffff; font-weight: bold;">switch</span> <span style="color: #93a8c6;">(</span>c<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">{</span>
 
-                argc = <span style="color: #d3869b; font-weight: bold;">0</span>;
+            <span style="color: #00ffff; font-weight: bold;">case</span> &#8242;x&#8242;:
 
-                found = &#8722;<span style="color: #d3869b; font-weight: bold;">1</span>;
+                except = <span style="color: #ff00ff;">1</span>;
 
-                <span style="color: #fb4934;">break</span>;
+                <span style="color: #00ffff; font-weight: bold;">break</span>;
 
-            <span style="color: #fb4934;">}</span>
+            <span style="color: #00ffff; font-weight: bold;">case</span> &#8242;n&#8242;:
 
-    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>argc != <span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #fb4934;">)</span>
+                number = <span style="color: #ff00ff;">1</span>;
 
-        printf<span style="color: #fb4934;">(</span><span style="color: #b8bb26;">"Usage: find -x -n pattern\n"</span><span style="color: #fb4934;">)</span>;
+                <span style="color: #00ffff; font-weight: bold;">break</span>;
 
-    <span style="color: #fb4934;">else</span>
+            <span style="color: #00ffff; font-weight: bold;">default</span>:
 
-        <span style="color: #fb4934;">while</span> <span style="color: #fb4934;">(</span>getline<span style="color: #cc241d;">(</span>line, <span style="color: #d3869b;">MAXLINE</span><span style="color: #cc241d;">)</span> &gt; <span style="color: #d3869b; font-weight: bold;">0</span><span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>
+                printf<span style="color: #b0b1a3;">(</span><span style="color: #00ff00;">"find: illegal option %c\n"</span>, c<span style="color: #b0b1a3;">)</span>;
+
+                argc = <span style="color: #ff00ff;">0</span>;
+
+                found = &#8722;<span style="color: #ff00ff;">1</span>;
+
+                <span style="color: #00ffff; font-weight: bold;">break</span>;
+
+            <span style="color: #93a8c6;">}</span>
+
+    <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>argc != <span style="color: #ff00ff;">1</span><span style="color: #93a8c6;">)</span>
+
+        printf<span style="color: #93a8c6;">(</span><span style="color: #00ff00;">"Usage: find -x -n pattern\n"</span><span style="color: #93a8c6;">)</span>;
+
+    <span style="color: #00ffff; font-weight: bold;">else</span>
+
+        <span style="color: #00ffff; font-weight: bold;">while</span> <span style="color: #93a8c6;">(</span>getline<span style="color: #b0b1a3;">(</span>line, <span style="color: #ff00ff;">MAXLINE</span><span style="color: #b0b1a3;">)</span> &gt; <span style="color: #ff00ff;">0</span><span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">{</span>
 
             lineno++;
 
-            <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span><span style="color: #fe8019;">(</span>strstr<span style="color: #fb4934;">(</span>line, *argv<span style="color: #fb4934;">)</span> != <span style="color: #d3869b;">NULL</span><span style="color: #fe8019;">)</span> != except<span style="color: #cc241d;">)</span> <span style="color: #cc241d;">{</span>
+            <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #b0b1a3;">(</span><span style="color: #8c8c8c;">(</span>strstr<span style="color: #93a8c6;">(</span>line, *argv<span style="color: #93a8c6;">)</span> != <span style="color: #ff00ff;">NULL</span><span style="color: #8c8c8c;">)</span> != except<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">{</span>
 
-                <span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>number<span style="color: #fe8019;">)</span>
+                <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #8c8c8c;">(</span>number<span style="color: #8c8c8c;">)</span>
 
-                    printf<span style="color: #fe8019;">(</span><span style="color: #b8bb26;">"%ld:"</span>, lineno<span style="color: #fe8019;">)</span>;
+                    printf<span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">"%ld:"</span>, lineno<span style="color: #8c8c8c;">)</span>;
 
-                printf<span style="color: #fe8019;">(</span><span style="color: #b8bb26;">"%s"</span>, line<span style="color: #fe8019;">)</span>;
+                printf<span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">"%s"</span>, line<span style="color: #8c8c8c;">)</span>;
 
                 found++;
 
-            <span style="color: #cc241d;">}</span>
+            <span style="color: #b0b1a3;">}</span>
 
-        <span style="color: #fb4934;">}</span>
+        <span style="color: #93a8c6;">}</span>
 
-    <span style="color: #fb4934;">return</span> found;
+    <span style="color: #00ffff; font-weight: bold;">return</span> found;
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgf6a7bc8" class="outline-3">
-<h3 id="orgf6a7bc8">Pointers To Functions</h3>
-<div class="outline-text-3" id="text-orgf6a7bc8">
+<div id="outline-container-org37e0a30" class="outline-3">
+<h3 id="org37e0a30">Pointers To Functions</h3>
+<div class="outline-text-3" id="text-org37e0a30">
 <p>
 In C, it is possible to define pointers to functions which can be assigned, placed in arrays, passed to functions, returned by functions, and so on.
 </p>
@@ -779,7 +779,7 @@ When creating a function that accepts function pointers:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">qsort</span> <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span>* <span style="color: #83a598;">v</span><span style="color: #fb4934;">[]</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">left</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">right</span>, <span style="color: #fabd2f;">int</span> <span style="color: #fb4934;">(</span>*<span style="color: #b8bb26;">comp</span><span style="color: #fb4934;">)(</span><span style="color: #fabd2f;">void</span>*, <span style="color: #fabd2f;">void</span>*<span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span>
+<pre class="src src-C"><span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">qsort</span> <span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">void</span>* <span style="color: #ffff00;">v</span><span style="color: #93a8c6;">[]</span>, <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">left</span>, <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">right</span>, <span style="color: #00ff00;">int</span> <span style="color: #93a8c6;">(</span>*<span style="color: #0000ff; font-weight: bold;">comp</span><span style="color: #93a8c6;">)(</span><span style="color: #00ff00;">void</span>*, <span style="color: #00ff00;">void</span>*<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span>
 </pre>
 </div>
 
@@ -789,56 +789,56 @@ Says that `comp` is a pointer to a function that has two `void*` as arguments.
 </div>
 </div>
 
-<div id="outline-container-org8d1192b" class="outline-3">
-<h3 id="org8d1192b">Complicated Declarations</h3>
-<div class="outline-text-3" id="text-org8d1192b">
+<div id="outline-container-org3d1e9a1" class="outline-3">
+<h3 id="org3d1e9a1">Complicated Declarations</h3>
+<div class="outline-text-3" id="text-org3d1e9a1">
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">char</span> **<span style="color: #b8bb26;">argv</span>
+<pre class="src src-C"><span style="color: #00ff00;">char</span> **<span style="color: #0000ff; font-weight: bold;">argv</span>
 
-    argv:  pointer to pointer to <span style="color: #fabd2f;">char</span>
+    argv:  pointer to pointer to <span style="color: #00ff00;">char</span>
 
-<span style="color: #fabd2f;">int</span> <span style="color: #fe8019;">(</span>*daytab<span style="color: #fe8019;">)[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span>
+<span style="color: #00ff00;">int</span> <span style="color: #8c8c8c;">(</span>*daytab<span style="color: #8c8c8c;">)[</span><span style="color: #ff00ff;">13</span><span style="color: #8c8c8c;">]</span>
 
-    daytab:  pointer to array<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span> of <span style="color: #fabd2f;">int</span>
+    daytab:  pointer to array<span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">13</span><span style="color: #8c8c8c;">]</span> of <span style="color: #00ff00;">int</span>
 
-<span style="color: #fabd2f;">int</span> *daytab<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span>
+<span style="color: #00ff00;">int</span> *daytab<span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">13</span><span style="color: #8c8c8c;">]</span>
 
-    daytab:  array<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">13</span><span style="color: #fe8019;">]</span> of pointer to <span style="color: #fabd2f;">int</span>
+    daytab:  array<span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">13</span><span style="color: #8c8c8c;">]</span> of pointer to <span style="color: #00ff00;">int</span>
 
-<span style="color: #fabd2f;">void</span> *comp<span style="color: #fe8019;">()</span>
+<span style="color: #00ff00;">void</span> *comp<span style="color: #8c8c8c;">()</span>
 
-    comp:  function returning pointer to <span style="color: #fabd2f;">void</span>
+    comp:  function returning pointer to <span style="color: #00ff00;">void</span>
 
-<span style="color: #fabd2f;">void</span> <span style="color: #fe8019;">(</span>*comp<span style="color: #fe8019;">)()</span>
+<span style="color: #00ff00;">void</span> <span style="color: #8c8c8c;">(</span>*comp<span style="color: #8c8c8c;">)()</span>
 
-    comp:  pointer to function returning <span style="color: #fabd2f;">void</span>
+    comp:  pointer to function returning <span style="color: #00ff00;">void</span>
 
-<span style="color: #fabd2f;">char</span> <span style="color: #fe8019;">(</span>*<span style="color: #fb4934;">(</span>*x<span style="color: #cc241d;">()</span><span style="color: #fb4934;">)[]</span><span style="color: #fe8019;">)()</span>
+<span style="color: #00ff00;">char</span> <span style="color: #8c8c8c;">(</span>*<span style="color: #93a8c6;">(</span>*x<span style="color: #b0b1a3;">()</span><span style="color: #93a8c6;">)[]</span><span style="color: #8c8c8c;">)()</span>
 
-    x: function returning pointer to array<span style="color: #fe8019;">[]</span> of
+    x: function returning pointer to array<span style="color: #8c8c8c;">[]</span> of
 
-    pointer to function returning <span style="color: #fabd2f;">char</span>
+    pointer to function returning <span style="color: #00ff00;">char</span>
 
-<span style="color: #fabd2f;">char</span> <span style="color: #fe8019;">(</span>*<span style="color: #fb4934;">(</span>*x<span style="color: #cc241d;">[</span><span style="color: #d3869b; font-weight: bold;">3</span><span style="color: #cc241d;">]</span><span style="color: #fb4934;">)()</span><span style="color: #fe8019;">)[</span><span style="color: #d3869b; font-weight: bold;">5</span><span style="color: #fe8019;">]</span>
+<span style="color: #00ff00;">char</span> <span style="color: #8c8c8c;">(</span>*<span style="color: #93a8c6;">(</span>*x<span style="color: #b0b1a3;">[</span><span style="color: #ff00ff;">3</span><span style="color: #b0b1a3;">]</span><span style="color: #93a8c6;">)()</span><span style="color: #8c8c8c;">)[</span><span style="color: #ff00ff;">5</span><span style="color: #8c8c8c;">]</span>
 
-    x: array<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">3</span><span style="color: #fe8019;">]</span> of pointer to function returning
+    x: array<span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">3</span><span style="color: #8c8c8c;">]</span> of pointer to function returning
 
-    pointer to array<span style="color: #fe8019;">[</span><span style="color: #d3869b; font-weight: bold;">5</span><span style="color: #fe8019;">]</span> of <span style="color: #fabd2f;">char</span>
+    pointer to array<span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">5</span><span style="color: #8c8c8c;">]</span> of <span style="color: #00ff00;">char</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbbb6b9a" class="outline-2">
-<h2 id="orgbbb6b9a">Structures</h2>
-<div class="outline-text-2" id="text-orgbbb6b9a">
+<div id="outline-container-orga6de34c" class="outline-2">
+<h2 id="orga6de34c">Structures</h2>
+<div class="outline-text-2" id="text-orga6de34c">
 <p>
 A `struct` declaration defines a type. The right brace that terminates the list of members may be followed by a list of variables, just as for any basic type. That is,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fe8019;">{</span>...<span style="color: #fe8019;">}</span> <span style="color: #83a598;">x</span>, <span style="color: #83a598;">y</span>, <span style="color: #83a598;">z</span>;
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #8c8c8c;">{</span>...<span style="color: #8c8c8c;">}</span> <span style="color: #ffff00;">x</span>, <span style="color: #ffff00;">y</span>, <span style="color: #ffff00;">z</span>;
 </pre>
 </div>
 
@@ -847,7 +847,7 @@ A structure declaration that is not followed by  a list of variables reserves no
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">point</span> <span style="color: #83a598;">pt</span>;
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">point</span> <span style="color: #ffff00;">pt</span>;
 </pre>
 </div>
 
@@ -856,47 +856,47 @@ Is analogous to `int c`.
 </p>
 </div>
 
-<div id="outline-container-org03cb1d2" class="outline-3">
-<h3 id="org03cb1d2">Arrays of Structures</h3>
-<div class="outline-text-3" id="text-org03cb1d2">
+<div id="outline-container-org68af864" class="outline-3">
+<h3 id="org68af864">Arrays of Structures</h3>
+<div class="outline-text-3" id="text-org68af864">
 <p>
 When defining an array of structures, it is acceptable to define it in the following manner:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">key</span> <span style="color: #fe8019;">{</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">key</span> <span style="color: #8c8c8c;">{</span>
 
-    <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">word</span>;
+    <span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">word</span>;
 
-    <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">count</span>;
+    <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">count</span>;
 
-<span style="color: #fe8019;">}</span> <span style="color: #83a598;">keytab</span><span style="color: #fe8019;">[]</span> = <span style="color: #fe8019;">{</span>
+<span style="color: #8c8c8c;">}</span> <span style="color: #ffff00;">keytab</span><span style="color: #8c8c8c;">[]</span> = <span style="color: #8c8c8c;">{</span>
 
-    <span style="color: #b8bb26;">"auto"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"auto"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"break"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"break"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"case"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"case"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"char"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"char"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"const"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"const"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"continue"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"continue"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"default"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"default"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #928374;">/* </span><span style="color: #928374;">...</span><span style="color: #928374;"> */</span>
+    <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">...</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #b8bb26;">"unsigned"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"unsigned"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"void"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"void"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"volatile"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>,
+    <span style="color: #00ff00;">"volatile"</span>, <span style="color: #ff00ff;">0</span>,
 
-    <span style="color: #b8bb26;">"while"</span>, <span style="color: #d3869b; font-weight: bold;">0</span>
+    <span style="color: #00ff00;">"while"</span>, <span style="color: #ff00ff;">0</span>
 
-<span style="color: #fe8019;">}</span>;
+<span style="color: #8c8c8c;">}</span>;
 </pre>
 </div>
 
@@ -905,11 +905,11 @@ However, it is more precise to enclose the initializers for each &ldquo;row&rdqu
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"> <span style="color: #fe8019;">{</span> <span style="color: #b8bb26;">"auto"</span>, <span style="color: #d3869b; font-weight: bold;">0</span> <span style="color: #fe8019;">}</span>,
+<pre class="src src-C"> <span style="color: #8c8c8c;">{</span> <span style="color: #00ff00;">"auto"</span>, <span style="color: #ff00ff;">0</span> <span style="color: #8c8c8c;">}</span>,
 
- <span style="color: #fe8019;">{</span> <span style="color: #b8bb26;">"break"</span>, <span style="color: #d3869b; font-weight: bold;">0</span> <span style="color: #fe8019;">}</span>,
+ <span style="color: #8c8c8c;">{</span> <span style="color: #00ff00;">"break"</span>, <span style="color: #ff00ff;">0</span> <span style="color: #8c8c8c;">}</span>,
 
- <span style="color: #fe8019;">{</span> <span style="color: #b8bb26;">"case"</span>, <span style="color: #d3869b; font-weight: bold;">0</span> <span style="color: #fe8019;">}</span>,
+ <span style="color: #8c8c8c;">{</span> <span style="color: #00ff00;">"case"</span>, <span style="color: #ff00ff;">0</span> <span style="color: #8c8c8c;">}</span>,
 
 ...
 </pre>
@@ -917,9 +917,9 @@ However, it is more precise to enclose the initializers for each &ldquo;row&rdqu
 </div>
 </div>
 
-<div id="outline-container-orga90a6f7" class="outline-3">
-<h3 id="orga90a6f7">Table Lookup</h3>
-<div class="outline-text-3" id="text-orga90a6f7">
+<div id="outline-container-org85040a5" class="outline-3">
+<h3 id="org85040a5">Table Lookup</h3>
+<div class="outline-text-3" id="text-org85040a5">
 <p>
 This section will be about writing the innards of a table-lookup package.
 </p>
@@ -945,15 +945,15 @@ A block in the list is a structure containing pointers to the name, the replacem
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> <span style="color: #fe8019;">{</span>       <span style="color: #928374;">/* </span><span style="color: #928374;">table entry:</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> <span style="color: #8c8c8c;">{</span>       <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">table entry:</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #83a598;">next</span>;   <span style="color: #928374;">/* </span><span style="color: #928374;">next entry in chain</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> *<span style="color: #ffff00;">next</span>;   <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">next entry in chain</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">name</span>;           <span style="color: #928374;">/* </span><span style="color: #928374;">defined name</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">name</span>;           <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">defined name</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">defn</span>;           <span style="color: #928374;">/* </span><span style="color: #928374;">replacement text</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">defn</span>;           <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">replacement text</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fe8019;">}</span>;
+<span style="color: #8c8c8c;">}</span>;
 </pre>
 </div>
 
@@ -962,9 +962,9 @@ The pointer array is just
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span> <span style="color: #83a598;">HASHSIZE</span> <span style="color: #d3869b; font-weight: bold;">101</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">#define</span> <span style="color: #ffff00;">HASHSIZE</span> <span style="color: #ff00ff;">101</span>
 
-<span style="color: #fb4934;">static</span> <span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #83a598;">hashtab</span><span style="color: #fe8019;">[</span><span style="color: #d3869b;">HASHSIZE</span><span style="color: #fe8019;">]</span>;    <span style="color: #928374;">/* </span><span style="color: #928374;">pointer table</span><span style="color: #928374;"> */</span>
+<span style="color: #00ffff; font-weight: bold;">static</span> <span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> *<span style="color: #ffff00;">hashtab</span><span style="color: #8c8c8c;">[</span><span style="color: #ff00ff;">HASHSIZE</span><span style="color: #8c8c8c;">]</span>;    <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">pointer table</span><span style="color: #ffff00;"> */</span>
 </pre>
 </div>
 
@@ -973,23 +973,23 @@ The hashing function, which is used by both `lookup` and `install`, adds each ch
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">hash:  form hash value for string s</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #ffff00;">/* </span><span style="color: #ffff00;">hash:  form hash value for string s</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fabd2f;">unsigned</span> <span style="color: #b8bb26;">hash</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">s</span><span style="color: #fe8019;">)</span>
+<span style="color: #00ff00;">unsigned</span> <span style="color: #0000ff; font-weight: bold;">hash</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">s</span><span style="color: #8c8c8c;">)</span>
 
-<span style="color: #fe8019;">{</span>
+<span style="color: #8c8c8c;">{</span>
 
-    <span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">hashval</span>;
+    <span style="color: #00ff00;">unsigned</span> <span style="color: #ffff00;">hashval</span>;
 
 
 
-    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>hashval = <span style="color: #d3869b; font-weight: bold;">0</span>; *s != &#8242;\<span style="color: #d3869b; font-weight: bold;">0</span>&#8242;; s++<span style="color: #fb4934;">)</span>
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #93a8c6;">(</span>hashval = <span style="color: #ff00ff;">0</span>; *s != &#8242;\<span style="color: #ff00ff;">0</span>&#8242;; s++<span style="color: #93a8c6;">)</span>
 
-        hashval = *s + <span style="color: #d3869b; font-weight: bold;">31</span> * hashval;
+        hashval = *s + <span style="color: #ff00ff;">31</span> * hashval;
 
-    <span style="color: #fb4934;">return</span> hashval % <span style="color: #d3869b;">HASHSIZE</span>;
+    <span style="color: #00ffff; font-weight: bold;">return</span> hashval % <span style="color: #ff00ff;">HASHSIZE</span>;
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -1002,25 +1002,25 @@ The hashing process produces a staring index in the array `hashtab`; if the stri
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">lookup:  look for s in hashtab</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #ffff00;">/* </span><span style="color: #ffff00;">lookup:  look for s in hashtab</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #b8bb26;">lookup</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">s</span><span style="color: #fe8019;">)</span>
+<span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> *<span style="color: #0000ff; font-weight: bold;">lookup</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">s</span><span style="color: #8c8c8c;">)</span>
 
-<span style="color: #fe8019;">{</span>
+<span style="color: #8c8c8c;">{</span>
 
-    <span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #83a598;">np</span>;
+    <span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> *<span style="color: #ffff00;">np</span>;
 
 
 
-    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>np = hashtab<span style="color: #cc241d;">[</span>hash<span style="color: #fe8019;">(</span>s<span style="color: #fe8019;">)</span><span style="color: #cc241d;">]</span>; np != <span style="color: #d3869b;">NULL</span>; np = np-&gt;next<span style="color: #fb4934;">)</span>
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #93a8c6;">(</span>np = hashtab<span style="color: #b0b1a3;">[</span>hash<span style="color: #8c8c8c;">(</span>s<span style="color: #8c8c8c;">)</span><span style="color: #b0b1a3;">]</span>; np != <span style="color: #ff00ff;">NULL</span>; np = np-&gt;next<span style="color: #93a8c6;">)</span>
 
-        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>strcmp<span style="color: #cc241d;">(</span>s, np-&gt;name<span style="color: #cc241d;">)</span> == <span style="color: #d3869b; font-weight: bold;">0</span><span style="color: #fb4934;">)</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>strcmp<span style="color: #b0b1a3;">(</span>s, np-&gt;name<span style="color: #b0b1a3;">)</span> == <span style="color: #ff00ff;">0</span><span style="color: #93a8c6;">)</span>
 
-            <span style="color: #fb4934;">return</span> np;  <span style="color: #928374;">/* </span><span style="color: #928374;">found</span><span style="color: #928374;"> */</span>
+            <span style="color: #00ffff; font-weight: bold;">return</span> np;  <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">found</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;        <span style="color: #928374;">/* </span><span style="color: #928374;">not found</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ffff; font-weight: bold;">return</span> <span style="color: #ff00ff;">NULL</span>;        <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">not found</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -1029,93 +1029,93 @@ The hashing process produces a staring index in the array `hashtab`; if the stri
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #b8bb26;">lookup</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #fe8019;">)</span>;
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> *<span style="color: #0000ff; font-weight: bold;">lookup</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">char</span> *<span style="color: #8c8c8c;">)</span>;
 
-<span style="color: #fabd2f;">char</span> *<span style="color: #b8bb26;">strdup</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #fe8019;">)</span>;
-
-
-
-<span style="color: #928374;">/* </span><span style="color: #928374;">install:  put (name, defn) in hashtab</span><span style="color: #928374;"> */</span>
-
-<span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #b8bb26;">install</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">name</span>, <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">defn</span><span style="color: #fe8019;">)</span>
-
-<span style="color: #fe8019;">{</span>
-
-    <span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #83a598;">np</span>;
-
-    <span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">hashval</span>;
+<span style="color: #00ff00;">char</span> *<span style="color: #0000ff; font-weight: bold;">strdup</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">char</span> *<span style="color: #8c8c8c;">)</span>;
 
 
 
-    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span>np = lookup<span style="color: #fe8019;">(</span>name<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>  <span style="color: #928374;">/* </span><span style="color: #928374;">not found</span><span style="color: #928374;"> */</span>
+<span style="color: #ffff00;">/* </span><span style="color: #ffff00;">install:  put (name, defn) in hashtab</span><span style="color: #ffff00;"> */</span>
 
-        np = <span style="color: #cc241d;">(</span><span style="color: #fb4934;">struct</span> <span style="color: #fabd2f;">nlist</span> *<span style="color: #cc241d;">)</span> malloc<span style="color: #cc241d;">(</span><span style="color: #fb4934;">sizeof</span><span style="color: #fe8019;">(</span>*np<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span>;
+<span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> *<span style="color: #0000ff; font-weight: bold;">install</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">name</span>, <span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">defn</span><span style="color: #8c8c8c;">)</span>
 
-        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>np == <span style="color: #d3869b;">NULL</span> &#166;&#166; <span style="color: #fe8019;">(</span>np-&gt;name = strdup<span style="color: #fb4934;">(</span>name<span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #cc241d;">)</span>
+<span style="color: #8c8c8c;">{</span>
 
-            <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;
+    <span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> *<span style="color: #ffff00;">np</span>;
 
-        hashval = hash<span style="color: #cc241d;">(</span>name<span style="color: #cc241d;">)</span>;
+    <span style="color: #00ff00;">unsigned</span> <span style="color: #ffff00;">hashval</span>;
 
-        np-&gt;next = hashtab<span style="color: #cc241d;">[</span>hashval<span style="color: #cc241d;">]</span>;
 
-        hashtab<span style="color: #cc241d;">[</span>hashval<span style="color: #cc241d;">]</span> = np;
 
-    <span style="color: #fb4934;">}</span> <span style="color: #fb4934;">else</span>      <span style="color: #928374;">/* </span><span style="color: #928374;">already there</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>np = lookup<span style="color: #8c8c8c;">(</span>name<span style="color: #8c8c8c;">)</span><span style="color: #b0b1a3;">)</span> == <span style="color: #ff00ff;">NULL</span><span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">{</span>  <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">not found</span><span style="color: #ffff00;"> */</span>
 
-        free<span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span><span style="color: #fabd2f;">void</span> *<span style="color: #cc241d;">)</span> np-&gt;defn<span style="color: #fb4934;">)</span>;  <span style="color: #928374;">/* </span><span style="color: #928374;">free previous defn</span><span style="color: #928374;"> */</span>
+        np = <span style="color: #b0b1a3;">(</span><span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #00ff00;">nlist</span> *<span style="color: #b0b1a3;">)</span> malloc<span style="color: #b0b1a3;">(</span><span style="color: #00ffff; font-weight: bold;">sizeof</span><span style="color: #8c8c8c;">(</span>*np<span style="color: #8c8c8c;">)</span><span style="color: #b0b1a3;">)</span>;
 
-    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span>np-&gt;defn = strdup<span style="color: #fe8019;">(</span>defn<span style="color: #fe8019;">)</span><span style="color: #cc241d;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #fb4934;">)</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #b0b1a3;">(</span>np == <span style="color: #ff00ff;">NULL</span> &#166;&#166; <span style="color: #8c8c8c;">(</span>np-&gt;name = strdup<span style="color: #93a8c6;">(</span>name<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span> == <span style="color: #ff00ff;">NULL</span><span style="color: #b0b1a3;">)</span>
 
-        <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;
+            <span style="color: #00ffff; font-weight: bold;">return</span> <span style="color: #ff00ff;">NULL</span>;
 
-    <span style="color: #fb4934;">return</span> np;
+        hashval = hash<span style="color: #b0b1a3;">(</span>name<span style="color: #b0b1a3;">)</span>;
 
-<span style="color: #fe8019;">}</span>
+        np-&gt;next = hashtab<span style="color: #b0b1a3;">[</span>hashval<span style="color: #b0b1a3;">]</span>;
+
+        hashtab<span style="color: #b0b1a3;">[</span>hashval<span style="color: #b0b1a3;">]</span> = np;
+
+    <span style="color: #93a8c6;">}</span> <span style="color: #00ffff; font-weight: bold;">else</span>      <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">already there</span><span style="color: #ffff00;"> */</span>
+
+        free<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span><span style="color: #00ff00;">void</span> *<span style="color: #b0b1a3;">)</span> np-&gt;defn<span style="color: #93a8c6;">)</span>;  <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">free previous defn</span><span style="color: #ffff00;"> */</span>
+
+    <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>np-&gt;defn = strdup<span style="color: #8c8c8c;">(</span>defn<span style="color: #8c8c8c;">)</span><span style="color: #b0b1a3;">)</span> == <span style="color: #ff00ff;">NULL</span><span style="color: #93a8c6;">)</span>
+
+        <span style="color: #00ffff; font-weight: bold;">return</span> <span style="color: #ff00ff;">NULL</span>;
+
+    <span style="color: #00ffff; font-weight: bold;">return</span> np;
+
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org02d3d98" class="outline-2">
-<h2 id="org02d3d98">Input and Output</h2>
-<div class="outline-text-2" id="text-org02d3d98">
+<div id="outline-container-org89e7116" class="outline-2">
+<h2 id="org89e7116">Input and Output</h2>
+<div class="outline-text-2" id="text-org89e7116">
 </div>
-<div id="outline-container-org33ae63d" class="outline-3">
-<h3 id="org33ae63d">Command Execution</h3>
-<div class="outline-text-3" id="text-org33ae63d">
+<div id="outline-container-orgf7771d7" class="outline-3">
+<h3 id="orgf7771d7">Command Execution</h3>
+<div class="outline-text-3" id="text-orgf7771d7">
 <p>
 The function `system(char* s)` executes the commands contained in the character string `s`, then resumes execution of the current program.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C">system<span style="color: #fe8019;">(</span><span style="color: #b8bb26;">"date"</span><span style="color: #fe8019;">)</span>;
+<pre class="src src-C">system<span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">"date"</span><span style="color: #8c8c8c;">)</span>;
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org306ddc2" class="outline-3">
-<h3 id="org306ddc2">Storage Management</h3>
-<div class="outline-text-3" id="text-org306ddc2">
+<div id="outline-container-orgc004e30" class="outline-3">
+<h3 id="orgc004e30">Storage Management</h3>
+<div class="outline-text-3" id="text-orgc004e30">
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">void</span>* <span style="color: #b8bb26;">malloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">n</span><span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">returns a pointer to n bytes of uninitialized storage</span>
-<span style="color: #fabd2f;">void</span>* <span style="color: #b8bb26;">calloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">n</span>, <span style="color: #fabd2f;">size_t</span> <span style="color: #83a598;">size</span><span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">returns a pointer to enough space for an array of n objects of the specified size. </span>
-<span style="color: #b8bb26;">free</span><span style="color: #fe8019;">(</span>p<span style="color: #fe8019;">)</span>; <span style="color: #928374;">// </span><span style="color: #928374;">frees the space appointed to p where p was originally obtained by calling malloc or calloc.</span>
+<pre class="src src-C"><span style="color: #00ff00;">void</span>* <span style="color: #0000ff; font-weight: bold;">malloc</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">size_t</span> <span style="color: #ffff00;">n</span><span style="color: #8c8c8c;">)</span>; <span style="color: #ffff00;">// </span><span style="color: #ffff00;">returns a pointer to n bytes of uninitialized storage</span>
+<span style="color: #00ff00;">void</span>* <span style="color: #0000ff; font-weight: bold;">calloc</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">size_t</span> <span style="color: #ffff00;">n</span>, <span style="color: #00ff00;">size_t</span> <span style="color: #ffff00;">size</span><span style="color: #8c8c8c;">)</span>; <span style="color: #ffff00;">// </span><span style="color: #ffff00;">returns a pointer to enough space for an array of n objects of the specified size. </span>
+<span style="color: #0000ff; font-weight: bold;">free</span><span style="color: #8c8c8c;">(</span>p<span style="color: #8c8c8c;">)</span>; <span style="color: #ffff00;">// </span><span style="color: #ffff00;">frees the space appointed to p where p was originally obtained by calling malloc or calloc.</span>
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9707318" class="outline-2">
-<h2 id="org9707318">The UNIX System Interface</h2>
-<div class="outline-text-2" id="text-org9707318">
+<div id="outline-container-orgf473efd" class="outline-2">
+<h2 id="orgf473efd">The UNIX System Interface</h2>
+<div class="outline-text-2" id="text-orgf473efd">
 </div>
-<div id="outline-container-org8932227" class="outline-3">
-<h3 id="org8932227">Open, Creat, Close, Unlink</h3>
-<div class="outline-text-3" id="text-org8932227">
+<div id="outline-container-org2c2ddde" class="outline-3">
+<h3 id="org2c2ddde">Open, Creat, Close, Unlink</h3>
+<div class="outline-text-3" id="text-org2c2ddde">
 <p>
 Other than the default standard input, output and error, you must explicitly open files in order to read or write them (such as with I/O manipulation with external hardware).
 </p>
@@ -1126,15 +1126,15 @@ There is a limit (often about 20) on the number of files that a program may have
 </div>
 </div>
 
-<div id="outline-container-org8b85798" class="outline-3">
-<h3 id="org8b85798">Random Access - Lseek</h3>
-<div class="outline-text-3" id="text-org8b85798">
+<div id="outline-container-org4be1eca" class="outline-3">
+<h3 id="org4be1eca">Random Access - Lseek</h3>
+<div class="outline-text-3" id="text-org4be1eca">
 <p>
 When necessary, a file can be read or written in any arbitrary order. The system call `lseek` provides a way to move around in a file without reading or writing any data:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fabd2f;">long</span> <span style="color: #b8bb26;">lseek</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">int</span> <span style="color: #83a598;">fd</span>, <span style="color: #fabd2f;">long</span> <span style="color: #83a598;">offset</span>, <span style="color: #fabd2f;">int</span> <span style="color: #83a598;">origin</span><span style="color: #fe8019;">)</span>;
+<pre class="src src-C"><span style="color: #00ff00;">long</span> <span style="color: #0000ff; font-weight: bold;">lseek</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">int</span> <span style="color: #ffff00;">fd</span>, <span style="color: #00ff00;">long</span> <span style="color: #ffff00;">offset</span>, <span style="color: #00ff00;">int</span> <span style="color: #ffff00;">origin</span><span style="color: #8c8c8c;">)</span>;
 </pre>
 </div>
 
@@ -1144,9 +1144,9 @@ When necessary, a file can be read or written in any arbitrary order. The system
 </div>
 </div>
 
-<div id="outline-container-org385f9c8" class="outline-3">
-<h3 id="org385f9c8">Example - A Storage Allocator</h3>
-<div class="outline-text-3" id="text-org385f9c8">
+<div id="outline-container-orgfc2f1d0" class="outline-3">
+<h3 id="orgfc2f1d0">Example - A Storage Allocator</h3>
+<div class="outline-text-3" id="text-orgfc2f1d0">
 <p>
 This example creates a memory allocator that allows for non-continuous and/or segmented memory allocation as shown in Figure \ref{fig:storageexample}.
 </p>
@@ -1160,27 +1160,27 @@ This example creates a memory allocator that allows for non-continuous and/or se
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">typedef</span> <span style="color: #fabd2f;">long</span> <span style="color: #fabd2f;">Align</span>;  <span style="color: #928374;">/* </span><span style="color: #928374;">for alignment to long boundary</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">typedef</span> <span style="color: #00ff00;">long</span> <span style="color: #00ff00;">Align</span>;  <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">for alignment to long boundary</span><span style="color: #ffff00;"> */</span>
 
 
 
-<span style="color: #fb4934;">union</span> <span style="color: #fabd2f;">header</span> <span style="color: #fe8019;">{</span>       <span style="color: #928374;">/* </span><span style="color: #928374;">block header:</span><span style="color: #928374;"> */</span>
+<span style="color: #00ffff; font-weight: bold;">union</span> <span style="color: #00ff00;">header</span> <span style="color: #8c8c8c;">{</span>       <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">block header:</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #fb4934;">struct</span> <span style="color: #fb4934;">{</span>
+    <span style="color: #00ffff; font-weight: bold;">struct</span> <span style="color: #93a8c6;">{</span>
 
-        <span style="color: #fb4934;">union</span> <span style="color: #fabd2f;">header</span> *<span style="color: #83a598;">ptr</span>; <span style="color: #928374;">/* </span><span style="color: #928374;">next block if on free list</span><span style="color: #928374;"> */</span>
+        <span style="color: #00ffff; font-weight: bold;">union</span> <span style="color: #00ff00;">header</span> *<span style="color: #ffff00;">ptr</span>; <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">next block if on free list</span><span style="color: #ffff00;"> */</span>
 
-        <span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">size</span>;     <span style="color: #928374;">/* </span><span style="color: #928374;">size of this block</span><span style="color: #928374;"> */</span>
+        <span style="color: #00ff00;">unsigned</span> <span style="color: #ffff00;">size</span>;     <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">size of this block</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #fb4934;">}</span> <span style="color: #83a598;">s</span>;
+    <span style="color: #93a8c6;">}</span> <span style="color: #ffff00;">s</span>;
 
-    <span style="color: #fabd2f;">Align</span> <span style="color: #83a598;">x</span>;         <span style="color: #928374;">/* </span><span style="color: #928374;">force alignment of blocks</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ff00;">Align</span> <span style="color: #ffff00;">x</span>;         <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">force alignment of blocks</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fe8019;">}</span>;
+<span style="color: #8c8c8c;">}</span>;
 
 
 
-<span style="color: #fb4934;">typedef</span> <span style="color: #fb4934;">union</span> <span style="color: #fabd2f;">header</span> <span style="color: #fabd2f;">Header</span>;
+<span style="color: #00ffff; font-weight: bold;">typedef</span> <span style="color: #00ffff; font-weight: bold;">union</span> <span style="color: #00ff00;">header</span> <span style="color: #00ff00;">Header</span>;
 </pre>
 </div>
 
@@ -1189,45 +1189,45 @@ The overridden `malloc` method has the form of:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #fb4934;">static</span> <span style="color: #fabd2f;">Header</span> <span style="color: #83a598;">base</span>;       <span style="color: #928374;">/* </span><span style="color: #928374;">empty list to get started</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #00ffff; font-weight: bold;">static</span> <span style="color: #00ff00;">Header</span> <span style="color: #ffff00;">base</span>;       <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">empty list to get started</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fb4934;">static</span> <span style="color: #fabd2f;">Header</span> *<span style="color: #83a598;">freep</span> = <span style="color: #d3869b;">NULL</span>;     <span style="color: #928374;">/* </span><span style="color: #928374;">start of free list</span><span style="color: #928374;"> */</span>
-
-
-
-<span style="color: #928374;">/* </span><span style="color: #928374;">malloc:  general-purpose storage allocator</span><span style="color: #928374;"> */</span>
-
-<span style="color: #fabd2f;">void</span> *<span style="color: #b8bb26;">malloc</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">nbytes</span><span style="color: #fe8019;">)</span>
-
-<span style="color: #fe8019;">{</span>
-
-    <span style="color: #fabd2f;">Header</span> *<span style="color: #83a598;">p</span>, *<span style="color: #83a598;">prevp</span>;
-
-    <span style="color: #fabd2f;">Header</span> *<span style="color: #b8bb26;">morecore</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">unsigned</span><span style="color: #fb4934;">)</span>;
-
-    <span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">nunits</span>;
+<span style="color: #00ffff; font-weight: bold;">static</span> <span style="color: #00ff00;">Header</span> *<span style="color: #ffff00;">freep</span> = <span style="color: #ff00ff;">NULL</span>;     <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">start of free list</span><span style="color: #ffff00;"> */</span>
 
 
 
-    nunits = <span style="color: #fb4934;">(</span>nbytes+<span style="color: #fb4934;">sizeof</span><span style="color: #cc241d;">(</span>Header<span style="color: #cc241d;">)</span>&#8722;<span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #fb4934;">)</span>/<span style="color: #fb4934;">sizeof</span><span style="color: #fb4934;">(</span>Header<span style="color: #fb4934;">)</span> + <span style="color: #d3869b; font-weight: bold;">1</span>;
+<span style="color: #ffff00;">/* </span><span style="color: #ffff00;">malloc:  general-purpose storage allocator</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span>prevp = freep<span style="color: #cc241d;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>  <span style="color: #928374;">/* </span><span style="color: #928374;">no free list yet</span><span style="color: #928374;"> */</span>
+<span style="color: #00ff00;">void</span> *<span style="color: #0000ff; font-weight: bold;">malloc</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">unsigned</span> <span style="color: #ffff00;">nbytes</span><span style="color: #8c8c8c;">)</span>
+
+<span style="color: #8c8c8c;">{</span>
+
+    <span style="color: #00ff00;">Header</span> *<span style="color: #ffff00;">p</span>, *<span style="color: #ffff00;">prevp</span>;
+
+    <span style="color: #00ff00;">Header</span> *<span style="color: #0000ff; font-weight: bold;">morecore</span><span style="color: #93a8c6;">(</span><span style="color: #00ff00;">unsigned</span><span style="color: #93a8c6;">)</span>;
+
+    <span style="color: #00ff00;">unsigned</span> <span style="color: #ffff00;">nunits</span>;
+
+
+
+    nunits = <span style="color: #93a8c6;">(</span>nbytes+<span style="color: #00ffff; font-weight: bold;">sizeof</span><span style="color: #b0b1a3;">(</span>Header<span style="color: #b0b1a3;">)</span>&#8722;<span style="color: #ff00ff;">1</span><span style="color: #93a8c6;">)</span>/<span style="color: #00ffff; font-weight: bold;">sizeof</span><span style="color: #93a8c6;">(</span>Header<span style="color: #93a8c6;">)</span> + <span style="color: #ff00ff;">1</span>;
+
+    <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span>prevp = freep<span style="color: #b0b1a3;">)</span> == <span style="color: #ff00ff;">NULL</span><span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">{</span>  <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">no free list yet</span><span style="color: #ffff00;"> */</span>
 
         base.s.ptr = freep = prevp = &amp;base;
 
-        base.s.size = <span style="color: #d3869b; font-weight: bold;">0</span>;
+        base.s.size = <span style="color: #ff00ff;">0</span>;
 
-    <span style="color: #fb4934;">}</span>
+    <span style="color: #93a8c6;">}</span>
 
-    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>p = prevp-&gt;s.ptr; ; prevp = p, p = p-&gt;s.ptr<span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #93a8c6;">(</span>p = prevp-&gt;s.ptr; ; prevp = p, p = p-&gt;s.ptr<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">{</span>
 
-        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>p-&gt;s.size &gt;= nunits<span style="color: #cc241d;">)</span> <span style="color: #cc241d;">{</span>    <span style="color: #928374;">/* </span><span style="color: #928374;">big enough</span><span style="color: #928374;"> */</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #b0b1a3;">(</span>p-&gt;s.size &gt;= nunits<span style="color: #b0b1a3;">)</span> <span style="color: #b0b1a3;">{</span>    <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">big enough</span><span style="color: #ffff00;"> */</span>
 
-            <span style="color: #fb4934;">if</span> <span style="color: #fe8019;">(</span>p-&gt;s.size == nunits<span style="color: #fe8019;">)</span>     <span style="color: #928374;">/* </span><span style="color: #928374;">exactly</span><span style="color: #928374;"> */</span>
+            <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #8c8c8c;">(</span>p-&gt;s.size == nunits<span style="color: #8c8c8c;">)</span>     <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">exactly</span><span style="color: #ffff00;"> */</span>
 
                 prevp-&gt;s.ptr = p-&gt;s.ptr;
 
-            <span style="color: #fb4934;">else</span> <span style="color: #fe8019;">{</span>             <span style="color: #928374;">/* </span><span style="color: #928374;">allocate tail end</span><span style="color: #928374;"> */</span>
+            <span style="color: #00ffff; font-weight: bold;">else</span> <span style="color: #8c8c8c;">{</span>             <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">allocate tail end</span><span style="color: #ffff00;"> */</span>
 
                 p-&gt;s.size -= nunits;
 
@@ -1235,23 +1235,23 @@ The overridden `malloc` method has the form of:
 
                 p-&gt;s.size = nunits;
 
-            <span style="color: #fe8019;">}</span>
+            <span style="color: #8c8c8c;">}</span>
 
             freep = prevp;
 
-            <span style="color: #fb4934;">return</span> <span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> *<span style="color: #fe8019;">)(</span>p+<span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #fe8019;">)</span>;
+            <span style="color: #00ffff; font-weight: bold;">return</span> <span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">void</span> *<span style="color: #8c8c8c;">)(</span>p+<span style="color: #ff00ff;">1</span><span style="color: #8c8c8c;">)</span>;
 
-        <span style="color: #cc241d;">}</span>
+        <span style="color: #b0b1a3;">}</span>
 
-        <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span>p == freep<span style="color: #cc241d;">)</span>  <span style="color: #928374;">/* </span><span style="color: #928374;">wrapped around free list</span><span style="color: #928374;"> */</span>
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #b0b1a3;">(</span>p == freep<span style="color: #b0b1a3;">)</span>  <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">wrapped around free list</span><span style="color: #ffff00;"> */</span>
 
-            <span style="color: #fb4934;">if</span> <span style="color: #cc241d;">(</span><span style="color: #fe8019;">(</span>p = morecore<span style="color: #fb4934;">(</span>nunits<span style="color: #fb4934;">)</span><span style="color: #fe8019;">)</span> == <span style="color: #d3869b;">NULL</span><span style="color: #cc241d;">)</span>
+            <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #b0b1a3;">(</span><span style="color: #8c8c8c;">(</span>p = morecore<span style="color: #93a8c6;">(</span>nunits<span style="color: #93a8c6;">)</span><span style="color: #8c8c8c;">)</span> == <span style="color: #ff00ff;">NULL</span><span style="color: #b0b1a3;">)</span>
 
-                <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;   <span style="color: #928374;">/* </span><span style="color: #928374;">none left</span><span style="color: #928374;"> */</span>
+                <span style="color: #00ffff; font-weight: bold;">return</span> <span style="color: #ff00ff;">NULL</span>;   <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">none left</span><span style="color: #ffff00;"> */</span>
 
-    <span style="color: #fb4934;">}</span>
+    <span style="color: #93a8c6;">}</span>
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -1260,41 +1260,41 @@ Where `morecore` is used to obtain more storage from the operating system.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #ebdbb2; font-weight: bold;">#define</span>    <span style="color: #83a598;">NALLOC</span>    <span style="color: #d3869b; font-weight: bold;">1024</span>    <span style="color: #928374;">/* </span><span style="color: #928374;">minimum #units to request</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #0000ff; font-weight: bold;">#define</span>    <span style="color: #ffff00;">NALLOC</span>    <span style="color: #ff00ff;">1024</span>    <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">minimum #units to request</span><span style="color: #ffff00;"> */</span>
 
 
 
-<span style="color: #928374;">/* </span><span style="color: #928374;">morecore:  ask system for more memory</span><span style="color: #928374;"> */</span>
+<span style="color: #ffff00;">/* </span><span style="color: #ffff00;">morecore:  ask system for more memory</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fb4934;">static</span> <span style="color: #fabd2f;">Header</span> *<span style="color: #b8bb26;">morecore</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">unsigned</span> <span style="color: #83a598;">nu</span><span style="color: #fe8019;">)</span>
+<span style="color: #00ffff; font-weight: bold;">static</span> <span style="color: #00ff00;">Header</span> *<span style="color: #0000ff; font-weight: bold;">morecore</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">unsigned</span> <span style="color: #ffff00;">nu</span><span style="color: #8c8c8c;">)</span>
 
-<span style="color: #fe8019;">{</span>
+<span style="color: #8c8c8c;">{</span>
 
-    <span style="color: #fabd2f;">char</span> *<span style="color: #83a598;">cp</span>, *<span style="color: #b8bb26;">sbrk</span><span style="color: #fb4934;">(</span><span style="color: #fabd2f;">int</span><span style="color: #fb4934;">)</span>;
+    <span style="color: #00ff00;">char</span> *<span style="color: #ffff00;">cp</span>, *<span style="color: #0000ff; font-weight: bold;">sbrk</span><span style="color: #93a8c6;">(</span><span style="color: #00ff00;">int</span><span style="color: #93a8c6;">)</span>;
 
-    <span style="color: #fabd2f;">Header</span> *<span style="color: #83a598;">up</span>;
+    <span style="color: #00ff00;">Header</span> *<span style="color: #ffff00;">up</span>;
 
 
 
-    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>nu &lt; <span style="color: #d3869b;">NALLOC</span><span style="color: #fb4934;">)</span>
+    <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>nu &lt; <span style="color: #ff00ff;">NALLOC</span><span style="color: #93a8c6;">)</span>
 
-        nu = <span style="color: #d3869b;">NALLOC</span>;
+        nu = <span style="color: #ff00ff;">NALLOC</span>;
 
-    cp = sbrk<span style="color: #fb4934;">(</span>nu * <span style="color: #fb4934;">sizeof</span><span style="color: #cc241d;">(</span>Header<span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>;
+    cp = sbrk<span style="color: #93a8c6;">(</span>nu * <span style="color: #00ffff; font-weight: bold;">sizeof</span><span style="color: #b0b1a3;">(</span>Header<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>;
 
-    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>cp == <span style="color: #cc241d;">(</span><span style="color: #fabd2f;">char</span> *<span style="color: #cc241d;">)</span> &#8722;<span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #fb4934;">)</span>    <span style="color: #928374;">/* </span><span style="color: #928374;">no space at all</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>cp == <span style="color: #b0b1a3;">(</span><span style="color: #00ff00;">char</span> *<span style="color: #b0b1a3;">)</span> &#8722;<span style="color: #ff00ff;">1</span><span style="color: #93a8c6;">)</span>    <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">no space at all</span><span style="color: #ffff00;"> */</span>
 
-        <span style="color: #fb4934;">return</span> <span style="color: #d3869b;">NULL</span>;
+        <span style="color: #00ffff; font-weight: bold;">return</span> <span style="color: #ff00ff;">NULL</span>;
 
-    up = <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">Header</span> *<span style="color: #fb4934;">)</span> cp;
+    up = <span style="color: #93a8c6;">(</span><span style="color: #00ff00;">Header</span> *<span style="color: #93a8c6;">)</span> cp;
 
     up-&gt;s.size = nu;
 
-    free<span style="color: #fb4934;">(</span><span style="color: #cc241d;">(</span><span style="color: #fabd2f;">void</span> *<span style="color: #cc241d;">)(</span>up+<span style="color: #d3869b; font-weight: bold;">1</span><span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>;
+    free<span style="color: #93a8c6;">(</span><span style="color: #b0b1a3;">(</span><span style="color: #00ff00;">void</span> *<span style="color: #b0b1a3;">)(</span>up+<span style="color: #ff00ff;">1</span><span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>;
 
-    <span style="color: #fb4934;">return</span> freep;
+    <span style="color: #00ffff; font-weight: bold;">return</span> freep;
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 
@@ -1303,49 +1303,49 @@ Where `morecore` is used to obtain more storage from the operating system.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-C"><span style="color: #928374;">/* </span><span style="color: #928374;">free:  put block ap in free list</span><span style="color: #928374;"> */</span>
+<pre class="src src-C"><span style="color: #ffff00;">/* </span><span style="color: #ffff00;">free:  put block ap in free list</span><span style="color: #ffff00;"> */</span>
 
-<span style="color: #fabd2f;">void</span> <span style="color: #b8bb26;">free</span><span style="color: #fe8019;">(</span><span style="color: #fabd2f;">void</span> *<span style="color: #83a598;">ap</span><span style="color: #fe8019;">)</span>
+<span style="color: #00ff00;">void</span> <span style="color: #0000ff; font-weight: bold;">free</span><span style="color: #8c8c8c;">(</span><span style="color: #00ff00;">void</span> *<span style="color: #ffff00;">ap</span><span style="color: #8c8c8c;">)</span>
 
-<span style="color: #fe8019;">{</span>
+<span style="color: #8c8c8c;">{</span>
 
-    <span style="color: #fabd2f;">Header</span> *<span style="color: #83a598;">bp</span>, *<span style="color: #83a598;">p</span>;
-
-
-
-    bp = <span style="color: #fb4934;">(</span><span style="color: #fabd2f;">Header</span> *<span style="color: #fb4934;">)</span>ap - <span style="color: #d3869b; font-weight: bold;">1</span>;    <span style="color: #928374;">/* </span><span style="color: #928374;">point to block header</span><span style="color: #928374;"> */</span>
-
-    <span style="color: #fb4934;">for</span> <span style="color: #fb4934;">(</span>p = freep; <span style="color: #ebdbb2; font-weight: bold;">!</span><span style="color: #cc241d;">(</span>bp &gt; p &amp;&amp; bp &lt; p-&gt;s.ptr<span style="color: #cc241d;">)</span>; p = p-&gt;s.ptr<span style="color: #fb4934;">)</span>
-
-        <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>p &gt;= p-&gt;s.ptr &amp;&amp; <span style="color: #cc241d;">(</span>bp &gt; p &#166;&#166; bp &lt; p-&gt;s.ptr<span style="color: #cc241d;">)</span><span style="color: #fb4934;">)</span>
-
-            <span style="color: #fb4934;">break</span>;  <span style="color: #928374;">/* </span><span style="color: #928374;">freed block at start or end of arena</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ff00;">Header</span> *<span style="color: #ffff00;">bp</span>, *<span style="color: #ffff00;">p</span>;
 
 
 
-    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>bp + bp-&gt;s.size == p-&gt;s.ptr<span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span> <span style="color: #928374;">/* </span><span style="color: #928374;">join to upper nbr</span><span style="color: #928374;"> */</span>
+    bp = <span style="color: #93a8c6;">(</span><span style="color: #00ff00;">Header</span> *<span style="color: #93a8c6;">)</span>ap - <span style="color: #ff00ff;">1</span>;    <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">point to block header</span><span style="color: #ffff00;"> */</span>
+
+    <span style="color: #00ffff; font-weight: bold;">for</span> <span style="color: #93a8c6;">(</span>p = freep; !<span style="color: #b0b1a3;">(</span>bp &gt; p &amp;&amp; bp &lt; p-&gt;s.ptr<span style="color: #b0b1a3;">)</span>; p = p-&gt;s.ptr<span style="color: #93a8c6;">)</span>
+
+        <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>p &gt;= p-&gt;s.ptr &amp;&amp; <span style="color: #b0b1a3;">(</span>bp &gt; p &#166;&#166; bp &lt; p-&gt;s.ptr<span style="color: #b0b1a3;">)</span><span style="color: #93a8c6;">)</span>
+
+            <span style="color: #00ffff; font-weight: bold;">break</span>;  <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">freed block at start or end of arena</span><span style="color: #ffff00;"> */</span>
+
+
+
+    <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>bp + bp-&gt;s.size == p-&gt;s.ptr<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">{</span> <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">join to upper nbr</span><span style="color: #ffff00;"> */</span>
 
         bp-&gt;s.size += p-&gt;s.ptr-&gt;s.size;
 
         bp-&gt;s.ptr = p-&gt;s.ptr-&gt;s.ptr;
 
-    <span style="color: #fb4934;">}</span> <span style="color: #fb4934;">else</span>
+    <span style="color: #93a8c6;">}</span> <span style="color: #00ffff; font-weight: bold;">else</span>
 
         bp-&gt;s.ptr = p-&gt;s.ptr;
 
-    <span style="color: #fb4934;">if</span> <span style="color: #fb4934;">(</span>p + p-&gt;s.size == bp<span style="color: #fb4934;">)</span> <span style="color: #fb4934;">{</span>         <span style="color: #928374;">/* </span><span style="color: #928374;">join to lower nbr</span><span style="color: #928374;"> */</span>
+    <span style="color: #00ffff; font-weight: bold;">if</span> <span style="color: #93a8c6;">(</span>p + p-&gt;s.size == bp<span style="color: #93a8c6;">)</span> <span style="color: #93a8c6;">{</span>         <span style="color: #ffff00;">/* </span><span style="color: #ffff00;">join to lower nbr</span><span style="color: #ffff00;"> */</span>
 
         p-&gt;s.size += bp-&gt;s.size;
 
         p-&gt;s.ptr = bp-&gt;s.ptr;
 
-    <span style="color: #fb4934;">}</span> <span style="color: #fb4934;">else</span>
+    <span style="color: #93a8c6;">}</span> <span style="color: #00ffff; font-weight: bold;">else</span>
 
         p-&gt;s.ptr = bp;
 
     freep = p;
 
-<span style="color: #fe8019;">}</span>
+<span style="color: #8c8c8c;">}</span>
 </pre>
 </div>
 </div>

@@ -4,7 +4,7 @@
 <title><![CDATA[Alex Brown]]></title>
 <description><![CDATA[Alex Brown]]></description>
 <link>https://alexb7711.github.io</link>
-<lastBuildDate>Mon, 24 May 2021 07:42:02 -0600</lastBuildDate>
+<lastBuildDate>Mon, 24 May 2021 07:46:43 -0600</lastBuildDate>
 <item>
   <title><![CDATA[A Guide To Hosting An Email Server In A Residential Area (Port 25 Blocked)]]></title>
   <description><![CDATA[
@@ -2020,17 +2020,17 @@ stow -t ~/ aliasrc dunst <span style="color: #fabd2f;">git</span> Xmodmap zshenv
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org0c20eb8">Introduction</a></li>
-<li><a href="#org73090d4">pandoc</a></li>
-<li><a href="#orgcb951f7">Compile Script</a></li>
-<li><a href="#org8221b68">Tying this all together with Vim</a></li>
+<li><a href="#org3e63b40">Introduction</a></li>
+<li><a href="#org1794c64">pandoc</a></li>
+<li><a href="#org028f2ff">Compile Script</a></li>
+<li><a href="#org3b4d83a">Tying this all together with Vim</a></li>
 </ul>
 </div>
 </nav>
 
-<div id="outline-container-org0c20eb8" class="outline-2">
-<h2 id="org0c20eb8">Introduction</h2>
-<div class="outline-text-2" id="text-org0c20eb8">
+<div id="outline-container-org3e63b40" class="outline-2">
+<h2 id="org3e63b40">Introduction</h2>
+<div class="outline-text-2" id="text-org3e63b40">
 <p>
 Markdown is an extremely quick and convenient way to jot down notes, draft up a quick styled paper, or even with the yaml metada block for pandoc markdown write a full paper. During college I went through a few markdown applications that auto-generated the markdown on the fly, managed your notes into a tree structure for you, or had auto complete commands. I even tried using Vim for a while, but gave up on it for a while. Recently I have rekindled my affinity for Vim because of work and decided to give note taking through Vim another shot. Needless to say that it went well because this post exists.
 </p>
@@ -2041,9 +2041,9 @@ If you don&rsquo;t know the basics of Markdown, you can refer to <a href="https:
 </div>
 </div>
 
-<div id="outline-container-org73090d4" class="outline-2">
-<h2 id="org73090d4">pandoc</h2>
-<div class="outline-text-2" id="text-org73090d4">
+<div id="outline-container-org1794c64" class="outline-2">
+<h2 id="org1794c64">pandoc</h2>
+<div class="outline-text-2" id="text-org1794c64">
 <p>
 Very simply pandoc is a file converter. You can convert LaTeX files into html files, pdf files, or whatever other file type pandoc supports. This is a similar case to markdown. A typical conversion from markdown to pdf using pandoc would be:
 </p>
@@ -2059,26 +2059,26 @@ Which takes a markdown file called &ldquo;markdown&rdquo; and creates a pdf file
 </div>
 </div>
 
-<div id="outline-container-orgcb951f7" class="outline-2">
-<h2 id="orgcb951f7">Compile Script</h2>
-<div class="outline-text-2" id="text-orgcb951f7">
+<div id="outline-container-org028f2ff" class="outline-2">
+<h2 id="org028f2ff">Compile Script</h2>
+<div class="outline-text-2" id="text-org028f2ff">
 <p>
 This is the glue that will make the compiling a breeze. Create a document called &ldquo;compile&rdquo; and insert the following code:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell"><span style="color: #928374;">#</span><span style="color: #928374;">!/bin/</span><span style="color: #fb4934;">sh</span>
+<pre class="src src-shell"><span style="color: #ffff00;">#</span><span style="color: #ffff00;">!/bin/</span><span style="color: #00ffff; font-weight: bold;">sh</span>
 
-<span style="color: #83a598;">file</span>=$<span style="color: #fe8019;">(</span>readlink -f <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">1</span><span style="color: #b8bb26;">"</span><span style="color: #fe8019;">)</span>
-<span style="color: #83a598;">dir</span>=$<span style="color: #fe8019;">(</span>dirname <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">file</span><span style="color: #b8bb26;">"</span><span style="color: #fe8019;">)</span>
-<span style="color: #83a598;">base</span>=<span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">{file%.*}</span><span style="color: #b8bb26;">"</span>
-<span style="color: #83a598;">shebang</span>=$<span style="color: #fe8019;">(</span>sed -n 1p <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">file</span><span style="color: #b8bb26;">"</span><span style="color: #fe8019;">)</span>
+<span style="color: #ffff00;">file</span>=$<span style="color: #8c8c8c;">(</span>readlink -f <span style="color: #00ff00;">"</span><span style="color: #ff00ff;">$</span><span style="color: #ffff00;">1</span><span style="color: #00ff00;">"</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ffff00;">dir</span>=$<span style="color: #8c8c8c;">(</span>dirname <span style="color: #00ff00;">"</span><span style="color: #ff00ff;">$</span><span style="color: #ffff00;">file</span><span style="color: #00ff00;">"</span><span style="color: #8c8c8c;">)</span>
+<span style="color: #ffff00;">base</span>=<span style="color: #00ff00;">"</span><span style="color: #ff00ff;">$</span><span style="color: #ffff00;">{file%.*}</span><span style="color: #00ff00;">"</span>
+<span style="color: #ffff00;">shebang</span>=$<span style="color: #8c8c8c;">(</span>sed -n 1p <span style="color: #00ff00;">"</span><span style="color: #ff00ff;">$</span><span style="color: #ffff00;">file</span><span style="color: #00ff00;">"</span><span style="color: #8c8c8c;">)</span>
 
-<span style="color: #fabd2f;">cd</span> <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">dir</span><span style="color: #b8bb26;">"</span> || <span style="color: #fb4934;">exit</span>
+<span style="color: #00ff00;">cd</span> <span style="color: #00ff00;">"</span><span style="color: #ff00ff;">$</span><span style="color: #ffff00;">dir</span><span style="color: #00ff00;">"</span> || <span style="color: #00ffff; font-weight: bold;">exit</span>
 
-<span style="color: #fb4934;">case</span> <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">file</span><span style="color: #b8bb26;">"</span><span style="color: #fb4934;"> in</span>
-    *.md) pandoc <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">file</span><span style="color: #b8bb26;">"</span> -o <span style="color: #b8bb26;">"</span><span style="color: #d3869b;">$</span><span style="color: #83a598;">base</span><span style="color: #b8bb26;">"</span>.pdf;;
-<span style="color: #fb4934;">esac</span>
+<span style="color: #00ffff; font-weight: bold;">case</span> <span style="color: #00ff00;">"</span><span style="color: #ff00ff;">$</span><span style="color: #ffff00;">file</span><span style="color: #00ff00;">"</span><span style="color: #00ffff; font-weight: bold;"> in</span>
+    *.md) pandoc <span style="color: #00ff00;">"</span><span style="color: #ff00ff;">$</span><span style="color: #ffff00;">file</span><span style="color: #00ff00;">"</span> -o <span style="color: #00ff00;">"</span><span style="color: #ff00ff;">$</span><span style="color: #ffff00;">base</span><span style="color: #00ff00;">"</span>.pdf;;
+<span style="color: #00ffff; font-weight: bold;">esac</span>
 </pre>
 </div>
 
@@ -2088,9 +2088,9 @@ All this script does is when it is passed a file it will run a certain command b
 </div>
 </div>
 
-<div id="outline-container-org8221b68" class="outline-2">
-<h2 id="org8221b68">Tying this all together with Vim</h2>
-<div class="outline-text-2" id="text-org8221b68">
+<div id="outline-container-org3b4d83a" class="outline-2">
+<h2 id="org3b4d83a">Tying this all together with Vim</h2>
+<div class="outline-text-2" id="text-org3b4d83a">
 <p>
 Now we want a quick and easy way to run this command and pass the file we are editing from Vim. Fortunately, this is easy enough! Copy the following command into your .vimrc:
 </p>

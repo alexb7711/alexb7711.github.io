@@ -10,7 +10,7 @@
 <title>A Guide To Hosting An Email Server In A Residential Area (Port 25 Blocked)</title>
 <meta name="author" content="Alex Brown">
 <meta name="referrer" content="no-referrer">
-<link href= "readtheorg/readtheorg.css" rel="stylesheet" type="text/css" />
+<link href= "Theme/style.css" rel="stylesheet" type="text/css" />
 <link rel="icon" href="~/Videos/StreamingAssets/Profile.png"></head>
 <body>
 <div id="preamble" class="status"><div class="header">
@@ -22,18 +22,18 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8b4b761">Email Server Components</a>
+<li><a href="#orgcca486a">Email Server Components</a>
 <ul>
-<li><a href="#org0750038">Postfix</a></li>
-<li><a href="#org80da91d">Dovecot</a></li>
-<li><a href="#org04ca169">Spamassasin</a></li>
-<li><a href="#org25dc2c1">OpenDKIM</a></li>
+<li><a href="#orgd1974bb">Postfix</a></li>
+<li><a href="#org2ad6865">Dovecot</a></li>
+<li><a href="#orgce5745e">Spamassasin</a></li>
+<li><a href="#org7adb28c">OpenDKIM</a></li>
 </ul>
 </li>
-<li><a href="#orgd4842db">Problem with Residential email servers</a>
+<li><a href="#org6b19fca">Problem with Residential email servers</a>
 <ul>
-<li><a href="#org2d0d654">Borrowing SMTP server</a></li>
-<li><a href="#orge55a425">Reroute incoming mail</a></li>
+<li><a href="#org836edf5">Borrowing SMTP server</a></li>
+<li><a href="#org369715d">Reroute incoming mail</a></li>
 </ul>
 </li>
 </ul>
@@ -59,13 +59,13 @@ The issue I came accross while setting up my email server is that my ISP (Intern
 I&rsquo;ll also preface this by saying that the script README says that it is configured for VPS (Vitual Private Servers), but it worked great on my little 300$ hp pavillion makeshift server running Debian 10. Now to talk about each component.
 </p>
 
-<div id="outline-container-org8b4b761" class="outline-2">
-<h2 id="org8b4b761">Email Server Components</h2>
-<div class="outline-text-2" id="text-org8b4b761">
+<div id="outline-container-orgcca486a" class="outline-2">
+<h2 id="orgcca486a">Email Server Components</h2>
+<div class="outline-text-2" id="text-orgcca486a">
 </div>
-<div id="outline-container-org0750038" class="outline-3">
-<h3 id="org0750038"><a href="http://www.postfix.org/">Postfix</a></h3>
-<div class="outline-text-3" id="text-org0750038">
+<div id="outline-container-orgd1974bb" class="outline-3">
+<h3 id="orgd1974bb"><a href="http://www.postfix.org/">Postfix</a></h3>
+<div class="outline-text-3" id="text-orgd1974bb">
 <p>
 As stated by <a href="https://en.wikipedia.org/wiki/Postfix_(software)">Wikipedia</a>:
 </p>
@@ -82,9 +82,9 @@ Or in other words, this is the guy that will send/receive mail to and from the o
 </div>
 </div>
 
-<div id="outline-container-org80da91d" class="outline-3">
-<h3 id="org80da91d"><a href="https://www.dovecot.org/">Dovecot</a></h3>
-<div class="outline-text-3" id="text-org80da91d">
+<div id="outline-container-org2ad6865" class="outline-3">
+<h3 id="org2ad6865"><a href="https://www.dovecot.org/">Dovecot</a></h3>
+<div class="outline-text-3" id="text-org2ad6865">
 <blockquote>
 <p>
 Dovecot is an open source IMAP and POP3 email server for Linux/UNIX-like systems
@@ -97,9 +97,9 @@ Basically, this is what you interface with to access your email through your ema
 </div>
 </div>
 
-<div id="outline-container-org04ca169" class="outline-3">
-<h3 id="org04ca169"><a href="https://spamassassin.apache.org/">Spamassasin</a></h3>
-<div class="outline-text-3" id="text-org04ca169">
+<div id="outline-container-orgce5745e" class="outline-3">
+<h3 id="orgce5745e"><a href="https://spamassassin.apache.org/">Spamassasin</a></h3>
+<div class="outline-text-3" id="text-orgce5745e">
 <p>
 What it does is pretty self evident by the name. To be safe though here is a description via <a href="https://en.wikipedia.org/wiki/SpamAssassin">Wikipedia.</a>
 </p>
@@ -112,9 +112,9 @@ It uses a variety of spam-detection techniques, including DNS and fuzzy checksum
 </div>
 </div>
 
-<div id="outline-container-org25dc2c1" class="outline-3">
-<h3 id="org25dc2c1"><a href="http://opendkim.org/">OpenDKIM</a></h3>
-<div class="outline-text-3" id="text-org25dc2c1">
+<div id="outline-container-org7adb28c" class="outline-3">
+<h3 id="org7adb28c"><a href="http://opendkim.org/">OpenDKIM</a></h3>
+<div class="outline-text-3" id="text-org7adb28c">
 <blockquote>
 <p>
 OpenDKIM is an open source implementation of the DKIM (Domain Keys Identified Mail) sender authentication system proposed by the E-mail Signing Technology Group (ESTG), now standardized by the IETF.
@@ -128,9 +128,9 @@ In other words, it just signs your email in a way to show that is valid in such 
 </div>
 </div>
 
-<div id="outline-container-orgd4842db" class="outline-2">
-<h2 id="orgd4842db">Problem with Residential email servers</h2>
-<div class="outline-text-2" id="text-orgd4842db">
+<div id="outline-container-org6b19fca" class="outline-2">
+<h2 id="org6b19fca">Problem with Residential email servers</h2>
+<div class="outline-text-2" id="text-org6b19fca">
 <p>
 Port 25 is blocked by a <b><b>lot</b></b> of ISPs. Why does that matter? Well, port 25 is what mail servers use to transfer email. That means that your email server is only good locally. There are two things you need to do in order to fix this problem:
 </p>
@@ -145,9 +145,9 @@ Maybe it isn&rsquo;t the best answer since you are probably trying to gain more 
 </p>
 </div>
 
-<div id="outline-container-org2d0d654" class="outline-3">
-<h3 id="org2d0d654">Borrowing SMTP server</h3>
-<div class="outline-text-3" id="text-org2d0d654">
+<div id="outline-container-org836edf5" class="outline-3">
+<h3 id="org836edf5">Borrowing SMTP server</h3>
+<div class="outline-text-3" id="text-org836edf5">
 <p>
 The quick and easy way to get it up and running is to borrow Google&rsquo;s STMP servers. If you have an account, then you are all set to get this done. This also should work if your ISP supplies an SMTP server. You will just need the credentials for your ISP email account.
 </p>
@@ -195,9 +195,9 @@ Restart postfix via <code>systemctl restart postfix</code> and try sending an em
 </div>
 </div>
 
-<div id="outline-container-orge55a425" class="outline-3">
-<h3 id="orge55a425">Reroute incoming mail</h3>
-<div class="outline-text-3" id="text-orge55a425">
+<div id="outline-container-org369715d" class="outline-3">
+<h3 id="org369715d">Reroute incoming mail</h3>
+<div class="outline-text-3" id="text-org369715d">
 <p>
 If you are in a residential area, you most likely need a DDNS (Dynamic Domain Name System), personally I use [Dynu](dynu.com). It is free, and easy to set up. The only thing you need to do here is create an account, go to Dynamic DNS Service, click the add button, use one of the given DNS names or type in your own. If you opted to use your own domain name on the website you got your domain name from in your &ldquo;External Hosts&rdquo; record type in the ip address given to you by Dynu.
 </p>
