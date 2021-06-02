@@ -1,0 +1,233 @@
+#+TITLE: #+title: Fuzzy Linear Programming
+#+date: <2021-06-01 20:42>
+#+description:
+#+filetags:
+
+Linear programming is a widely used method of solving for obtaining optimal solutions. They typically come in the form of some cost function $\sum_i c_i x_i$ subject so some set of constraints. This solution method works extremely well when the problem and its constraints are well defined. Real life problems, however, are rarely well defined and are almost indefinitely left with some ambiguity or "wiggle room". That is what this post is about, a way to represent linear programs with different types of fuzzy parameters.
+
+* Introduction
+A typical integer linear program can be represented as
+
+\begin{equation}
+    \begin{array}{ccc}
+        max z = xc &  &                                                      \\
+        s.t.       & \sum_{j\in N} a_{ij} x_j \leq b_i & i \in M = {1,...,m} \\
+                   & x_j \geq 0 & j \in N = {1,...,n}                        \\
+                   & x_j \in \mathbb{N} & j \in N                            \\
+    \end{array}
+\end{equation}
+
+Where $\mathbb{N}$ is the set of real numbers, $c\in \mathbb{R}^n$ and $a_{ij},\; b_i \in \mathbb{R}$, $i \in M$, and $j \in N$.
+
+Real situations, like the above system assumes, is not always the case. There are some situations where the information available is not exact. The types of formulations that can address these uncertainties are known as Fuzzy Integer linear Programs (FILP).
+
+* Triangular Fuzzy Theory
+** Definitions
+- *Fuzzy Subset*: Let $E$ be a set that is finite or infinite. Let $A$ be a set contained in $E$. The order pair $(x, \mu_{A}(x))$ defines the fuzzy subset $A$ of $E$, where $x$ is an element in $E$ and $\mu_{A}(x)$ is the degree of membership of $x$ in $E$.
+- *Fuzzy Number*: A fuzzy number is a generalization of a regular, real number. It refers to a connected set of possible values, where each possible value has its own weight between 0 and 1. A fuzzy number is thus a special case of a convex, normalized fuzzy set of the real line.
+- *Triangular Fuzzy Numbers*: A fuzzy number $\sim{A} = (a,b,c)$ is called a triangular fuzzy number if its membership function is given by
+
+    \begin{equation}
+    \mu_{\sim{A}(x)} =
+    \begin{cases}
+        0               & x < a           \\
+        \frac{x-a}{b-a} & a \leq x \leq b \\
+        \frac{c-x}{c-b} & b \leq x \leq c \\
+        0               & x > c           \\
+    \end{cases}
+    \end{equation}
+
+** Concepts
+$c$, $j$, and $a$ are natural numbers and satisfy Pythagorean's identity $c^2 + j^2 = a^2$. Such numbers are called a Pythagorean triple (or triangle). Without loss of generality we can also state that we can always find two natural numbers $j_1$ and $j_2$ such that
+
+1. g.c.d\; (j_1, j_2) = 1
+2. $c = j_{2}^2 - j_{1}^2$, $2j_{1}j_{2}$ and $a = j_{2}^2 + j_{1}^2$
+3. $j_2 > j_1 > 0*
+
+Let $A = (a,b,c,d)$ be a trapezoidal fuzzy number. Then, its $\lambda$-cut. We then get that $A^{\lambda} = [a + (b-a)\lambda, d-(d-c)]$ where $0 \leq \lambda \leq 1$. If we then allow $b = c$ we regain the triangular fuzzy number.
+
+*** Properties
+1. If $[c,j,a]$ is a Pythagorean Triangular Fuzzy Number, then $[mc,mj,ma]$ is also a Pythagorean Triangular Fuzzy Number
+2. If $d$ is a common divisor of $c$ and $j$, then $d$ divides $a$
+3. Let $e$ denote a common divisor of $c$, $j$, $a$. Then $[c_1,j_1,a_1]$ such that $c_1 = c/e$, $j_1 = j/e$, $a_1 = a/e$, is also a Pythagorean Triangular Fuzzy Number.
+4. All Pythagorean Triangular Fuzzy Numbers like $[c,j,a]$ are multiples of $[c_1,j_1,a_1]$.
+
+* Linear Ranking Functions
+Linear Ranking Functions (LRFs) are used as a standard technique (heuristic) to prove the termination of a loop. It maps program states to elements of some well-founded ordered sets, such that the value descends whenever the loop completes an iteration. As an example consider the following:
+
+#+begin_src
+while (4*x1 >= x2 and x2 >= 1)
+{
+    x1 := (2*x1)/5;
+    x2 := x2
+}
+#+end_src
+
+Note that the body of the loop consists of deterministic update statements. This same loop can also be represented as
+
+#+begin_src
+while (4*x1 >= 1 and x2 >= 1)
+{
+    5*x1' <= 2*x1 + 1;
+    5*x1' >= 2*x1 - 3;
+    x2'    = x2;
+}
+#+end_src
+
+which is usually called a single-path linear-constraint (SLC) loop.
+* FILP With Fuzzy Constraints
+
+\begin{equation}
+    \begin{array}{ccc}
+        max z = xc &  &                                                          \\
+        s.t.       & \sum_{j\in N} a_{ij} x_j <_{\sim} b_i & i \in M = {1,...,m} \\
+                   & x_j \geq 0 & j \in N = {1,...,n}                            \\
+                   & x_j \in \mathbb{N} & j \in N                                \\
+    \end{array}
+\end{equation}
+
+The symbol $<_{\sim}$ indicates that the decision-maker is willing to permit some violations in the accomplishment of the constraints (i.e. fuzzy constraints defined by some membership function $\mu_i : \mathbb{R}^n \rightarrow (0,1],\; i \in M$).
+
+The objective is to transform the FILP into an ILP with a modified objective function and some supplementary constraints and variables. To do so, we restate that $\sum_{j\in N} a_{ij}x_j <_{\sim} b_i$ where $x_i$ is the variable that varied. Assume the following membership function
+
+\begin{equation}
+\mu_i(x) =
+\begin{cases}
+    1                     & a_i x \leq b_i                \\
+    [(b_i + d_i) - a_i x] & b_i \leq a_i x \leq b_i + d_i \\
+    0                     & a_i x \geq b_i + d_i          \\
+\end{cases}
+\end{equation}
+
+Which states how much of a "member" the variable is for a given state. If we take the second parameter and solve for $a_i x$, we can use that as a constraint for our problem. We rewrite the FILP as a ILP by stating:
+
+\begin{equation}
+    \begin{array}{ccc}
+        max z = xc &  &                                 \\
+        s.t.       & a_i x \leq b_i + d_i(1 - \alpha) & \\
+                   & x_j \geq 0 & j \in N = {1,...,n}   \\
+                   & x_j \in \mathbb{N} & j \in N       \\
+        x_j \in N  & \alpha \in (0, 1]  & j \in N       \\
+    \end{array}
+\end{equation}
+
+Where the $\alpha$ term is now used as the "cut" of the constraint (much like the equality done above). It also should be noted that the use of nonlinear membership functions has been shown not to interfere with the computational efficiency of the solution method.
+
+* FILP With Imprecise Cost
+This section covers the FLIP problem with an imprecise coefficients in the cost function.
+
+\begin{equation}
+    \begin{array}{ccc}
+        max z = \sum_{j\in N} c_{\sim j}x_{j} &  &                                \\
+        s.t.                                  & a_{ij} x \leq b_i               & \\
+                                              & x_j \geq 0 & j \in N = {1,...,n}  \\
+                                              & x_j \in \mathbb{N} & j \in N      \\
+        x_j \in N                             & \alpha \in (0, 1]  & j \in N      \\
+    \end{array}
+\end{equation}
+
+Where $a_{ij}, b_i \in \mathbb{R}$ and $c_{\sim j} \in F(\mathbb{R})$ and $F(\mathbb{R})$ being the set of real fuzzy numbers. To solve this there are two approaches
+
+- Utilize several well known ranking fuzzy number methods, each provide a different auxiliary conventional optimization model solving the former problem
+- Explore the behavior of the representing theorem for fuzzy sets when it is used as a tool to solve the proposed problem
+
+** DONE Fuzzy Number via Linear Ranking Functions
+Consider the set of fuzzy numbers $A = \{g(x) | x\in X\}$ where $g(x) = c_{\sim}x$. $A$ represents all primal-feasible results plus the fuzzy-feasible results. If we assume $x*$ to be the optimal alternative if $g(x*)$ is the greatest in $A$, therefore we need to determine the greatest in $A$. If we know the function to de-fuzzify the values from $A$ (i.e. $f:F(\mathbb{R}) \rightarrow \mathbb{R}$) then $f(A)>f(B),\; f(A)=f(B),\; f(A)<f(B)$ are equivalent to $A>B,\; A=B\; A<B$.
+
+We assume triangular fuzzy numbers with the membership function of the form:
+
+\begin{equation}
+\forall u \in \mathbb{R}, j\in N, u_{c_j}(u) =
+\begin{cases}
+    (u - r_j)/(c_j-r_j)   & r_j \leq u \leq c_j \\
+    (R_j - u)/(R_j - c_j) & c_j \leq u \leq R_j \\
+    0                     & \textrm{otherwise}  \\
+\end{cases}
+\end{equation}
+
+Which implies the membership functions for the fuzzy members
+
+\begin{equation}
+\forall u \in \mathbb{R}, j\in N, u_{c_j}(u) =
+\begin{cases}
+    h_j(z) = (z - rx)/(cz - rx) & x > 0, rx \leq z \leq cx \\
+    g_j(z) = (Rx - z)/(Rx - cx) & x > 0, cx \leq z \leq Rx \\
+    0 & \textrm{otherwise} \\
+\end{cases}
+\end{equation}
+
+From this, if we consider the function $f(\cdot)$ then we can state the solution to the problem is of the following form:
+
+\begin{equation}
+\begin{array}{cc}
+    max & f(c_{\sim} x)                \\
+    s.t & Ax \leq b                     \\
+        & x_j \in \mathbb{N},\; j \in N \\
+\end{array}
+\end{equation}
+
+Where we can let our auxiliary model be something of the form
+
+\begin{equation}
+\begin{array}{c}
+ max\{(idx + d'x) * (3cx + dx - d'x)/6 | Ax \leq b\} \\
+ max\{[c+(d-d'/3)]x                    | Ax \leq b\} \\
+ max\{(cx + dx)/(dx+1)                 | Ax \leq b\} \\
+ max\{[c+(d-d')/4]x                    | Ax \leq b\} \\
+\end{array}
+\end{equation}
+
+** Representation Theorem
+Consider the cost function
+
+\begin{equation}
+    \mu (c) = inf_j \mu_j(c_j),\; j \in N
+\end{equation}
+
+If we are able to define the lower and upper bound by using the triangular fuzzy constraints the solution becomes trivial. Allow $c$ to be of its primal state and create a constraint that gives it a lower and upper bound.
+
+\begin{equation}
+\begin{array}{cc}
+    max  & z = cx \\
+    s.t. & \Psi(\cdot) \leq c \leq \Gamma(\cdot) \\
+\end{array}
+\end{equation}
+
+* FILP With Fuzzy Numbers As Coefficients Of The Technological Matrix
+This problem can be formulated as follows:
+
+\begin{equation}
+\begin{array}{ccc}
+    max                & z = cx                                      &         \\
+    s.t.               & \sum_{j\in N} a_{\sim ij}x_{j} <_{\sim} b_i & i \in M \\
+    x_j \geq 0         & j \in N                                     &         \\
+    x_j \in \mathbb{N} & j \in N                                     &         \\
+\end{array}
+\end{equation}
+
+Where $a_{\sim ij}, b_i \in F(\mathbb{R})$ and $<_{\sim}$ allows the decision maker flexibility in the constraints.
+
+Using the first index of Yager we get:
+
+\begin{equation}
+\begin{array}{cc}
+    max  & z = 2x_1 + 5x_2                                 \\
+    s.t. & 2_x1 - 1.166x_2 \leq 8.66 + 3.166(1-\alpha)     \\
+         & 2.333x_1 + 8.333x_2 \leq 31.66 + 4.33(1-\alpha) \\
+\end{array}
+\end{equation}
+* References
+** Fuzzy Linear Programming
+- [[https://git.brownhaus.xyz/School/Spring2021/src/branch/master/FundamentalsOfResourceAllocation/Literature/FuzzyBAP.pdf][A Fully Fuzzy Linear Programming Model to the Berth Allocation Problem]]
+
+** Fuzzy Theory
+- [[https://www.sciencedirect.com/science/article/pii/0022247X83902536][An Introduction to Fuzzy Linear Programming Problems]]
+- [[https://www.sciencedirect.com/science/article/pii/0022247X83902536][Fuzzy Numbers]]
+- [[https://www.researchgate.net/publication/318946539_Theory_of_Triangular_Fuzzy_Number][Theory of Triangular Fuzzy Number]]
+
+** Ranking Functions
+- [[https://link-springer-com.dist.lib.usu.edu/content/pdf/10.1007/s10009-019-00549-9.pdf][On Ranking Functions of Single-Path Linear-Constraint Loops]]
+- [[https://www.bugseng.com/sites/default/files/BagnaraM13PPDP.pdf][Eventual Linear Ranking Functions]]
+- [[https://ieeexplore-ieee-org.dist.lib.usu.edu/document/4046341][Ranking Fuzzy Subsets Over The Unit Interval]]
+- [[https://www-scopus-com.dist.lib.usu.edu/record/display.uri?eid=2-s2.0-0019585325&origin=resultslist&sort=plf-f&src=s&sid=e04fd19ef279878a8a73c1579d0e5e52&sot=b&sdt=b&sl=74&s=TITLE-ABS-KEY%28A+procedure+for+ordering+fuzzy+subsets+of+the+unit+interval%29&relpos=0&citeCnt=963&searchTerm=][A Procedure For Ordering Fuzzy Subsets Of The Unit Interval]]
+- [[https://jmlr.csail.mit.edu/papers/volume10/xu09c/xu09c.pdf][Learning Linear Ranking Functions for Beam Search with Applications to Planning]]

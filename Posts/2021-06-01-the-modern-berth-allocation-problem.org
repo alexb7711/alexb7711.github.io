@@ -1,0 +1,231 @@
+#+TITLE: #+title: The Modern Berth Allocation Problem
+#+date: <2021-06-01 20:52>
+#+description:
+#+filetags:
+
+* Introduction
+The Berth Allocation Problem (BAP), is a long studied problem which consists of the solving for the optimal docking of vessels on a birth to be processed. There are many renditions of the problem to optimize over multiple quays, to be solved using discrete or continuous variables, to optimize over different parameters such as time of service or cost, and many more. Needless to say, it is a well studied problem. This post introduces that idea and then begins to introduce some new ideas and views that BAP may be used for.
+
+* The Berth Allocation Problem
+The BAP is a ship allocation problem regarding berth space for vessels in container terminals. As ships arrive, they must be allocated space and time along the berth to be served. Different factors that are taken into account are: time required to serve and size of the vessel. Solutions to BAP make attempts to optimize the space/time allocation for the vessels by
+
++ Minimization of service time
++ Minimization of early and delayed departures
++ Optimization of arrival times
++ Optimization of emissions and fuel consumption
+
+** Continuous and Discrete Representation
+As with most problems, they can be represented in either a continuous or discrete fashion. Among the models
+
+1. Discrete vs. continuous berth space
+2. Static vs. dynamic vessel arrival
+3. Static vs. dynamic vessel handling times
+4. Variable vessel arrivals
+
+are observed most frequently in literature. For our purposes, we will mostly be analyzing the discrete berth space with dynamic vessel arrivals.
+
+** Static BAP Modeling
+*** Port and Berth Information
+- $W$: Number of wharfs
+- $w_l$ : Length of wharf $i \in 1,...,W$
+- $M$: Number of berths in the terminal
+- $L_i$: Length of berth $i \in 1,...,M$
+
+*** Vessel Information
+- $N$: Number of vessels that have arrive or will arrive within the schedule window
+- $r_i$: Arrival time of vessel $i$
+- $l_i$: Length of vessel $i$
+- $p_i$: Time to process vessel $i$
+
+*** Decision Variables
+- $x_i$: Berthing location for vessel $i$
+- $t_i$: Planning berthing time for vessel $i$
+
+*** Cost Variables
+- Location Cost
+  The quality of the berthing locations assigned are given by
+
+#+NAME{eq:1}
+\begin{equation}
+\sum_{i=1}^{N} c_i (x_i)
+\end{equation}
+
+where $c_i$ is a step function in $x_i$. Another way to look at this is assume $c_i(x_i) = d_{i,l}$ where $d_{i,j}$ is the cost for berthing vessel $i$ at berth $l$. $d_{i,l}$ can then be thought as the desirability of berthing vessel $i$ at berth $l$.
+
+- Delay Cost
+  The quality of the berthing times assigned is given by
+
+#+NAME{eq:2}
+\begin{equation}
+\sum_{i=1}^{N} w_i(t_i-r_i-2)^+
+\end{equation}
+
+In this case, a vessel is considered berthed-on-arrival if it can be berthed within two hours of arrival (hence the $-2$ in the cost function).
+
+Putting it together we get
+
+#+NAME{eq:2}
+\begin{equation}
+\begin{array}{cc}
+\sum_{i=1}^{N} c_i(x_i) + w_i(t_i-r_i-2)^+ & \\
+s.t & t_i \geq r_i \forall i \\
+    & x_i + l_i \leq \sum_i L_i, x_i \geq 0 \forall i \\
+    & x_i \in W \\
+    & t_i + p_i \leq t_j \; \textrm{or}\; t_j + p_j \leq t_i\; \textrm{or}\; x_i + l_i \leq x_j\; \textrm{or}\; x_j + l_j \leq x_j \forall i \neq j \\
+\end{array}
+\end{equation}
+
+The last constraint models that vessels $i$ and $j$ cannot occupy the same location in the terminal at the same time.
+
+** Definitions
+- Terminal: The facility where the vessels are docked
+- Wharf: A linear strip where the vessels are able to dock. There are typically multiple wharfs in a terminal
+- Berth: A berth is a discrete subsection of the wharf. There are typically multiple berths in a wharf.
+
+*** TODO: Add image from Cornell paper here
+
+** Dynamic BAP Model
+The dynamic BAP model adds the additional challenge of rolling the plan forward every time step. The main problem being is how to handle the situation where a vessel $j$ is already in the place of vessel $i$.
+
+An approach to this is to mark used berths as forbidden zones. The schedule is then is readjusted by placing a lower limit to the berthing location decision variable. If there is no room (meaning the vessel must wait), a lower bound can be placed on the time decision variable.
+
+* The Position Allocation Problem (PAP)
+PAP describes the scenario where rather than vessels lined up to dock at a berth, we have electric vehicles lined up to be charged by a series of chargers. The scenario where buses are lined up to be charged is extremely analogous to the BAP problem. The significant difference is the location of the "wharf". Instead of docking the vehicles parallel to the wharf, they will be lined up perpendicular to it. The following describes the conversion from the berth allocation problem to the position allocation problem.
+
+** Variable Matching:
+
+- $S$: Length of the berth
+- $T$: Length of the time horizon
+- $N$: Total number of incoming vehicles
+- $p_i$: The charging time for vehicle $i; \forall 1 \leq i \leq N$
+- $s_i$: The size of vehicle $i; \forall 1 \leq i \leq N$
+- $a_i$: The arrival time of vehicle $i; \forall 1 \leq i \leq N$
+- $w_i$: The weight assigned for vehicle $i; \forall 1 \leq i \leq N$
+
+** Decision Variable Matching
+- $u_i$: The starting time of charging for vehicle $i; \forall 1 \leq i \leq N$
+- $v_i$: The starting berth position occupied by vehicle $i; \forall 1 \leq i \leq N$
+- $c_i$: The departure time of vehicle $i; \forall 1 \leq i \leq N$
+- $\sigma_{ij}$:
+  \begin{equation*}
+  \begin{array}{c}
+    \sigma_{ij}:\; \begin{cases} 1 & \textrm{ if vehicle i is full on the left of} \\
+    & \textrm{vehicle j in the } \\
+    & \textrm{Time - space diagram} \\
+    0 & \textrm{otherwise} \\
+    \end{cases} \\
+   \end{array}
+   \end{equation*}
+- $\delta_{ij}$:
+  \begin{equation*}
+  \begin{array}{c}
+    \delta_{ij}:\; \begin{cases} 1 & \textrm{ if vehicle i is full below} \\
+    & \textrm{vehicle j in the } \\
+    & \textrm{Time - space diagram} \\
+    0 & \textrm{otherwise} \\
+   \end{cases}\\
+   \end{array}
+   \end{equation*}
+
+** Formulation
+The cost function is of the form
+\begin{equation}
+min \sum_{i=1}^N w_i(c_i - a_i)
+\end{equation}
+
+Subject to the constraints
+
+\begin{equation}
+\begin{array}{cc}
+u_j - u_i - p_i - (\sigma_{ij} - 1)                          & T \geq 0 \\
+v_j - v_i - s_i - (\delta_{ij} - 1)                          & S \geq 0 \\
+\sigma_{ij} + \sigma_{ji} + \delta_{ij} + \delta_{ji} \geq 1 & \\
+\sigma_{ij} + \sigma_{ji} \leq 1                             & \\
+\delta_{ij} + \delta_{ji} \leq 1                             & \\
+p_i + u_i = c_i                                              & \\
+a_i \leq u_i \leq (T-p_i)                                    & \\
+\sigma_{ij} \in \{0,1\},\; \delta_{ij} \in \{0,1\} \\
+\end{array}
+\end{equation}
+
+The first and second constraint are the definition of $\sigma$ and $\delta$, respectively. The fourth constraint through the sixth guarantee that vehicle $i$ and $j$ do not overlap in the Time-Space diagram. Constraint seven shows the relationship between the completion time $c_i$ and the starting time $u_i$ for vehicle $i$. Constraints eight and nine define the feasible domains for the decision variables $u_i$, $v_i$, $\sigma_{ij}$, and $\delta_{ij}$.
+
+*** The Time-Space Diagram
+The first and second constraint ($\sigma_{ij}$ and $\delta){ij}$) are represented in the figure below. $\sigma{ij}$ represents vehicle $i$ being charged and allowing $j$ to take its place to be charged (i.e. if the vehicle in front of me is charged $\sigma_{ij} = 1$). $\delta{ij}$ represents the vehicles being lined up perpendicular to their respective charging stations (i.e. the vehicle in the charging lane to my left is done therefore $\delta_{ij} = 1$).
+
+![Berth Allocation Time-Space Diagram](img/BerthTimeSpace.gif)
+
+* Fuzzy BAP
+** Preliminaries
+*** Fuzzy Sets
+\begin{equation}
+    \tilde{A} = \{ (x, \mu_{\tilde{A}}(x), x \in X) \}
+\end{equation}
+
+Where $\mu_{\tilde{A}} : X \rightarrow [0,1]$ is called the membership function.
+
+*** Triangular Fuzzy Number
+\begin{equation}
+\tilde{a} = (a_1, a_2, a_3)
+\end{equation}
+
+[[./img/TriangularFuzzyNumber.png]]
+
+*** Fuzzy Arithmetic
+If we have two fuzzy numbers $\tilde{a}$ and $\tilde{b}$ then the sum is taken as
+
+\begin{equation}
+\tilde{a} + \tilde{b} = (a_1 + b_1, a_2 + b_2, a_3 + b_3)
+\end{equation}
+
+And similarly is done for the difference.
+
+*** Comparison of Fuzzy Numbers
+There are multiple ways of comparing fuzzy numbers, the way done in this particular text is the First Index of Yagger
+
+\begin{equation}
+\mathbb{R} = \frac{a_1 + a_2 + a_3}{3}
+\end{equation}
+
+Which results in $\tilde{a} \leq \tilde{b}$ when $\mathbb{R}(\tilde{a}) \leq \mathbb{R}(\tilde{b})$
+
+
+** Formulation of Fully Fuzzy Linear Programs
+
+\begin{equation}
+\begin{array}{cc}
+\sum_{j=1}^n \tilde{c}_j \tilde{x}_j & \\
+s.t. & \sum_{j=1}^n \tilde{a}_{ij} \tilde{x}_j \leq \tilde{b}_j \\
+\end{array}
+\end{equation}
+
+As a consequence of the mathematics applied to fuzzy numbers, we can rewrite this problem as a standard linear problem by applying the addition rule:
+
+[[./img/FuzzyToStandardBAP.png]]
+
+** FFLP Model for the Berth Allocation Problem
+Using the following definitions
+
+[[./img/FFLPDef.png]]
+
+the BAP can be formulated assigned
+
+[[./img/FFLPFormulation.png]]
+
+where the $z$ variable is similar to the $\sigma$ variable in the PAP problem. It indicates if the vessel $i$ is located to the left of vessel $j$ at the berth.
+
+Applying the methodology from the previous section, the BAP problem can be fully modeled assigned
+
+[[./img/FFLPMILP.png]]
+
+* Sources
+** BAP
+- [[http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.471.9196&rep=rep1&type=pdf][The dynamic berth allocation problem for a container port]]
+- [[https://en.wikipedia.org/wiki/Berth_allocation_problem][Berth allocation problem]]
+- [[https://people.orie.cornell.edu/jdai/publications/daiLinMoorthyTeo08.pdf][Berth Allocation Planning Optimization in Container Terminals]]
+- [[https://www.comp.nus.edu.sg/~cs5234/BAP/lecture/BAP-Lecture-CS5234.pdf][Berth Allocation Problem – A Case Study in Algorithmic Approaches]]
+- [[https://www.researchgate.net/publication/320013147_A_Fully_Fuzzy_Linear_Programming_Model_to_the_Berth_Allocation_Problem][A Fully Fuzzy Linear Programming Model to the Berth Allocation]]
+- [[https://www.sciencedirect.com/science/article/pii/S0957417415003462][The Continuous Berth Allocation Problem In A Container Terminal With Multiple Quays]]
+
+** PAP
+- [[https://ieeexplore.ieee.org/document/8786524][Optimized Scheduling for Solving Position Allocation Problem in Electric Vehicle Charging Stations]]
