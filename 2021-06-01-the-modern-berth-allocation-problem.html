@@ -6,7 +6,7 @@
       type="application/rss+xml"
       href="https://alexb7711.github.io/rss.xml"
       title="RSS feed for https://alexb7711.github.io">
-<title>#+title: The Modern Berth Allocation Problem</title>
+<title>The Modern Berth Allocation Problem</title>
 <meta name="author" content="Alex Brown">
 <meta name="referrer" content="no-referrer">
 <link href= "Theme/style.css" rel="stylesheet" type="text/css" />
@@ -14,78 +14,78 @@
 <body>
 <div id="preamble" class="status"></div>
 <div id="content">
-<div class="post-date">01 Jun 2021</div><h1 class="post-title"><a href="https://alexb7711.github.io/2021-06-01-the-modern-berth-allocation-problem.html">#+title: The Modern Berth Allocation Problem</a></h1>
+<div class="post-date">01 Jun 2021</div><h1 class="post-title"><a href="https://alexb7711.github.io/2021-06-01-the-modern-berth-allocation-problem.html">The Modern Berth Allocation Problem</a></h1>
 <nav id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgef0e673">Introduction</a></li>
-<li><a href="#org5cbd634">The Berth Allocation Problem</a>
+<li><a href="#org6bb175a">Introduction</a></li>
+<li><a href="#org5e55dfd">The Berth Allocation Problem</a>
 <ul>
-<li><a href="#orgf69a9fe">Continuous and Discrete Representation</a></li>
-<li><a href="#orgb3857f9">Static BAP Modeling</a>
+<li><a href="#org9e6dbf1">Continuous and Discrete Representation</a></li>
+<li><a href="#org73350d8">Static BAP Modeling</a>
 <ul>
-<li><a href="#orgd72539f">Port and Berth Information</a></li>
-<li><a href="#orgb39d1cd">Vessel Information</a></li>
-<li><a href="#org2f04410">Decision Variables</a></li>
-<li><a href="#org7806f99">Cost Variables</a></li>
+<li><a href="#org5e176b2">Port and Berth Information</a></li>
+<li><a href="#org1d9e606">Vessel Information</a></li>
+<li><a href="#org30b4bd5">Decision Variables</a></li>
+<li><a href="#orga010c66">Cost Variables</a></li>
 </ul>
 </li>
-<li><a href="#org76de236">Definitions</a>
+<li><a href="#org385a1a9">Definitions</a>
 <ul>
-<li><a href="#orgb74ee5b">TODO: Add image from Cornell paper here</a></li>
+<li><a href="#orge05ba1d">TODO: Add image from Cornell paper here</a></li>
 </ul>
 </li>
-<li><a href="#orgc00b7c1">Dynamic BAP Model</a></li>
+<li><a href="#org037fbfc">Dynamic BAP Model</a></li>
 </ul>
 </li>
-<li><a href="#org622165b">The Position Allocation Problem (PAP)</a>
+<li><a href="#org929e489">The Position Allocation Problem (PAP)</a>
 <ul>
-<li><a href="#org535249e">Variable Matching:</a></li>
-<li><a href="#org011fb02">Decision Variable Matching</a></li>
-<li><a href="#orga7f8e02">Formulation</a>
+<li><a href="#org0aa69e0">Variable Matching:</a></li>
+<li><a href="#org97a1d59">Decision Variable Matching</a></li>
+<li><a href="#orgc6661e0">Formulation</a>
 <ul>
-<li><a href="#org7e64b2b">The Time-Space Diagram</a></li>
+<li><a href="#orga98946e">The Time-Space Diagram</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org3528068">Fuzzy BAP</a>
+<li><a href="#org71fc731">Fuzzy BAP</a>
 <ul>
-<li><a href="#orged30934">Preliminaries</a>
+<li><a href="#orgbdb1ac2">Preliminaries</a>
 <ul>
-<li><a href="#org1647cd1">Fuzzy Sets</a></li>
-<li><a href="#org7c121f5">Triangular Fuzzy Number</a></li>
-<li><a href="#org75c0871">Fuzzy Arithmetic</a></li>
-<li><a href="#org2ba53f2">Comparison of Fuzzy Numbers</a></li>
+<li><a href="#org7a261d0">Fuzzy Sets</a></li>
+<li><a href="#orgcd8e312">Triangular Fuzzy Number</a></li>
+<li><a href="#orgcbc7a9d">Fuzzy Arithmetic</a></li>
+<li><a href="#org610d10a">Comparison of Fuzzy Numbers</a></li>
 </ul>
 </li>
-<li><a href="#org746fef6">Formulation of Fully Fuzzy Linear Programs</a></li>
-<li><a href="#orga8c110e">FFLP Model for the Berth Allocation Problem</a></li>
+<li><a href="#orgfc65acb">Formulation of Fully Fuzzy Linear Programs</a></li>
+<li><a href="#org9312506">FFLP Model for the Berth Allocation Problem</a></li>
 </ul>
 </li>
-<li><a href="#org6ad2a28">Sources</a>
+<li><a href="#orgccdb3c9">Sources</a>
 <ul>
-<li><a href="#org380779f">BAP</a></li>
-<li><a href="#org5f9378a">PAP</a></li>
+<li><a href="#org3370a81">BAP</a></li>
+<li><a href="#orge96c29e">PAP</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </nav>
 
-<div id="outline-container-orgef0e673" class="outline-2">
-<h2 id="orgef0e673">Introduction</h2>
-<div class="outline-text-2" id="text-orgef0e673">
+<div id="outline-container-org6bb175a" class="outline-2">
+<h2 id="org6bb175a">Introduction</h2>
+<div class="outline-text-2" id="text-org6bb175a">
 <p>
 The Berth Allocation Problem (BAP), is a long studied problem which consists of the solving for the optimal docking of vessels on a birth to be processed. There are many renditions of the problem to optimize over multiple quays, to be solved using discrete or continuous variables, to optimize over different parameters such as time of service or cost, and many more. Needless to say, it is a well studied problem. This post introduces that idea and then begins to introduce some new ideas and views that BAP may be used for.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5cbd634" class="outline-2">
-<h2 id="org5cbd634">The Berth Allocation Problem</h2>
-<div class="outline-text-2" id="text-org5cbd634">
+<div id="outline-container-org5e55dfd" class="outline-2">
+<h2 id="org5e55dfd">The Berth Allocation Problem</h2>
+<div class="outline-text-2" id="text-org5e55dfd">
 <p>
 The BAP is a ship allocation problem regarding berth space for vessels in container terminals. As ships arrive, they must be allocated space and time along the berth to be served. Different factors that are taken into account are: time required to serve and size of the vessel. Solutions to BAP make attempts to optimize the space/time allocation for the vessels by
 </p>
@@ -98,9 +98,9 @@ The BAP is a ship allocation problem regarding berth space for vessels in contai
 </ul>
 </div>
 
-<div id="outline-container-orgf69a9fe" class="outline-3">
-<h3 id="orgf69a9fe">Continuous and Discrete Representation</h3>
-<div class="outline-text-3" id="text-orgf69a9fe">
+<div id="outline-container-org9e6dbf1" class="outline-3">
+<h3 id="org9e6dbf1">Continuous and Discrete Representation</h3>
+<div class="outline-text-3" id="text-org9e6dbf1">
 <p>
 As with most problems, they can be represented in either a continuous or discrete fashion. Among the models
 </p>
@@ -118,13 +118,13 @@ are observed most frequently in literature. For our purposes, we will mostly be 
 </div>
 </div>
 
-<div id="outline-container-orgb3857f9" class="outline-3">
-<h3 id="orgb3857f9">Static BAP Modeling</h3>
-<div class="outline-text-3" id="text-orgb3857f9">
+<div id="outline-container-org73350d8" class="outline-3">
+<h3 id="org73350d8">Static BAP Modeling</h3>
+<div class="outline-text-3" id="text-org73350d8">
 </div>
-<div id="outline-container-orgd72539f" class="outline-4">
-<h4 id="orgd72539f">Port and Berth Information</h4>
-<div class="outline-text-4" id="text-orgd72539f">
+<div id="outline-container-org5e176b2" class="outline-4">
+<h4 id="org5e176b2">Port and Berth Information</h4>
+<div class="outline-text-4" id="text-org5e176b2">
 <ul class="org-ul">
 <li>\(W\): Number of wharfs</li>
 <li>\(w_l\) : Length of wharf \(i \in 1,...,W\)</li>
@@ -134,9 +134,9 @@ are observed most frequently in literature. For our purposes, we will mostly be 
 </div>
 </div>
 
-<div id="outline-container-orgb39d1cd" class="outline-4">
-<h4 id="orgb39d1cd">Vessel Information</h4>
-<div class="outline-text-4" id="text-orgb39d1cd">
+<div id="outline-container-org1d9e606" class="outline-4">
+<h4 id="org1d9e606">Vessel Information</h4>
+<div class="outline-text-4" id="text-org1d9e606">
 <ul class="org-ul">
 <li>\(N\): Number of vessels that have arrive or will arrive within the schedule window</li>
 <li>\(r_i\): Arrival time of vessel \(i\)</li>
@@ -146,9 +146,9 @@ are observed most frequently in literature. For our purposes, we will mostly be 
 </div>
 </div>
 
-<div id="outline-container-org2f04410" class="outline-4">
-<h4 id="org2f04410">Decision Variables</h4>
-<div class="outline-text-4" id="text-org2f04410">
+<div id="outline-container-org30b4bd5" class="outline-4">
+<h4 id="org30b4bd5">Decision Variables</h4>
+<div class="outline-text-4" id="text-org30b4bd5">
 <ul class="org-ul">
 <li>\(x_i\): Berthing location for vessel \(i\)</li>
 <li>\(t_i\): Planning berthing time for vessel \(i\)</li>
@@ -156,9 +156,9 @@ are observed most frequently in literature. For our purposes, we will mostly be 
 </div>
 </div>
 
-<div id="outline-container-org7806f99" class="outline-4">
-<h4 id="org7806f99">Cost Variables</h4>
-<div class="outline-text-4" id="text-org7806f99">
+<div id="outline-container-orga010c66" class="outline-4">
+<h4 id="orga010c66">Cost Variables</h4>
+<div class="outline-text-4" id="text-orga010c66">
 <ul class="org-ul">
 <li>Location Cost
 The quality of the berthing locations assigned are given by</li>
@@ -206,9 +206,9 @@ The last constraint models that vessels \(i\) and \(j\) cannot occupy the same l
 </div>
 </div>
 
-<div id="outline-container-org76de236" class="outline-3">
-<h3 id="org76de236">Definitions</h3>
-<div class="outline-text-3" id="text-org76de236">
+<div id="outline-container-org385a1a9" class="outline-3">
+<h3 id="org385a1a9">Definitions</h3>
+<div class="outline-text-3" id="text-org385a1a9">
 <ul class="org-ul">
 <li>Terminal: The facility where the vessels are docked</li>
 <li>Wharf: A linear strip where the vessels are able to dock. There are typically multiple wharfs in a terminal</li>
@@ -216,14 +216,14 @@ The last constraint models that vessels \(i\) and \(j\) cannot occupy the same l
 </ul>
 </div>
 
-<div id="outline-container-orgb74ee5b" class="outline-4">
-<h4 id="orgb74ee5b">TODO: Add image from Cornell paper here</h4>
+<div id="outline-container-orge05ba1d" class="outline-4">
+<h4 id="orge05ba1d">TODO: Add image from Cornell paper here</h4>
 </div>
 </div>
 
-<div id="outline-container-orgc00b7c1" class="outline-3">
-<h3 id="orgc00b7c1">Dynamic BAP Model</h3>
-<div class="outline-text-3" id="text-orgc00b7c1">
+<div id="outline-container-org037fbfc" class="outline-3">
+<h3 id="org037fbfc">Dynamic BAP Model</h3>
+<div class="outline-text-3" id="text-org037fbfc">
 <p>
 The dynamic BAP model adds the additional challenge of rolling the plan forward every time step. The main problem being is how to handle the situation where a vessel \(j\) is already in the place of vessel \(i\).
 </p>
@@ -235,17 +235,17 @@ An approach to this is to mark used berths as forbidden zones. The schedule is t
 </div>
 </div>
 
-<div id="outline-container-org622165b" class="outline-2">
-<h2 id="org622165b">The Position Allocation Problem (PAP)</h2>
-<div class="outline-text-2" id="text-org622165b">
+<div id="outline-container-org929e489" class="outline-2">
+<h2 id="org929e489">The Position Allocation Problem (PAP)</h2>
+<div class="outline-text-2" id="text-org929e489">
 <p>
 PAP describes the scenario where rather than vessels lined up to dock at a berth, we have electric vehicles lined up to be charged by a series of chargers. The scenario where buses are lined up to be charged is extremely analogous to the BAP problem. The significant difference is the location of the &ldquo;wharf&rdquo;. Instead of docking the vehicles parallel to the wharf, they will be lined up perpendicular to it. The following describes the conversion from the berth allocation problem to the position allocation problem.
 </p>
 </div>
 
-<div id="outline-container-org535249e" class="outline-3">
-<h3 id="org535249e">Variable Matching:</h3>
-<div class="outline-text-3" id="text-org535249e">
+<div id="outline-container-org0aa69e0" class="outline-3">
+<h3 id="org0aa69e0">Variable Matching:</h3>
+<div class="outline-text-3" id="text-org0aa69e0">
 <ul class="org-ul">
 <li>\(S\): Length of the berth</li>
 <li>\(T\): Length of the time horizon</li>
@@ -258,9 +258,9 @@ PAP describes the scenario where rather than vessels lined up to dock at a berth
 </div>
 </div>
 
-<div id="outline-container-org011fb02" class="outline-3">
-<h3 id="org011fb02">Decision Variable Matching</h3>
-<div class="outline-text-3" id="text-org011fb02">
+<div id="outline-container-org97a1d59" class="outline-3">
+<h3 id="org97a1d59">Decision Variable Matching</h3>
+<div class="outline-text-3" id="text-org97a1d59">
 <ul class="org-ul">
 <li>\(u_i\): The starting time of charging for vehicle \(i; \forall 1 \leq i \leq N\)</li>
 <li>\(v_i\): The starting berth position occupied by vehicle \(i; \forall 1 \leq i \leq N\)</li>
@@ -293,9 +293,9 @@ PAP describes the scenario where rather than vessels lined up to dock at a berth
 </div>
 </div>
 
-<div id="outline-container-orga7f8e02" class="outline-3">
-<h3 id="orga7f8e02">Formulation</h3>
-<div class="outline-text-3" id="text-orga7f8e02">
+<div id="outline-container-orgc6661e0" class="outline-3">
+<h3 id="orgc6661e0">Formulation</h3>
+<div class="outline-text-3" id="text-orgc6661e0">
 <p>
 The cost function is of the form
 </p>
@@ -325,9 +325,9 @@ The first and second constraint are the definition of \(\sigma\) and \(\delta\),
 </p>
 </div>
 
-<div id="outline-container-org7e64b2b" class="outline-4">
-<h4 id="org7e64b2b">The Time-Space Diagram</h4>
-<div class="outline-text-4" id="text-org7e64b2b">
+<div id="outline-container-orga98946e" class="outline-4">
+<h4 id="orga98946e">The Time-Space Diagram</h4>
+<div class="outline-text-4" id="text-orga98946e">
 <p>
 The first and second constraint (\(\sigma_{ij}\) and \(\delta){ij}\)) are represented in the figure below. \(\sigma{ij}\) represents vehicle \(i\) being charged and allowing \(j\) to take its place to be charged (i.e. if the vehicle in front of me is charged \(\sigma_{ij} = 1\)). \(\delta{ij}\) represents the vehicles being lined up perpendicular to their respective charging stations (i.e. the vehicle in the charging lane to my left is done therefore \(\delta_{ij} = 1\)).
 </p>
@@ -340,17 +340,17 @@ The first and second constraint (\(\sigma_{ij}\) and \(\delta){ij}\)) are repres
 </div>
 </div>
 
-<div id="outline-container-org3528068" class="outline-2">
-<h2 id="org3528068">Fuzzy BAP</h2>
-<div class="outline-text-2" id="text-org3528068">
+<div id="outline-container-org71fc731" class="outline-2">
+<h2 id="org71fc731">Fuzzy BAP</h2>
+<div class="outline-text-2" id="text-org71fc731">
 </div>
-<div id="outline-container-orged30934" class="outline-3">
-<h3 id="orged30934">Preliminaries</h3>
-<div class="outline-text-3" id="text-orged30934">
+<div id="outline-container-orgbdb1ac2" class="outline-3">
+<h3 id="orgbdb1ac2">Preliminaries</h3>
+<div class="outline-text-3" id="text-orgbdb1ac2">
 </div>
-<div id="outline-container-org1647cd1" class="outline-4">
-<h4 id="org1647cd1">Fuzzy Sets</h4>
-<div class="outline-text-4" id="text-org1647cd1">
+<div id="outline-container-org7a261d0" class="outline-4">
+<h4 id="org7a261d0">Fuzzy Sets</h4>
+<div class="outline-text-4" id="text-org7a261d0">
 \begin{equation}
     \tilde{A} = \{ (x, \mu_{\tilde{A}}(x), x \in X) \}
 \end{equation}
@@ -361,24 +361,24 @@ Where \(\mu_{\tilde{A}} : X \rightarrow [0,1]\) is called the membership functio
 </div>
 </div>
 
-<div id="outline-container-org7c121f5" class="outline-4">
-<h4 id="org7c121f5">Triangular Fuzzy Number</h4>
-<div class="outline-text-4" id="text-org7c121f5">
+<div id="outline-container-orgcd8e312" class="outline-4">
+<h4 id="orgcd8e312">Triangular Fuzzy Number</h4>
+<div class="outline-text-4" id="text-orgcd8e312">
 \begin{equation}
 \tilde{a} = (a_1, a_2, a_3)
 \end{equation}
 
 
-<figure id="org735060b">
+<figure id="org833fb57">
 <img src="./img/TriangularFuzzyNumber.png" alt="TriangularFuzzyNumber.png">
 
 </figure>
 </div>
 </div>
 
-<div id="outline-container-org75c0871" class="outline-4">
-<h4 id="org75c0871">Fuzzy Arithmetic</h4>
-<div class="outline-text-4" id="text-org75c0871">
+<div id="outline-container-orgcbc7a9d" class="outline-4">
+<h4 id="orgcbc7a9d">Fuzzy Arithmetic</h4>
+<div class="outline-text-4" id="text-orgcbc7a9d">
 <p>
 If we have two fuzzy numbers \(\tilde{a}\) and \(\tilde{b}\) then the sum is taken as
 </p>
@@ -393,9 +393,9 @@ And similarly is done for the difference.
 </div>
 </div>
 
-<div id="outline-container-org2ba53f2" class="outline-4">
-<h4 id="org2ba53f2">Comparison of Fuzzy Numbers</h4>
-<div class="outline-text-4" id="text-org2ba53f2">
+<div id="outline-container-org610d10a" class="outline-4">
+<h4 id="org610d10a">Comparison of Fuzzy Numbers</h4>
+<div class="outline-text-4" id="text-org610d10a">
 <p>
 There are multiple ways of comparing fuzzy numbers, the way done in this particular text is the First Index of Yagger
 </p>
@@ -412,9 +412,9 @@ Which results in \(\tilde{a} \leq \tilde{b}\) when \(\mathbb{R}(\tilde{a}) \leq 
 </div>
 
 
-<div id="outline-container-org746fef6" class="outline-3">
-<h3 id="org746fef6">Formulation of Fully Fuzzy Linear Programs</h3>
-<div class="outline-text-3" id="text-org746fef6">
+<div id="outline-container-orgfc65acb" class="outline-3">
+<h3 id="orgfc65acb">Formulation of Fully Fuzzy Linear Programs</h3>
+<div class="outline-text-3" id="text-orgfc65acb">
 \begin{equation}
 \begin{array}{cc}
 \sum_{j=1}^n \tilde{c}_j \tilde{x}_j & \\
@@ -427,22 +427,22 @@ As a consequence of the mathematics applied to fuzzy numbers, we can rewrite thi
 </p>
 
 
-<figure id="org0a6c5d6">
+<figure id="org08f01b2">
 <img src="./img/FuzzyToStandardBAP.png" alt="FuzzyToStandardBAP.png">
 
 </figure>
 </div>
 </div>
 
-<div id="outline-container-orga8c110e" class="outline-3">
-<h3 id="orga8c110e">FFLP Model for the Berth Allocation Problem</h3>
-<div class="outline-text-3" id="text-orga8c110e">
+<div id="outline-container-org9312506" class="outline-3">
+<h3 id="org9312506">FFLP Model for the Berth Allocation Problem</h3>
+<div class="outline-text-3" id="text-org9312506">
 <p>
 Using the following definitions
 </p>
 
 
-<figure id="orga95de6e">
+<figure id="org0fa42cb">
 <img src="./img/FFLPDef.png" alt="FFLPDef.png">
 
 </figure>
@@ -452,7 +452,7 @@ the BAP can be formulated assigned
 </p>
 
 
-<figure id="org7105976">
+<figure id="orga54721b">
 <img src="./img/FFLPFormulation.png" alt="FFLPFormulation.png">
 
 </figure>
@@ -466,7 +466,7 @@ Applying the methodology from the previous section, the BAP problem can be fully
 </p>
 
 
-<figure id="orge15698f">
+<figure id="orgecb4dcd">
 <img src="./img/FFLPMILP.png" alt="FFLPMILP.png">
 
 </figure>
@@ -474,13 +474,13 @@ Applying the methodology from the previous section, the BAP problem can be fully
 </div>
 </div>
 
-<div id="outline-container-org6ad2a28" class="outline-2">
-<h2 id="org6ad2a28">Sources</h2>
-<div class="outline-text-2" id="text-org6ad2a28">
+<div id="outline-container-orgccdb3c9" class="outline-2">
+<h2 id="orgccdb3c9">Sources</h2>
+<div class="outline-text-2" id="text-orgccdb3c9">
 </div>
-<div id="outline-container-org380779f" class="outline-3">
-<h3 id="org380779f">BAP</h3>
-<div class="outline-text-3" id="text-org380779f">
+<div id="outline-container-org3370a81" class="outline-3">
+<h3 id="org3370a81">BAP</h3>
+<div class="outline-text-3" id="text-org3370a81">
 <ul class="org-ul">
 <li><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.471.9196&amp;rep=rep1&amp;type=pdf">The dynamic berth allocation problem for a container port</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Berth_allocation_problem">Berth allocation problem</a></li>
@@ -492,9 +492,9 @@ Applying the methodology from the previous section, the BAP problem can be fully
 </div>
 </div>
 
-<div id="outline-container-org5f9378a" class="outline-3">
-<h3 id="org5f9378a">PAP</h3>
-<div class="outline-text-3" id="text-org5f9378a">
+<div id="outline-container-orge96c29e" class="outline-3">
+<h3 id="orge96c29e">PAP</h3>
+<div class="outline-text-3" id="text-orge96c29e">
 <ul class="org-ul">
 <li><a href="https://ieeexplore.ieee.org/document/8786524">Optimized Scheduling for Solving Position Allocation Problem in Electric Vehicle Charging Stations</a></li>
 </ul>

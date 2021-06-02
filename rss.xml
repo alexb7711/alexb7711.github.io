@@ -4,81 +4,81 @@
 <title><![CDATA[Alex Brown]]></title>
 <description><![CDATA[Alex Brown]]></description>
 <link>https://alexb7711.github.io</link>
-<lastBuildDate>Tue, 01 Jun 2021 20:59:33 -0600</lastBuildDate>
+<lastBuildDate>Tue, 01 Jun 2021 21:08:04 -0600</lastBuildDate>
 <item>
-  <title><![CDATA[#+title: The Modern Berth Allocation Problem]]></title>
+  <title><![CDATA[The Modern Berth Allocation Problem]]></title>
   <description><![CDATA[
 <nav id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgef0e673">Introduction</a></li>
-<li><a href="#org5cbd634">The Berth Allocation Problem</a>
+<li><a href="#org6bb175a">Introduction</a></li>
+<li><a href="#org5e55dfd">The Berth Allocation Problem</a>
 <ul>
-<li><a href="#orgf69a9fe">Continuous and Discrete Representation</a></li>
-<li><a href="#orgb3857f9">Static BAP Modeling</a>
+<li><a href="#org9e6dbf1">Continuous and Discrete Representation</a></li>
+<li><a href="#org73350d8">Static BAP Modeling</a>
 <ul>
-<li><a href="#orgd72539f">Port and Berth Information</a></li>
-<li><a href="#orgb39d1cd">Vessel Information</a></li>
-<li><a href="#org2f04410">Decision Variables</a></li>
-<li><a href="#org7806f99">Cost Variables</a></li>
+<li><a href="#org5e176b2">Port and Berth Information</a></li>
+<li><a href="#org1d9e606">Vessel Information</a></li>
+<li><a href="#org30b4bd5">Decision Variables</a></li>
+<li><a href="#orga010c66">Cost Variables</a></li>
 </ul>
 </li>
-<li><a href="#org76de236">Definitions</a>
+<li><a href="#org385a1a9">Definitions</a>
 <ul>
-<li><a href="#orgb74ee5b">TODO: Add image from Cornell paper here</a></li>
+<li><a href="#orge05ba1d">TODO: Add image from Cornell paper here</a></li>
 </ul>
 </li>
-<li><a href="#orgc00b7c1">Dynamic BAP Model</a></li>
+<li><a href="#org037fbfc">Dynamic BAP Model</a></li>
 </ul>
 </li>
-<li><a href="#org622165b">The Position Allocation Problem (PAP)</a>
+<li><a href="#org929e489">The Position Allocation Problem (PAP)</a>
 <ul>
-<li><a href="#org535249e">Variable Matching:</a></li>
-<li><a href="#org011fb02">Decision Variable Matching</a></li>
-<li><a href="#orga7f8e02">Formulation</a>
+<li><a href="#org0aa69e0">Variable Matching:</a></li>
+<li><a href="#org97a1d59">Decision Variable Matching</a></li>
+<li><a href="#orgc6661e0">Formulation</a>
 <ul>
-<li><a href="#org7e64b2b">The Time-Space Diagram</a></li>
+<li><a href="#orga98946e">The Time-Space Diagram</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org3528068">Fuzzy BAP</a>
+<li><a href="#org71fc731">Fuzzy BAP</a>
 <ul>
-<li><a href="#orged30934">Preliminaries</a>
+<li><a href="#orgbdb1ac2">Preliminaries</a>
 <ul>
-<li><a href="#org1647cd1">Fuzzy Sets</a></li>
-<li><a href="#org7c121f5">Triangular Fuzzy Number</a></li>
-<li><a href="#org75c0871">Fuzzy Arithmetic</a></li>
-<li><a href="#org2ba53f2">Comparison of Fuzzy Numbers</a></li>
+<li><a href="#org7a261d0">Fuzzy Sets</a></li>
+<li><a href="#orgcd8e312">Triangular Fuzzy Number</a></li>
+<li><a href="#orgcbc7a9d">Fuzzy Arithmetic</a></li>
+<li><a href="#org610d10a">Comparison of Fuzzy Numbers</a></li>
 </ul>
 </li>
-<li><a href="#org746fef6">Formulation of Fully Fuzzy Linear Programs</a></li>
-<li><a href="#orga8c110e">FFLP Model for the Berth Allocation Problem</a></li>
+<li><a href="#orgfc65acb">Formulation of Fully Fuzzy Linear Programs</a></li>
+<li><a href="#org9312506">FFLP Model for the Berth Allocation Problem</a></li>
 </ul>
 </li>
-<li><a href="#org6ad2a28">Sources</a>
+<li><a href="#orgccdb3c9">Sources</a>
 <ul>
-<li><a href="#org380779f">BAP</a></li>
-<li><a href="#org5f9378a">PAP</a></li>
+<li><a href="#org3370a81">BAP</a></li>
+<li><a href="#orge96c29e">PAP</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </nav>
 
-<div id="outline-container-orgef0e673" class="outline-2">
-<h2 id="orgef0e673">Introduction</h2>
-<div class="outline-text-2" id="text-orgef0e673">
+<div id="outline-container-org6bb175a" class="outline-2">
+<h2 id="org6bb175a">Introduction</h2>
+<div class="outline-text-2" id="text-org6bb175a">
 <p>
 The Berth Allocation Problem (BAP), is a long studied problem which consists of the solving for the optimal docking of vessels on a birth to be processed. There are many renditions of the problem to optimize over multiple quays, to be solved using discrete or continuous variables, to optimize over different parameters such as time of service or cost, and many more. Needless to say, it is a well studied problem. This post introduces that idea and then begins to introduce some new ideas and views that BAP may be used for.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5cbd634" class="outline-2">
-<h2 id="org5cbd634">The Berth Allocation Problem</h2>
-<div class="outline-text-2" id="text-org5cbd634">
+<div id="outline-container-org5e55dfd" class="outline-2">
+<h2 id="org5e55dfd">The Berth Allocation Problem</h2>
+<div class="outline-text-2" id="text-org5e55dfd">
 <p>
 The BAP is a ship allocation problem regarding berth space for vessels in container terminals. As ships arrive, they must be allocated space and time along the berth to be served. Different factors that are taken into account are: time required to serve and size of the vessel. Solutions to BAP make attempts to optimize the space/time allocation for the vessels by
 </p>
@@ -91,9 +91,9 @@ The BAP is a ship allocation problem regarding berth space for vessels in contai
 </ul>
 </div>
 
-<div id="outline-container-orgf69a9fe" class="outline-3">
-<h3 id="orgf69a9fe">Continuous and Discrete Representation</h3>
-<div class="outline-text-3" id="text-orgf69a9fe">
+<div id="outline-container-org9e6dbf1" class="outline-3">
+<h3 id="org9e6dbf1">Continuous and Discrete Representation</h3>
+<div class="outline-text-3" id="text-org9e6dbf1">
 <p>
 As with most problems, they can be represented in either a continuous or discrete fashion. Among the models
 </p>
@@ -111,13 +111,13 @@ are observed most frequently in literature. For our purposes, we will mostly be 
 </div>
 </div>
 
-<div id="outline-container-orgb3857f9" class="outline-3">
-<h3 id="orgb3857f9">Static BAP Modeling</h3>
-<div class="outline-text-3" id="text-orgb3857f9">
+<div id="outline-container-org73350d8" class="outline-3">
+<h3 id="org73350d8">Static BAP Modeling</h3>
+<div class="outline-text-3" id="text-org73350d8">
 </div>
-<div id="outline-container-orgd72539f" class="outline-4">
-<h4 id="orgd72539f">Port and Berth Information</h4>
-<div class="outline-text-4" id="text-orgd72539f">
+<div id="outline-container-org5e176b2" class="outline-4">
+<h4 id="org5e176b2">Port and Berth Information</h4>
+<div class="outline-text-4" id="text-org5e176b2">
 <ul class="org-ul">
 <li>\(W\): Number of wharfs</li>
 <li>\(w_l\) : Length of wharf \(i \in 1,...,W\)</li>
@@ -127,9 +127,9 @@ are observed most frequently in literature. For our purposes, we will mostly be 
 </div>
 </div>
 
-<div id="outline-container-orgb39d1cd" class="outline-4">
-<h4 id="orgb39d1cd">Vessel Information</h4>
-<div class="outline-text-4" id="text-orgb39d1cd">
+<div id="outline-container-org1d9e606" class="outline-4">
+<h4 id="org1d9e606">Vessel Information</h4>
+<div class="outline-text-4" id="text-org1d9e606">
 <ul class="org-ul">
 <li>\(N\): Number of vessels that have arrive or will arrive within the schedule window</li>
 <li>\(r_i\): Arrival time of vessel \(i\)</li>
@@ -139,9 +139,9 @@ are observed most frequently in literature. For our purposes, we will mostly be 
 </div>
 </div>
 
-<div id="outline-container-org2f04410" class="outline-4">
-<h4 id="org2f04410">Decision Variables</h4>
-<div class="outline-text-4" id="text-org2f04410">
+<div id="outline-container-org30b4bd5" class="outline-4">
+<h4 id="org30b4bd5">Decision Variables</h4>
+<div class="outline-text-4" id="text-org30b4bd5">
 <ul class="org-ul">
 <li>\(x_i\): Berthing location for vessel \(i\)</li>
 <li>\(t_i\): Planning berthing time for vessel \(i\)</li>
@@ -149,9 +149,9 @@ are observed most frequently in literature. For our purposes, we will mostly be 
 </div>
 </div>
 
-<div id="outline-container-org7806f99" class="outline-4">
-<h4 id="org7806f99">Cost Variables</h4>
-<div class="outline-text-4" id="text-org7806f99">
+<div id="outline-container-orga010c66" class="outline-4">
+<h4 id="orga010c66">Cost Variables</h4>
+<div class="outline-text-4" id="text-orga010c66">
 <ul class="org-ul">
 <li>Location Cost
 The quality of the berthing locations assigned are given by</li>
@@ -199,9 +199,9 @@ The last constraint models that vessels \(i\) and \(j\) cannot occupy the same l
 </div>
 </div>
 
-<div id="outline-container-org76de236" class="outline-3">
-<h3 id="org76de236">Definitions</h3>
-<div class="outline-text-3" id="text-org76de236">
+<div id="outline-container-org385a1a9" class="outline-3">
+<h3 id="org385a1a9">Definitions</h3>
+<div class="outline-text-3" id="text-org385a1a9">
 <ul class="org-ul">
 <li>Terminal: The facility where the vessels are docked</li>
 <li>Wharf: A linear strip where the vessels are able to dock. There are typically multiple wharfs in a terminal</li>
@@ -209,14 +209,14 @@ The last constraint models that vessels \(i\) and \(j\) cannot occupy the same l
 </ul>
 </div>
 
-<div id="outline-container-orgb74ee5b" class="outline-4">
-<h4 id="orgb74ee5b">TODO: Add image from Cornell paper here</h4>
+<div id="outline-container-orge05ba1d" class="outline-4">
+<h4 id="orge05ba1d">TODO: Add image from Cornell paper here</h4>
 </div>
 </div>
 
-<div id="outline-container-orgc00b7c1" class="outline-3">
-<h3 id="orgc00b7c1">Dynamic BAP Model</h3>
-<div class="outline-text-3" id="text-orgc00b7c1">
+<div id="outline-container-org037fbfc" class="outline-3">
+<h3 id="org037fbfc">Dynamic BAP Model</h3>
+<div class="outline-text-3" id="text-org037fbfc">
 <p>
 The dynamic BAP model adds the additional challenge of rolling the plan forward every time step. The main problem being is how to handle the situation where a vessel \(j\) is already in the place of vessel \(i\).
 </p>
@@ -228,17 +228,17 @@ An approach to this is to mark used berths as forbidden zones. The schedule is t
 </div>
 </div>
 
-<div id="outline-container-org622165b" class="outline-2">
-<h2 id="org622165b">The Position Allocation Problem (PAP)</h2>
-<div class="outline-text-2" id="text-org622165b">
+<div id="outline-container-org929e489" class="outline-2">
+<h2 id="org929e489">The Position Allocation Problem (PAP)</h2>
+<div class="outline-text-2" id="text-org929e489">
 <p>
 PAP describes the scenario where rather than vessels lined up to dock at a berth, we have electric vehicles lined up to be charged by a series of chargers. The scenario where buses are lined up to be charged is extremely analogous to the BAP problem. The significant difference is the location of the &ldquo;wharf&rdquo;. Instead of docking the vehicles parallel to the wharf, they will be lined up perpendicular to it. The following describes the conversion from the berth allocation problem to the position allocation problem.
 </p>
 </div>
 
-<div id="outline-container-org535249e" class="outline-3">
-<h3 id="org535249e">Variable Matching:</h3>
-<div class="outline-text-3" id="text-org535249e">
+<div id="outline-container-org0aa69e0" class="outline-3">
+<h3 id="org0aa69e0">Variable Matching:</h3>
+<div class="outline-text-3" id="text-org0aa69e0">
 <ul class="org-ul">
 <li>\(S\): Length of the berth</li>
 <li>\(T\): Length of the time horizon</li>
@@ -251,9 +251,9 @@ PAP describes the scenario where rather than vessels lined up to dock at a berth
 </div>
 </div>
 
-<div id="outline-container-org011fb02" class="outline-3">
-<h3 id="org011fb02">Decision Variable Matching</h3>
-<div class="outline-text-3" id="text-org011fb02">
+<div id="outline-container-org97a1d59" class="outline-3">
+<h3 id="org97a1d59">Decision Variable Matching</h3>
+<div class="outline-text-3" id="text-org97a1d59">
 <ul class="org-ul">
 <li>\(u_i\): The starting time of charging for vehicle \(i; \forall 1 \leq i \leq N\)</li>
 <li>\(v_i\): The starting berth position occupied by vehicle \(i; \forall 1 \leq i \leq N\)</li>
@@ -286,9 +286,9 @@ PAP describes the scenario where rather than vessels lined up to dock at a berth
 </div>
 </div>
 
-<div id="outline-container-orga7f8e02" class="outline-3">
-<h3 id="orga7f8e02">Formulation</h3>
-<div class="outline-text-3" id="text-orga7f8e02">
+<div id="outline-container-orgc6661e0" class="outline-3">
+<h3 id="orgc6661e0">Formulation</h3>
+<div class="outline-text-3" id="text-orgc6661e0">
 <p>
 The cost function is of the form
 </p>
@@ -318,9 +318,9 @@ The first and second constraint are the definition of \(\sigma\) and \(\delta\),
 </p>
 </div>
 
-<div id="outline-container-org7e64b2b" class="outline-4">
-<h4 id="org7e64b2b">The Time-Space Diagram</h4>
-<div class="outline-text-4" id="text-org7e64b2b">
+<div id="outline-container-orga98946e" class="outline-4">
+<h4 id="orga98946e">The Time-Space Diagram</h4>
+<div class="outline-text-4" id="text-orga98946e">
 <p>
 The first and second constraint (\(\sigma_{ij}\) and \(\delta){ij}\)) are represented in the figure below. \(\sigma{ij}\) represents vehicle \(i\) being charged and allowing \(j\) to take its place to be charged (i.e. if the vehicle in front of me is charged \(\sigma_{ij} = 1\)). \(\delta{ij}\) represents the vehicles being lined up perpendicular to their respective charging stations (i.e. the vehicle in the charging lane to my left is done therefore \(\delta_{ij} = 1\)).
 </p>
@@ -333,17 +333,17 @@ The first and second constraint (\(\sigma_{ij}\) and \(\delta){ij}\)) are repres
 </div>
 </div>
 
-<div id="outline-container-org3528068" class="outline-2">
-<h2 id="org3528068">Fuzzy BAP</h2>
-<div class="outline-text-2" id="text-org3528068">
+<div id="outline-container-org71fc731" class="outline-2">
+<h2 id="org71fc731">Fuzzy BAP</h2>
+<div class="outline-text-2" id="text-org71fc731">
 </div>
-<div id="outline-container-orged30934" class="outline-3">
-<h3 id="orged30934">Preliminaries</h3>
-<div class="outline-text-3" id="text-orged30934">
+<div id="outline-container-orgbdb1ac2" class="outline-3">
+<h3 id="orgbdb1ac2">Preliminaries</h3>
+<div class="outline-text-3" id="text-orgbdb1ac2">
 </div>
-<div id="outline-container-org1647cd1" class="outline-4">
-<h4 id="org1647cd1">Fuzzy Sets</h4>
-<div class="outline-text-4" id="text-org1647cd1">
+<div id="outline-container-org7a261d0" class="outline-4">
+<h4 id="org7a261d0">Fuzzy Sets</h4>
+<div class="outline-text-4" id="text-org7a261d0">
 \begin{equation}
     \tilde{A} = \{ (x, \mu_{\tilde{A}}(x), x \in X) \}
 \end{equation}
@@ -354,24 +354,24 @@ Where \(\mu_{\tilde{A}} : X \rightarrow [0,1]\) is called the membership functio
 </div>
 </div>
 
-<div id="outline-container-org7c121f5" class="outline-4">
-<h4 id="org7c121f5">Triangular Fuzzy Number</h4>
-<div class="outline-text-4" id="text-org7c121f5">
+<div id="outline-container-orgcd8e312" class="outline-4">
+<h4 id="orgcd8e312">Triangular Fuzzy Number</h4>
+<div class="outline-text-4" id="text-orgcd8e312">
 \begin{equation}
 \tilde{a} = (a_1, a_2, a_3)
 \end{equation}
 
 
-<figure id="org735060b">
+<figure id="org833fb57">
 <img src="./img/TriangularFuzzyNumber.png" alt="TriangularFuzzyNumber.png">
 
 </figure>
 </div>
 </div>
 
-<div id="outline-container-org75c0871" class="outline-4">
-<h4 id="org75c0871">Fuzzy Arithmetic</h4>
-<div class="outline-text-4" id="text-org75c0871">
+<div id="outline-container-orgcbc7a9d" class="outline-4">
+<h4 id="orgcbc7a9d">Fuzzy Arithmetic</h4>
+<div class="outline-text-4" id="text-orgcbc7a9d">
 <p>
 If we have two fuzzy numbers \(\tilde{a}\) and \(\tilde{b}\) then the sum is taken as
 </p>
@@ -386,9 +386,9 @@ And similarly is done for the difference.
 </div>
 </div>
 
-<div id="outline-container-org2ba53f2" class="outline-4">
-<h4 id="org2ba53f2">Comparison of Fuzzy Numbers</h4>
-<div class="outline-text-4" id="text-org2ba53f2">
+<div id="outline-container-org610d10a" class="outline-4">
+<h4 id="org610d10a">Comparison of Fuzzy Numbers</h4>
+<div class="outline-text-4" id="text-org610d10a">
 <p>
 There are multiple ways of comparing fuzzy numbers, the way done in this particular text is the First Index of Yagger
 </p>
@@ -405,9 +405,9 @@ Which results in \(\tilde{a} \leq \tilde{b}\) when \(\mathbb{R}(\tilde{a}) \leq 
 </div>
 
 
-<div id="outline-container-org746fef6" class="outline-3">
-<h3 id="org746fef6">Formulation of Fully Fuzzy Linear Programs</h3>
-<div class="outline-text-3" id="text-org746fef6">
+<div id="outline-container-orgfc65acb" class="outline-3">
+<h3 id="orgfc65acb">Formulation of Fully Fuzzy Linear Programs</h3>
+<div class="outline-text-3" id="text-orgfc65acb">
 \begin{equation}
 \begin{array}{cc}
 \sum_{j=1}^n \tilde{c}_j \tilde{x}_j & \\
@@ -420,22 +420,22 @@ As a consequence of the mathematics applied to fuzzy numbers, we can rewrite thi
 </p>
 
 
-<figure id="org0a6c5d6">
+<figure id="org08f01b2">
 <img src="./img/FuzzyToStandardBAP.png" alt="FuzzyToStandardBAP.png">
 
 </figure>
 </div>
 </div>
 
-<div id="outline-container-orga8c110e" class="outline-3">
-<h3 id="orga8c110e">FFLP Model for the Berth Allocation Problem</h3>
-<div class="outline-text-3" id="text-orga8c110e">
+<div id="outline-container-org9312506" class="outline-3">
+<h3 id="org9312506">FFLP Model for the Berth Allocation Problem</h3>
+<div class="outline-text-3" id="text-org9312506">
 <p>
 Using the following definitions
 </p>
 
 
-<figure id="orga95de6e">
+<figure id="org0fa42cb">
 <img src="./img/FFLPDef.png" alt="FFLPDef.png">
 
 </figure>
@@ -445,7 +445,7 @@ the BAP can be formulated assigned
 </p>
 
 
-<figure id="org7105976">
+<figure id="orga54721b">
 <img src="./img/FFLPFormulation.png" alt="FFLPFormulation.png">
 
 </figure>
@@ -459,7 +459,7 @@ Applying the methodology from the previous section, the BAP problem can be fully
 </p>
 
 
-<figure id="orge15698f">
+<figure id="orgecb4dcd">
 <img src="./img/FFLPMILP.png" alt="FFLPMILP.png">
 
 </figure>
@@ -467,13 +467,13 @@ Applying the methodology from the previous section, the BAP problem can be fully
 </div>
 </div>
 
-<div id="outline-container-org6ad2a28" class="outline-2">
-<h2 id="org6ad2a28">Sources</h2>
-<div class="outline-text-2" id="text-org6ad2a28">
+<div id="outline-container-orgccdb3c9" class="outline-2">
+<h2 id="orgccdb3c9">Sources</h2>
+<div class="outline-text-2" id="text-orgccdb3c9">
 </div>
-<div id="outline-container-org380779f" class="outline-3">
-<h3 id="org380779f">BAP</h3>
-<div class="outline-text-3" id="text-org380779f">
+<div id="outline-container-org3370a81" class="outline-3">
+<h3 id="org3370a81">BAP</h3>
+<div class="outline-text-3" id="text-org3370a81">
 <ul class="org-ul">
 <li><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.471.9196&amp;rep=rep1&amp;type=pdf">The dynamic berth allocation problem for a container port</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Berth_allocation_problem">Berth allocation problem</a></li>
@@ -485,9 +485,9 @@ Applying the methodology from the previous section, the BAP problem can be fully
 </div>
 </div>
 
-<div id="outline-container-org5f9378a" class="outline-3">
-<h3 id="org5f9378a">PAP</h3>
-<div class="outline-text-3" id="text-org5f9378a">
+<div id="outline-container-orge96c29e" class="outline-3">
+<h3 id="orge96c29e">PAP</h3>
+<div class="outline-text-3" id="text-orge96c29e">
 <ul class="org-ul">
 <li><a href="https://ieeexplore.ieee.org/document/8786524">Optimized Scheduling for Solving Position Allocation Problem in Electric Vehicle Charging Stations</a></li>
 </ul>
@@ -499,37 +499,37 @@ Applying the methodology from the previous section, the BAP problem can be fully
   <pubDate>Tue, 01 Jun 2021 20:52:00 -0600</pubDate>
 </item>
 <item>
-  <title><![CDATA[#+title: Fuzzy Linear Programming]]></title>
+  <title><![CDATA[Fuzzy Linear Programming]]></title>
   <description><![CDATA[
 <nav id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org41ff1c4">Introduction</a></li>
-<li><a href="#org2b8d49d">Triangular Fuzzy Theory</a>
+<li><a href="#orgbd85f05">Introduction</a></li>
+<li><a href="#org4890490">Triangular Fuzzy Theory</a>
 <ul>
-<li><a href="#orgdf6cec2">Definitions</a></li>
-<li><a href="#org14508ec">Concepts</a>
+<li><a href="#orga4cd01d">Definitions</a></li>
+<li><a href="#orgc22e035">Concepts</a>
 <ul>
-<li><a href="#orgea2250b">Properties</a></li>
+<li><a href="#orgf7f1c0b">Properties</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgc89fe46">Linear Ranking Functions</a></li>
-<li><a href="#orgf377aad">FILP With Fuzzy Constraints</a></li>
-<li><a href="#orgf365d66">FILP With Imprecise Cost</a>
+<li><a href="#org8609e42">Linear Ranking Functions</a></li>
+<li><a href="#orgf578827">FILP With Fuzzy Constraints</a></li>
+<li><a href="#orgc12bb43">FILP With Imprecise Cost</a>
 <ul>
-<li><a href="#orgf190cd6"><span class="done DONE">DONE</span> Fuzzy Number via Linear Ranking Functions</a></li>
-<li><a href="#orgb19be37">Representation Theorem</a></li>
+<li><a href="#org4de0740"><span class="done DONE">DONE</span> Fuzzy Number via Linear Ranking Functions</a></li>
+<li><a href="#org66675d1">Representation Theorem</a></li>
 </ul>
 </li>
-<li><a href="#orgf8ae05e">FILP With Fuzzy Numbers As Coefficients Of The Technological Matrix</a></li>
-<li><a href="#org2c77ccc">References</a>
+<li><a href="#org3e30b7d">FILP With Fuzzy Numbers As Coefficients Of The Technological Matrix</a></li>
+<li><a href="#org374ddb7">References</a>
 <ul>
-<li><a href="#orga3e54ea">Fuzzy Linear Programming</a></li>
-<li><a href="#orgd3e138e">Fuzzy Theory</a></li>
-<li><a href="#orgdaf1412">Ranking Functions</a></li>
+<li><a href="#org43723cb">Fuzzy Linear Programming</a></li>
+<li><a href="#org11c6a49">Fuzzy Theory</a></li>
+<li><a href="#orgbb9ebc8">Ranking Functions</a></li>
 </ul>
 </li>
 </ul>
@@ -539,9 +539,9 @@ Applying the methodology from the previous section, the BAP problem can be fully
 Linear programming is a widely used method of solving for obtaining optimal solutions. They typically come in the form of some cost function \(\sum_i c_i x_i\) subject so some set of constraints. This solution method works extremely well when the problem and its constraints are well defined. Real life problems, however, are rarely well defined and are almost indefinitely left with some ambiguity or &ldquo;wiggle room&rdquo;. That is what this post is about, a way to represent linear programs with different types of fuzzy parameters.
 </p>
 
-<div id="outline-container-org41ff1c4" class="outline-2">
-<h2 id="org41ff1c4">Introduction</h2>
-<div class="outline-text-2" id="text-org41ff1c4">
+<div id="outline-container-orgbd85f05" class="outline-2">
+<h2 id="orgbd85f05">Introduction</h2>
+<div class="outline-text-2" id="text-orgbd85f05">
 <p>
 A typical integer linear program can be represented as
 </p>
@@ -565,13 +565,13 @@ Real situations, like the above system assumes, is not always the case. There ar
 </div>
 </div>
 
-<div id="outline-container-org2b8d49d" class="outline-2">
-<h2 id="org2b8d49d">Triangular Fuzzy Theory</h2>
-<div class="outline-text-2" id="text-org2b8d49d">
+<div id="outline-container-org4890490" class="outline-2">
+<h2 id="org4890490">Triangular Fuzzy Theory</h2>
+<div class="outline-text-2" id="text-org4890490">
 </div>
-<div id="outline-container-orgdf6cec2" class="outline-3">
-<h3 id="orgdf6cec2">Definitions</h3>
-<div class="outline-text-3" id="text-orgdf6cec2">
+<div id="outline-container-orga4cd01d" class="outline-3">
+<h3 id="orga4cd01d">Definitions</h3>
+<div class="outline-text-3" id="text-orga4cd01d">
 <ul class="org-ul">
 <li><b>Fuzzy Subset</b>: Let \(E\) be a set that is finite or infinite. Let \(A\) be a set contained in \(E\). The order pair \((x, \mu_{A}(x))\) defines the fuzzy subset \(A\) of \(E\), where \(x\) is an element in \(E\) and \(\mu_{A}(x)\) is the degree of membership of \(x\) in \(E\).</li>
 <li><b>Fuzzy Number</b>: A fuzzy number is a generalization of a regular, real number. It refers to a connected set of possible values, where each possible value has its own weight between 0 and 1. A fuzzy number is thus a special case of a convex, normalized fuzzy set of the real line.</li>
@@ -592,9 +592,9 @@ Real situations, like the above system assumes, is not always the case. There ar
 </div>
 </div>
 
-<div id="outline-container-org14508ec" class="outline-3">
-<h3 id="org14508ec">Concepts</h3>
-<div class="outline-text-3" id="text-org14508ec">
+<div id="outline-container-orgc22e035" class="outline-3">
+<h3 id="orgc22e035">Concepts</h3>
+<div class="outline-text-3" id="text-orgc22e035">
 <p>
 \(c\), \(j\), and \(a\) are natural numbers and satisfy Pythagorean&rsquo;s identity \(c^2 + j^2 = a^2\). Such numbers are called a Pythagorean triple (or triangle). Without loss of generality we can also state that we can always find two natural numbers \(j_1\) and \(j_2\) such that
 </p>
@@ -610,9 +610,9 @@ Let \(A = (a,b,c,d)\) be a trapezoidal fuzzy number. Then, its $&lambda;$-cut. W
 </p>
 </div>
 
-<div id="outline-container-orgea2250b" class="outline-4">
-<h4 id="orgea2250b">Properties</h4>
-<div class="outline-text-4" id="text-orgea2250b">
+<div id="outline-container-orgf7f1c0b" class="outline-4">
+<h4 id="orgf7f1c0b">Properties</h4>
+<div class="outline-text-4" id="text-orgf7f1c0b">
 <ol class="org-ol">
 <li>If \([c,j,a]\) is a Pythagorean Triangular Fuzzy Number, then \([mc,mj,ma]\) is also a Pythagorean Triangular Fuzzy Number</li>
 <li>If \(d\) is a common divisor of \(c\) and \(j\), then \(d\) divides \(a\)</li>
@@ -624,9 +624,9 @@ Let \(A = (a,b,c,d)\) be a trapezoidal fuzzy number. Then, its $&lambda;$-cut. W
 </div>
 </div>
 
-<div id="outline-container-orgc89fe46" class="outline-2">
-<h2 id="orgc89fe46">Linear Ranking Functions</h2>
-<div class="outline-text-2" id="text-orgc89fe46">
+<div id="outline-container-org8609e42" class="outline-2">
+<h2 id="org8609e42">Linear Ranking Functions</h2>
+<div class="outline-text-2" id="text-org8609e42">
 <p>
 Linear Ranking Functions (LRFs) are used as a standard technique (heuristic) to prove the termination of a loop. It maps program states to elements of some well-founded ordered sets, such that the value descends whenever the loop completes an iteration. As an example consider the following:
 </p>
@@ -657,9 +657,9 @@ which is usually called a single-path linear-constraint (SLC) loop.
 </p>
 </div>
 </div>
-<div id="outline-container-orgf377aad" class="outline-2">
-<h2 id="orgf377aad">FILP With Fuzzy Constraints</h2>
-<div class="outline-text-2" id="text-orgf377aad">
+<div id="outline-container-orgf578827" class="outline-2">
+<h2 id="orgf578827">FILP With Fuzzy Constraints</h2>
+<div class="outline-text-2" id="text-orgf578827">
 \begin{equation}
     \begin{array}{ccc}
         max z = xc &  &                                                          \\
@@ -706,9 +706,9 @@ Where the \(\alpha\) term is now used as the &ldquo;cut&rdquo; of the constraint
 </div>
 </div>
 
-<div id="outline-container-orgf365d66" class="outline-2">
-<h2 id="orgf365d66">FILP With Imprecise Cost</h2>
-<div class="outline-text-2" id="text-orgf365d66">
+<div id="outline-container-orgc12bb43" class="outline-2">
+<h2 id="orgc12bb43">FILP With Imprecise Cost</h2>
+<div class="outline-text-2" id="text-orgc12bb43">
 <p>
 This section covers the FLIP problem with an imprecise coefficients in the cost function.
 </p>
@@ -733,9 +733,9 @@ Where \(a_{ij}, b_i \in \mathbb{R}\) and \(c_{\sim j} \in F(\mathbb{R})\) and \(
 </ul>
 </div>
 
-<div id="outline-container-orgf190cd6" class="outline-3">
-<h3 id="orgf190cd6"><span class="done DONE">DONE</span> Fuzzy Number via Linear Ranking Functions</h3>
-<div class="outline-text-3" id="text-orgf190cd6">
+<div id="outline-container-org4de0740" class="outline-3">
+<h3 id="org4de0740"><span class="done DONE">DONE</span> Fuzzy Number via Linear Ranking Functions</h3>
+<div class="outline-text-3" id="text-org4de0740">
 <p>
 Consider the set of fuzzy numbers \(A = \{g(x) | x\in X\}\) where \(g(x) = c_{\sim}x\). \(A\) represents all primal-feasible results plus the fuzzy-feasible results. If we assume \(x*\) to be the optimal alternative if \(g(x*)\) is the greatest in \(A\), therefore we need to determine the greatest in \(A\). If we know the function to de-fuzzify the values from \(A\) (i.e. \(f:F(\mathbb{R}) \rightarrow \mathbb{R}\)) then \(f(A)>f(B),\; f(A)=f(B),\; f(A)<f(B)\) are equivalent to \(A>B,\; A=B\; A<B\).
 </p>
@@ -793,9 +793,9 @@ Where we can let our auxiliary model be something of the form
 </div>
 </div>
 
-<div id="outline-container-orgb19be37" class="outline-3">
-<h3 id="orgb19be37">Representation Theorem</h3>
-<div class="outline-text-3" id="text-orgb19be37">
+<div id="outline-container-org66675d1" class="outline-3">
+<h3 id="org66675d1">Representation Theorem</h3>
+<div class="outline-text-3" id="text-org66675d1">
 <p>
 Consider the cost function
 </p>
@@ -818,9 +818,9 @@ If we are able to define the lower and upper bound by using the triangular fuzzy
 </div>
 </div>
 
-<div id="outline-container-orgf8ae05e" class="outline-2">
-<h2 id="orgf8ae05e">FILP With Fuzzy Numbers As Coefficients Of The Technological Matrix</h2>
-<div class="outline-text-2" id="text-orgf8ae05e">
+<div id="outline-container-org3e30b7d" class="outline-2">
+<h2 id="org3e30b7d">FILP With Fuzzy Numbers As Coefficients Of The Technological Matrix</h2>
+<div class="outline-text-2" id="text-org3e30b7d">
 <p>
 This problem can be formulated as follows:
 </p>
@@ -851,22 +851,22 @@ Using the first index of Yager we get:
 \end{equation}
 </div>
 </div>
-<div id="outline-container-org2c77ccc" class="outline-2">
-<h2 id="org2c77ccc">References</h2>
-<div class="outline-text-2" id="text-org2c77ccc">
+<div id="outline-container-org374ddb7" class="outline-2">
+<h2 id="org374ddb7">References</h2>
+<div class="outline-text-2" id="text-org374ddb7">
 </div>
-<div id="outline-container-orga3e54ea" class="outline-3">
-<h3 id="orga3e54ea">Fuzzy Linear Programming</h3>
-<div class="outline-text-3" id="text-orga3e54ea">
+<div id="outline-container-org43723cb" class="outline-3">
+<h3 id="org43723cb">Fuzzy Linear Programming</h3>
+<div class="outline-text-3" id="text-org43723cb">
 <ul class="org-ul">
 <li><a href="https://git.brownhaus.xyz/School/Spring2021/src/branch/master/FundamentalsOfResourceAllocation/Literature/FuzzyBAP.pdf">A Fully Fuzzy Linear Programming Model to the Berth Allocation Problem</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd3e138e" class="outline-3">
-<h3 id="orgd3e138e">Fuzzy Theory</h3>
-<div class="outline-text-3" id="text-orgd3e138e">
+<div id="outline-container-org11c6a49" class="outline-3">
+<h3 id="org11c6a49">Fuzzy Theory</h3>
+<div class="outline-text-3" id="text-org11c6a49">
 <ul class="org-ul">
 <li><a href="https://www.sciencedirect.com/science/article/pii/0022247X83902536">An Introduction to Fuzzy Linear Programming Problems</a></li>
 <li><a href="https://www.sciencedirect.com/science/article/pii/0022247X83902536">Fuzzy Numbers</a></li>
@@ -875,9 +875,9 @@ Using the first index of Yager we get:
 </div>
 </div>
 
-<div id="outline-container-orgdaf1412" class="outline-3">
-<h3 id="orgdaf1412">Ranking Functions</h3>
-<div class="outline-text-3" id="text-orgdaf1412">
+<div id="outline-container-orgbb9ebc8" class="outline-3">
+<h3 id="orgbb9ebc8">Ranking Functions</h3>
+<div class="outline-text-3" id="text-orgbb9ebc8">
 <ul class="org-ul">
 <li><a href="https://link-springer-com.dist.lib.usu.edu/content/pdf/10.1007/s10009-019-00549-9.pdf">On Ranking Functions of Single-Path Linear-Constraint Loops</a></li>
 <li><a href="https://www.bugseng.com/sites/default/files/BagnaraM13PPDP.pdf">Eventual Linear Ranking Functions</a></li>
