@@ -1,4 +1,4 @@
-#+TITLE: #+title: Fuzzy Linear Programming
+#+TITLE: Fuzzy Linear Programming
 #+date: <2021-06-01 20:42>
 #+description:
 #+filetags:
